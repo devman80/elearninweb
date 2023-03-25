@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Auditeur index
+{% endblock %}
+
+{% block body %}
+	<div class="card shadow mb-4">
+		<div class="card-header py-3">
+			<h6 class="m-0 font-weight-bold text-primary">Cours
+			</div>
+			<div class="card-header py-3">
+
+				<a href="{{ path('app_inscription_new') }}">Nouveau</a>
+			</h6>
+		</div>
+
+
+		<div class="card-body">
+			<div class="table-responsive">
+				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+					<thead>
+						<tr>
+
+							<th>Matricule</th>
+							<th>Nom</th>
+							<th>Prenom</th>
+							<th>Photo</th>
+							<th>Sexe</th>
+							<th>Contact</th>
+					
+
+							<th>actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for inscription in inscriptions %}
+							<tr>
+
+								<td>{{ inscription.code|upper }}</td>
+								<td>{{ inscription.nom }}</td>
+								<td>{{ inscription.prenom }}</td>
+							<td>{% if inscription.brochureFilename is not empty %}
+
+			<img src="{{ asset('uploads/brochures/'~inscription.brochureFilename )}}" style="max-width: 100px;  max-height: 200px"/>
+
+
+										{% else %}Aucune photo
+									{% endif %}</td>
+
+								<td>{{ inscription.sexe }}</td>
+								<td>{{ inscription.contact }}</td>
+							
+								<td>
+									<a href="{{ path('app_inscription_show', {'id': inscription.id}) }}">show</a>
+									<a href="{{ path('app_inscription_edit', {'id': inscription.id}) }}">edit</a>
+								</td>
+							</tr>
+						{% else %}
+							<tr>
+								<td colspan="30">Aucune donnée</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+
+				
+			</div>
+		</div>
+	</div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Evaluation{% endblock %}
+
+{% block body %}
+    <h1>Evaluation</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ evaluation.id }}</td>
+            </tr>
+            <tr>
+                <th>Note</th>
+                <td>{{ evaluation.note }}</td>
+            </tr>
+            <tr>
+                <th>Dateevaluation</th>
+                <td>{{ evaluation.dateevaluation ? evaluation.dateevaluation|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Coefficiant</th>
+                <td>{{ evaluation.coefficiant }}</td>
+            </tr>
+            <tr>
+                <th>Totalcoef</th>
+                <td>{{ evaluation.totalcoef }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_evaluation_index') }}">back to list</a>
+
+    <a href="{{ path('app_evaluation_edit', {'id': evaluation.id}) }}">edit</a>
+
+    {{ include('evaluation/_delete_form.html.twig') }}
+{% endblock %}

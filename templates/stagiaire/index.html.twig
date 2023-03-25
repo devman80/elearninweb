@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Stagiaire index{% endblock %}
+
+{% block body %}
+    <h1>Stagiaire index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Sexe</th>
+                <th>Dateinscrit</th>
+                <th>BrochureFilename</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for stagiaire in stagiaires %}
+            <tr>
+                <td>{{ stagiaire.id }}</td>
+                <td>{{ stagiaire.nom }}</td>
+                <td>{{ stagiaire.prenom }}</td>
+                <td>{{ stagiaire.sexe }}</td>
+                <td>{{ stagiaire.dateinscrit ? stagiaire.dateinscrit|date('Y-m-d') : '' }}</td>
+                <td>{{ stagiaire.brochureFilename }}</td>
+                <td>
+                    <a href="{{ path('app_stagiaire_show', {'id': stagiaire.id}) }}">show</a>
+                    <a href="{{ path('app_stagiaire_edit', {'id': stagiaire.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_stagiaire_new') }}">Create new</a>
+{% endblock %}

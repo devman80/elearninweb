@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Module index
+{% endblock %}
+
+{% block body %}
+	<div class="card shadow mb-4">
+		<div class="card-header py-3">
+			<h6 class="m-0 font-weight-bold text-primary">Module
+			</div>
+			<div class="card-header py-3">
+
+				<a href="{{ path('app_module_new') }}">Nouveau</a>
+			</h6>
+		</div>
+
+
+		<div class="card-body">
+			<div class="table-responsive">
+				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+					<thead>
+						<tr>
+
+							<th>Matière</th>
+							<th>Libelle</th>
+							<th>Volume horaire</th>
+
+							<th>actions</th>
+							<th>Supprimer</th>
+						</tr>
+					</thead>
+                    
+					<tbody>
+						{% for module in modules %}
+							<tr>
+
+								<td> {% if module.matiere is not empty %} {{ module.matiere.libelle }} {% else %} {% endif %}  </td>
+								<td>{{ module.libelle }}</td>
+								<td>{{ module.volumeheure }}</td>
+
+								<td>
+									<a href="{{ path('app_module_edit', {'id': module.id}) }}">Modifier</a>
+								</td>
+                                	<td>
+						<form method="post" action="{{ path('app_module_delete', {'id': module.id}) }}" onsubmit="return confirm('Voulez-vous supprimer?');">
+							<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ module.id) }}">
+
+							<button class="btn">
+								<span style="font-size: 1em; color: red;">
+									<i class="fas fa-trash-alt"></i>
+								</span>
+                                supp
+							</button>
+						</form>
+					</td>
+							</tr>
+						{% else %}
+							<tr>
+								<td colspan="12">Aucune donnée</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+
+			</div>
+		</div>
+	{% endblock %}
