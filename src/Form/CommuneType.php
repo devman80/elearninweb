@@ -13,7 +13,7 @@ class CommuneType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('libelle')
+               ->add('libelle')
                ->add('save', SubmitType::class, [
                     'attr' => [
                         'value' => 'create-don'

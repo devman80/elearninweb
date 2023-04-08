@@ -7,9 +7,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: StagiaireRepository::class)]
-class Stagiaire
+class Stagiaire extends AbstractEntity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -17,12 +18,15 @@ class Stagiaire
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Veuillez saisir le nom SVP?')]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank(message: 'Veuillez saisir le prénom SVP?')]
     private ?string $prenom = null;
 
     #[ORM\Column(length: 128, nullable: true)]
+    #[Assert\NotBlank(message: 'Veuillez saisir le sexe SVP?')]
     private ?string $sexe = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]

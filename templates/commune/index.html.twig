@@ -1,54 +1,116 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Commune index
+{% block title %}Liste des communes
 {% endblock %}
 
 {% block body %}
-	<h2>Liste communes</h2>
+	<h1>Liste des communes</h1>
     {% for message in app.flashes('commune') %}
-                <div class="primary">
-                    {{ message }}
-                </div>
+		 <div class="row">
+			 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				 <div class="alert alert-success alert-dismissible">
+					 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					 <strong>Success!</strong> {{ message }}
+
+				 </div>
+			 </div>
+		 </div>
+
             {% endfor %}
-<div><a href="{{ path('app_commune_new') }}">Nouveau</a></div>
-	<table class="table">
-		<thead>
+<div><a href="{{ path('app_commune_new') }}" class="btn btn-outline-primary btns" data-turbo="true"><i class="fa-solid fa-bookmark"></i>&nbsp;&nbsp;Nouveau</a></div>
+	<!-- The Modal -->
+	<div class="modal fade" id="myModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header btn btn-danger">
+					<h4 class="modal-title">Suppression !</h4>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body" id="masupp">
+					Voulez-vous supprimer cet enregistrement ?
+				</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+
+                        <form id="my-form">
+							<input type="hidden" class="delete_value" id="delete_value" name="delete_value">
+							<button type="submit" class="btn btn-success" id="delete_values" data-bs-dismiss="modal">
+								Suppression
+							</button>
+						</form>
+
+					<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fermer</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<!-- fin modal -->
+
+	<table id="app_elearning" class="table table-striped dt-responsive nowrap table-bordered table-hover" style="width:100%">
+		<thead class="table-primary">
 			<tr>
 
-				<th>Libelle</th>
-				<th>Modifier</th>
-				<th>Supprimer</th>
+				<th class="alignements">Libellé</th>
+				<th style="text-align: center;"># Actions</th>
 			</tr>
 		</thead>
 		<tbody>
+		{% set i = 1 %}
 			{% for commune in communes %}
+
 				<tr>
 
 					<td>{{ commune.libelle }}</td>
-					<td>
-						
-						<a href="{{ path('app_commune_edit', {'id': commune.id}) }}">Modifier</a>
+					<td class="alignements">
+							<a href="#" data-value="{{ commune.id }}" data-libelle="{{ commune.libelle }}" data-bs-toggle="modal" data-bs-target="#myModal" id="communeid">
+								<img src="{{ asset('img/s_cancel.png') }}" title="Supprimer">
+								Supprimer
+							</a>
+						&nbsp;
+							<a href="{{ path('app_commune_edit', {'id': commune.id}) }}">
+								<img src="{{ asset('img/b_edit.png') }}" title="Modifier"> Modifier
+							</a>
 					</td>
-					<td>
-						<form method="post" action="{{ path('app_commune_delete', {'id': commune.id}) }}" onsubmit="return confirm('Voulez-vous supprimer?');">
-							<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ commune.id) }}">
+				</tr>
 
-							<button class="btn">
-								<span style="font-size: 1em; color: red;">
-									<i class="fas fa-trash-alt"></i>
-								</span>
-                                supp
-							</button>
-						</form>
-					</td>
-				</tr>
-			{% else %}
-				<tr>
-					<td colspan="3">Aucune donnée trouvée</td>
-				</tr>
+
 			{% endfor %}
 		</tbody>
 	</table>
 
 	
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+
+	<script src="{{ asset('js/elearning.js') }}" ></script>
+
+	<script type="application/javascript">
+
+		$(document).ready(function() {
+
+			var links = document.querySelectorAll('#communeid');
+			afficheModal(links);
+			$("#my-form").submit(function(event)
+			{
+				event.preventDefault(); // Empêcher l'envoi du formulaire
+				//console.log($("#my-form").serialize());
+				// Récupérer tous les liens du tableau
+
+				var url       = "{{ path('app_commune_delete') }}";
+				var formData  = $("#my-form").serialize(); // Récupérer les données du formulaire sous forme de chaîne de requête
+				var urlretour = "{{ path('app_commune_index') }}";
+
+				supprimeData(url,formData,urlretour);
+
+			});
+		});
+	</script>
+
 {% endblock %}

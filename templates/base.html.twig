@@ -10,28 +10,98 @@
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
 
+            <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+            <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.bootstrap5.min.css">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+
+            {{ encore_entry_script_tags('app') }}
         {% endblock %}
 
        
     </head>
     <body>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <p class="color-vert"></p>
+        <header>
+            <div class="container-fluid color-vert">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="">Liorm</p>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-        <div class="container">
-            <div class="row">
-              <div class="col-md-12">
-                <p class="color-vert">{% block body %}{% endblock %}</p>
-               </div>
+        </header>
+        <nav class="container-fluid navbar navbar-expand-sm bg-dark navbar-dark">
+            <div class="container">
+
+                    <a class="navbar-brand" href="#">E-Learning</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Accueil</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Inscription</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path("app_stagiaire_index") }}">Stagiaire</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Paramètres</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="{{ path("app_commune_index") }}">Commune</a></li>
+                                    <li><a class="dropdown-item" href="#">Année</a></li>
+                                    <li><a class="dropdown-item" href="#">Coefficient</a></li>
+                                    <li><a class="dropdown-item" href="#">Matière</a></li>
+                                    <li><a class="dropdown-item" href="#">Section</a></li>
+                                    <li><a class="dropdown-item" href="#">Enseignant</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+
             </div>
-        </div>
+        </nav>
+        <section class="top-50">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 col-lg-12">
+                        <div class="card corps">
+                            <div class="card-header text-gras"><h1>E-Learning</h1></div>
+                            <div class="card-body">{% block body %}{% endblock %}</div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+        <footer>
+            <section></section>
+        </footer>
+
+
+
 
         {% block javascripts %}
-        {{ encore_entry_script_tags('app') }}
+
+            <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+            <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+            <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+            <script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
+            <script src="https://cdn.datatables.net/responsive/2.4.1/js/responsive.bootstrap5.min.js"></script>
+
+            <script type="application/javascript">
+                $(document).ready(function() {
+                    $('#app_elearning').DataTable({
+                        language: {
+                            url: " http://cdn.datatables.net/plug-ins/1.10.9/i18n/French.json"
+                        }
+                    });
+                } );
+            </script>
+
 
         {% endblock %}
     </body>

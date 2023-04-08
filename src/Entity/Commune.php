@@ -6,16 +6,19 @@ use App\Repository\CommuneRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CommuneRepository::class)]
-class Commune
+#[ORM\ORM\Table("commune")]
+class Commune extends AbstractEntity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 255, nullable: false)]
+    #[Assert\NotBlank(message : 'Veuillez renseigner le champ SVP!')]
     private ?string $libelle = null;
 
     #[ORM\OneToMany(mappedBy: 'commune', targetEntity: Inscription::class)]
@@ -36,7 +39,7 @@ class Commune
         return $this->libelle;
     }
 
-    public function setLibelle(?string $libelle): self
+    public function setLibelle(string $libelle): self
     {
         $this->libelle = $libelle;
 

@@ -8,7 +8,7 @@ use App\Repository\CommuneRepository;
 use App\Traits\ClientIp;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -20,8 +20,10 @@ class CommuneController extends AbstractController
     #[Route('/', name: 'app_commune_index', methods: ['GET'])]
     public function index(CommuneRepository $communeRepository): Response
     {
+        $liste = ["deletedAt" => Null];
+        $limit = 1000;
         return $this->render('commune/index.html.twig', [
-            'communes' => $communeRepository->findAll(),
+            'communes' => $communeRepository->findBy($liste,["libelle"=>"ASC"]),
         ]);
     }
 
@@ -49,10 +51,10 @@ class CommuneController extends AbstractController
                 $this->addFlash('commune', 'Action effectuée avec succès.');
             }
 
-            return $this->redirectToRoute($nextAction);
+            return $this->redirectToRoute($nextAction, [],Response::HTTP_SEE_OTHER);
         }
 
-        $response = new Response(null, $form->isSubmitted() ? 422 : 200);
+        $response = new Response(null, $form->isSubmitted() ? Response::HTTP_UNPROCESSABLE_ENTITY : Response::HTTP_OK);
 
         return $this->render('commune/new.html.twig', [
             'commune' => $commune,
@@ -85,14 +87,19 @@ class CommuneController extends AbstractController
        //     'form' => $form,
        // ]);
   //  }
+//if ($this->isCsrfTokenValid('delete'.$commune->getId(), $request->request->get('_token'))) {
+//$communeRepository->remove($commune, true);
+//}
 
-    #[Route('/{id}', name: 'app_commune_delete', methods: ['POST'])]
-    public function delete(Request $request, Commune $commune, CommuneRepository $communeRepository): Response
+    #[Route('/delete', name: 'app_commune_delete', methods: ['GET', 'POST'])]
+    public function delete(Request $request,CommuneRepository $communeRepository, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$commune->getId(), $request->request->get('_token'))) {
-            $communeRepository->remove($commune, true);
-        }
-
-        return $this->redirectToRoute('app_commune_index', [], Response::HTTP_SEE_OTHER);
+        $id = $request->request->get('delete_value');
+        $LigneUpdate = $communeRepository->find($id);
+        $LigneUpdate->setDeletedAt(new \DateTimeImmutable("now"));
+        $entityManager->flush();
+        return $this->json(["data"=>"Suppression effectuée avec succès"],200,["Content-type"=>"application-json"]);
+      // return $this->redirectToRoute('app_commune_index', [], Response::HTTP_SEE_OTHER);
     }
+
 }

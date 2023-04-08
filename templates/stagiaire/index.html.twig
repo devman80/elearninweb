@@ -1,43 +1,121 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Stagiaire index{% endblock %}
+{% block title %}Liste des Stagiaires{% endblock %}
 
 {% block body %}
-    <h1>Stagiaire index</h1>
+    <h1>Liste des stagiaires</h1>
+    {% for message in app.flashes('stagiaire') %}
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="alert alert-success alert-dismissible">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Success!</strong> {{ message }}
 
-    <table class="table">
-        <thead>
+                </div>
+            </div>
+        </div>
+
+    {% endfor %}
+    <div><a href="{{ path('app_stagiaire_new') }}" class="btn btn-outline-primary btns" data-turbo="true"><i class="fa-solid fa-bookmark"></i>&nbsp;&nbsp;Nouveau</a></div>
+    <!-- The Modal -->
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header btn btn-danger">
+                    <h4 class="modal-title">Suppression !</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body" id="masupp">
+                    Voulez-vous supprimer cet enregistrement ?
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+
+                    <form id="my-form">
+                        <input type="hidden" class="delete_value" id="delete_value" name="delete_value">
+                        <button type="submit" class="btn btn-success" id="delete_values" data-bs-dismiss="modal">
+                            Suppression
+                        </button>
+                    </form>
+
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fermer</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- fin modal -->
+
+    <table  id="app_elearning" class="table table-striped dt-responsive nowrap table-bordered table-hover" style="width:100%">
+        <thead class="table-primary">
             <tr>
-                <th>Id</th>
                 <th>Nom</th>
                 <th>Prenom</th>
                 <th>Sexe</th>
-                <th>Dateinscrit</th>
-                <th>BrochureFilename</th>
-                <th>actions</th>
+                <th>Date D'inscription</th>
+                <th>Brochure</th>
+                <th classe="alignements"># Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for stagiaire in stagiaires %}
             <tr>
-                <td>{{ stagiaire.id }}</td>
                 <td>{{ stagiaire.nom }}</td>
                 <td>{{ stagiaire.prenom }}</td>
                 <td>{{ stagiaire.sexe }}</td>
-                <td>{{ stagiaire.dateinscrit ? stagiaire.dateinscrit|date('Y-m-d') : '' }}</td>
+                <td>{{ stagiaire.dateinscrit ? stagiaire.dateinscrit|date('d-m-Y') : '' }}</td>
                 <td>{{ stagiaire.brochureFilename }}</td>
-                <td>
-                    <a href="{{ path('app_stagiaire_show', {'id': stagiaire.id}) }}">show</a>
-                    <a href="{{ path('app_stagiaire_edit', {'id': stagiaire.id}) }}">edit</a>
+
+                <td class="alignements">
+                    <a href="#" data-value="{{ stagiaire.id }}" data-libelle="{{ stagiaire.nom }}" data-bs-toggle="modal" data-bs-target="#myModal" id="stagiaireid">
+                        <img src="{{ asset('img/s_cancel.png') }}" title="Supprimer">
+                        Supprimer
+                    </a>
+                    &nbsp;
+                    <a href="{{ path('app_stagiaire_edit', {'id': stagiaire.id}) }}">
+                        <img src="{{ asset('img/b_edit.png') }}" title="Modifier"> Modifier
+                    </a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="7">no records found</td>
+                <td colspan="7">Pas de données</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_stagiaire_new') }}">Create new</a>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('js/elearning.js') }}" ></script>
+
+    <script type="application/javascript">
+
+        $(document).ready(function() {
+
+            var links = document.querySelectorAll('#stagiaireid');
+            afficheModal(links);
+            $("#my-form").submit(function(event)
+            {
+                event.preventDefault(); // Empêcher l'envoi du formulaire
+
+                // Récupérer tous les liens du tableau
+
+                var url       = "{{ path('app_stagiaire_delete') }}";
+                var formData  = $("#my-form").serialize(); // Récupérer les données du formulaire sous forme de chaîne de requête
+                var urlretour = "{{ path('app_stagiaire_index') }}";
+
+                supprimeData(url,formData,urlretour);
+
+            });
+        });
+    </script>
+
 {% endblock %}

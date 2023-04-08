@@ -12,7 +12,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 
 #[ORM\Entity(repositoryClass: InscriptionRepository::class)]
-class Inscription
+class Inscription extends AbstractEntity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
