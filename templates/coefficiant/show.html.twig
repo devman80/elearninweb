@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Coefficiant{% endblock %}
+
+{% block body %}
+    <h1>Coefficiant</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ coefficiant.id }}</td>
+            </tr>
+            <tr>
+                <th>Libelle</th>
+                <td>{{ coefficiant.libelle }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_coefficiant_index') }}">back to list</a>
+
+    <a href="{{ path('app_coefficiant_edit', {'id': coefficiant.id}) }}">edit</a>
+
+    {{ include('coefficiant/_delete_form.html.twig') }}
+{% endblock %}

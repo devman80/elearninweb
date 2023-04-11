@@ -1,21 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Gestion commune
-{% endblock %}
+{% block title %}Gestion Coefficiant{% endblock %}
 
 {% block body %}
-
 <section class="bd-style  container">
 	<div class="row ">
 		<div class="col-md-6">
 			<h1 class="text-gras">
-				Gestion de commune
+				Gestion des années academiques
 			</h1>
 
 		</div>
 
 	</div>
-	{{ include('commune/_form.html.twig') }}
+	{{ include('coefficiant/_form.html.twig') }}
 </section>
-
 {% endblock %}

@@ -4,64 +4,122 @@
 {% endblock %}
 
 {% block body %}
-	<div class="card shadow mb-4">
-		<div class="card-header py-3">
-			<h6 class="m-0 font-weight-bold text-primary">Module
-			</div>
-			<div class="card-header py-3">
+	<h1>Liste des modules</h1>
+	{% for message in app.flashes('module') %}
+		<div class="row">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<div class="alert alert-success alert-dismissible">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<strong>Success!</strong>
+					{{ message }}
 
-				<a href="{{ path('app_module_new') }}">Nouveau</a>
-			</h6>
+				</div>
+			</div>
 		</div>
 
+	{% endfor %}
+	<div>
+		<a href="{{ path('app_module_new') }}" class="btn btn-outline-primary btns" data-turbo="true">
+			<i class="fa-solid fa-bookmark"></i>&nbsp;&nbsp;Nouveau</a>
+	</div>
+	<!-- The Modal -->
+	<div class="modal fade" id="myModal">
+		<div class="modal-dialog">
+			<div
+				class="modal-content">
 
-		<div class="card-body">
-			<div class="table-responsive">
-				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-					<thead>
-						<tr>
+				<!-- Modal Header -->
+				<div class="modal-header btn btn-danger">
+					<h4 class="modal-title">Suppression !</h4>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+				</div>
 
-							<th>Matière</th>
-							<th>Libelle</th>
-							<th>Volume horaire</th>
+				<!-- Modal body -->
+				<div class="modal-body" id="masupp">
+					Voulez-vous supprimer cet enregistrement ?
+				</div>
 
-							<th>actions</th>
-							<th>Supprimer</th>
-						</tr>
-					</thead>
-                    
-					<tbody>
-						{% for module in modules %}
-							<tr>
+				<!-- Modal footer -->
+				<div class="modal-footer">
 
-								<td> {% if module.matiere is not empty %} {{ module.matiere.libelle }} {% else %} {% endif %}  </td>
-								<td>{{ module.libelle }}</td>
-								<td>{{ module.volumeheure }}</td>
+					<form id="my-form">
+						<input type="hidden" class="delete_value" id="delete_value" name="delete_value">
+						<button type="submit" class="btn btn-success" id="delete_values" data-bs-dismiss="modal">
+							Suppression
+						</button>
+					</form>
 
-								<td>
-									<a href="{{ path('app_module_edit', {'id': module.id}) }}">Modifier</a>
-								</td>
-                                	<td>
-						<form method="post" action="{{ path('app_module_delete', {'id': module.id}) }}" onsubmit="return confirm('Voulez-vous supprimer?');">
-							<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ module.id) }}">
+					<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fermer</button>
+				</div>
 
-							<button class="btn">
-								<span style="font-size: 1em; color: red;">
-									<i class="fas fa-trash-alt"></i>
-								</span>
-                                supp
-							</button>
-						</form>
+			</div>
+		</div>
+	</div>
+	<!-- fin modal -->
+
+	<table id="app_elearning" class="table table-striped dt-responsive nowrap table-bordered table-hover" style="width:100%">
+		<thead class="table-primary">
+			<tr>
+
+				<th>Matière</th>
+				<th>Libelle</th>
+				<th>Volume horaire</th>
+
+				<th style="text-align: center;">actions</th>
+
+			</tr>
+		</thead>
+
+		<tbody>
+			{% for module in modules %}
+				<tr>
+
+					<td>
+						{% if module.matiere is not empty %}
+							{{ module.matiere.libelle }}
+							{% else %}
+						{% endif %}
 					</td>
-							</tr>
-						{% else %}
-							<tr>
-								<td colspan="12">Aucune donnée</td>
-							</tr>
-						{% endfor %}
-					</tbody>
-				</table>
+					<td>{{ module.libelle }}</td>
+					<td>{{ module.volumeheure }}</td>
 
-			</div>
-		</div>
-	{% endblock %}
+					<td class="alignements">
+						<a href="#" data-value="{{ module.id }}" data-libelle="{{ module.libelle }}" data-bs-toggle="modal" data-bs-target="#myModal" id="moduleid">
+							<img src="{{ asset('img/s_cancel.png') }}" title="Supprimer">
+							Supprimer
+						</a>
+						&nbsp;
+						<a href="{{ path('app_module_edit', {'id': module.id}) }}">
+							<img src="{{ asset('img/b_edit.png') }}" title="Modifier">
+							Modifier
+						</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="12">Aucune donnée</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+</div></div>{% endblock %}{% block javascripts %}{{ parent() }}<script src="{{ asset('js/elearning.js') }}"></script><script type="application/javascript">
+
+$(document).ready(function () {
+
+var links = document.querySelectorAll('#moduleid');
+afficheModal(links);
+$("#my-form").submit(function (event) {
+event.preventDefault();
+// Empêcher l'envoi du formulaire
+// console.log($("#my-form").serialize());
+// Récupérer tous les liens du tableau
+
+var url = "{{ path('app_module_delete') }}";
+var formData = $("#my-form").serialize(); // Récupérer les données du formulaire sous forme de chaîne de requête
+var urlretour = "{{ path('app_module_index') }}";
+
+supprimeData(url, formData, urlretour);
+
+});
+});</script>{% endblock %}

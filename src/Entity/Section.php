@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SectionRepository::class)]
-class Section
+class Section extends AbstractEntity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -71,5 +71,8 @@ class Section
         }
 
         return $this;
+    }
+    public function __toString() {
+        return $this->libelle;
     }
 }

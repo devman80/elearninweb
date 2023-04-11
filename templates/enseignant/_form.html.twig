@@ -2,54 +2,69 @@
 <div class="my-custom-class-for-errors">
 	{{ form_errors(form) }}
 	{% for message in app.flashes('enseignant') %}
-		<div class="primary">
-			{{ message }}
+		<div class="row">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<div class="alert alert-success alert-dismissible">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<strong>Succès!</strong>
+					{{ message }}
+
+				</div>
+			</div>
 		</div>
 	{% endfor %}
 
 </div>
 
+
 <div class="row">
-	<div class="row">
-		<div class="col-md-3">
-			{{ form_row(form.nom, {'label':'Nom ', 'attr':{'class':'form-control'}}) }}
-		</div>
-		<div class="col-md-3">
-			{{ form_row(form.prenom, {'label':'Prenoms ', 'attr':{'class':'form-control'}}) }}
-		</div>
-		<div class="col-md-3">
-			{{ form_row(form.contact, {'label':'Contact ', 'attr':{'class':'form-control'}}) }}
-		</div>
-		<div class="col-md-3">
-			{{ form_row(form.sexe, {'label':'Sexe ', 'attr':{'class':'form-control'}}) }}
-		</div>
+
+	<div class="col-md-6 bg-success-subtle grasmini">
+		{{ form_row(form.nom, {'label':'Nom ', 'attr':{'class':'form-control'}}) }}
 	</div>
-
-	<div class="row">
-		<div class="col-md-3">
-			{{ form_row(form.facebook, {'label':'Facebook ', 'attr':{'class':'form-control'}}) }}
-		</div>
-		<div class="col-md-3">
-			{{ form_row(form.twitter, {'label':'Twitter ', 'attr':{'class':'form-control'}}) }}
-		</div>
-		<div class="col-md-3">
-			{{ form_row(form.instagram, {'label':'Instagram ', 'attr':{'class':'form-control'}}) }}
-		</div>
-		<div class="col-md-3">
-			{{ form_row(form.brochure, {'label':'Photo ', 'attr':{'class':'form-control'}}) }}
-		</div>
+	<div class="col-md-6 bg-success-subtle grasmini">
+		{{ form_row(form.prenom, {'label':'Prenoms ', 'attr':{'class':'form-control'}}) }}
 	</div>
-
-
-	<div class="row">
-		<div class="col-md-2">{{ form_row(form.save, {'label':'Valider ','attr':{'value':'save'}}) }}</div>
-		<div class="col-md-2">
-			{{ form_row(form.saveAndAdd, {'label':'Valider et continuer  ','attr':{'value':'save-and-add'}}) }}
-		</div>
-
-		<div class="col-md-2">
-			<a href="{{ path('app_enseignant_index') }}" class="btn btn-success">Afficher la liste</a>
-		</div>
+	<div class="col-md-6 bg-success-subtle grasmini">
+		{{ form_row(form.contact, {'label':'Contact ', 'attr':{'class':'form-control'}}) }}
 	</div>
+	<div class="col-md-6 bg-success-subtle grasmini">
+		{{ form_row(form.sexe, {'label':'Sexe ', 'attr':{'class':'form-control'}}) }}
+	</div>
+</div>
 
-	{{ form_end(form) }}
+<div class="row">
+	<div class="col-md-6 bg-success-subtle grasmini">
+		{{ form_row(form.facebook, {'label':'Facebook ', 'attr':{'class':'form-control'}}) }}
+	</div>
+	<div class="col-md-6 bg-success-subtle grasmini">
+		{{ form_row(form.twitter, {'label':'Twitter ', 'attr':{'class':'form-control'}}) }}
+	</div>
+	<div class="col-md-6 bg-success-subtle grasmini">
+		{{ form_row(form.instagram, {'label':'Instagram ', 'attr':{'class':'form-control'}}) }}
+	</div>
+	<div class="col-md-6 bg-success-subtle grasmini">
+		{{ form_row(form.brochure, {'label':'Photo ', 'attr':{'class':'form-control'}}) }}
+	</div>
+</div>
+
+
+<div class="col-md-3">
+	&nbsp;
+</div>
+<div class="row">
+	<div class="col-md-3">
+		{{ form_row(form.save, {'label':'Valider ','attr':{'value':'save','class':'btn btnvalider'}}) }}
+	</div>
+	<div class="col-md-3">
+		{{ form_row(form.saveAndAdd, {'label':'Valider et continuer  ','attr':{'value':'save-and-add','class':'btn btnsave'}}) }}
+	</div>
+	<div class="col-md-3">
+
+		<a href="{{ path('app_enseignant_index') }}" class="btn btnliste">Afficher la liste</a>
+
+	</div>
+</div>
+
+
+{{ form_end(form) }}

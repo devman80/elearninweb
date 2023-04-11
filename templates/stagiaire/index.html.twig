@@ -69,7 +69,17 @@
                 <td>{{ stagiaire.prenom }}</td>
                 <td>{{ stagiaire.sexe }}</td>
                 <td>{{ stagiaire.dateinscrit ? stagiaire.dateinscrit|date('d-m-Y') : '' }}</td>
-                <td>{{ stagiaire.brochureFilename }}</td>
+                <td>
+                
+									{% if stagiaire.brochureFilename is not empty %}
+
+										<img src="{{ asset('uploads/brochures/'~stagiaire.brochureFilename )}}" style="max-width: 30%;  max-height: 40%"/>
+
+
+										{% else %}Aucune photo
+									{% endif %}
+                
+                </td>
 
                 <td class="alignements">
                     <a href="#" data-value="{{ stagiaire.id }}" data-libelle="{{ stagiaire.nom }}" data-bs-toggle="modal" data-bs-target="#myModal" id="stagiaireid">

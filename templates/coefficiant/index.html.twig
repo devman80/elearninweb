@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des sections
+{% block title %}Liste des coefficiants
 {% endblock %}
 
 {% block body %}
-	<h1>Liste des sections</h1>
-    {% for message in app.flashes('section') %}
+	<h1>Liste des coefficiants</h1>
+    {% for message in app.flashes('coefficiant') %}
 		 <div class="row">
 			 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				 <div class="alert alert-success alert-dismissible">
@@ -17,7 +17,7 @@
 		 </div>
 
             {% endfor %}
-<div><a href="{{ path('app_section_new') }}" class="btn btn-outline-primary btns" data-turbo="true"><i class="fa-solid fa-bookmark"></i>&nbsp;&nbsp;Nouveau</a></div>
+<div><a href="{{ path('app_coefficiant_new') }}" class="btn btn-outline-primary btns" data-turbo="true"><i class="fa-solid fa-bookmark"></i>&nbsp;&nbsp;Nouveau</a></div>
 	<!-- The Modal -->
 	<div class="modal fade" id="myModal">
 		<div class="modal-dialog">
@@ -62,18 +62,18 @@
 		</thead>
 		<tbody>
 		{% set i = 1 %}
-			{% for section in sections %}
+			{% for coefficiant in coefficiants %}
 
 				<tr>
 
-					<td>{{ section.libelle }}</td>
+					<td>{{ coefficiant.libelle }}</td>
 					<td class="alignements">
-							<a href="#" data-value="{{ section.id }}" data-libelle="{{ section.libelle }}" data-bs-toggle="modal" data-bs-target="#myModal" id="sectionid">
+							<a href="#" data-value="{{ coefficiant.id }}" data-libelle="{{ coefficiant.libelle }}" data-bs-toggle="modal" data-bs-target="#myModal" id="coefficiantid">
 								<img src="{{ asset('img/s_cancel.png') }}" title="Supprimer">
 								Supprimer
 							</a>
 						&nbsp;
-							<a href="{{ path('app_section_edit', {'id': section.id}) }}">
+							<a href="{{ path('app_coefficiant_edit', {'id': coefficiant.id}) }}">
 								<img src="{{ asset('img/b_edit.png') }}" title="Modifier"> Modifier
 							</a>
 					</td>
@@ -95,7 +95,7 @@
 
 		$(document).ready(function() {
 
-			var links = document.querySelectorAll('#sectionid');
+			var links = document.querySelectorAll('#coefficiantid');
 			afficheModal(links);
 			$("#my-form").submit(function(event)
 			{
@@ -103,9 +103,9 @@
 				//console.log($("#my-form").serialize());
 				// Récupérer tous les liens du tableau
 
-				var url       = "{{ path('app_section_delete') }}";
+				var url       = "{{ path('app_coefficiant_delete') }}";
 				var formData  = $("#my-form").serialize(); // Récupérer les données du formulaire sous forme de chaîne de requête
-				var urlretour = "{{ path('app_section_index') }}";
+				var urlretour = "{{ path('app_coefficiant_index') }}";
 
 				supprimeData(url,formData,urlretour);
 

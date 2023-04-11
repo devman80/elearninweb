@@ -8,6 +8,7 @@ use App\Repository\ModuleRepository;
 use App\Traits\ClientIp;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -19,8 +20,10 @@ class ModuleController extends AbstractController
     #[Route('/', name: 'app_module_index', methods: ['GET'])]
     public function index(ModuleRepository $moduleRepository): Response
     {
+        $liste = ["deletedAt" => Null];
+        $limit = 1000;
         return $this->render('module/index.html.twig', [
-            'modules' => $moduleRepository->findAll(),
+            'modules' => $moduleRepository->findBy($liste,["libelle"=>"ASC"]),
         ]);
     }
 
@@ -31,16 +34,26 @@ class ModuleController extends AbstractController
     {
         $type = $module === null ? 'new' : 'edit';
         $module = $module === null ? new Module() : $module;
+        $user = $this->getUser();
         $form = $this->createForm(ModuleType::class, $module);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             if ($type === 'new') {
+                $module->setCreatedFromIp($this->GetIp()); // remplacement de la function par le trait
+              //  ->setCreatedBy($user);
+              $module->setCreatedAt(new \DateTimeImmutable("now"));
+
                 $moduleRepository->save($module, true);
 
                 ;
             } else {
+                $module->setUpdatedFromIp($this->GetIp()) // remplacement de la function par le trait
+              //  ->setUpdatedBy($user)
+        ;
+        $module->setUpdatedAt(new \DateTimeImmutable("now"));
+
                 $moduleRepository->save($module, true);
             }
             $nextAction = $form->get('saveAndAdd')->isClicked() ? 'app_module_new' : 'app_module_index';
@@ -48,10 +61,10 @@ class ModuleController extends AbstractController
                 $this->addFlash('module', 'Action effectuée avec succès.');
             }
 
-            return $this->redirectToRoute($nextAction);
+            return $this->redirectToRoute($nextAction, [],Response::HTTP_SEE_OTHER);
         }
 
-        $response = new Response(null, $form->isSubmitted() ? 422 : 200);
+        $response = new Response(null, $form->isSubmitted() ? Response::HTTP_UNPROCESSABLE_ENTITY : Response::HTTP_OK);
 
         return $this->render('module/new.html.twig', [
             'module' => $module,
@@ -84,14 +97,22 @@ class ModuleController extends AbstractController
        //     'form' => $form,
        // ]);
   //  }
+//if ($this->isCsrfTokenValid('delete'.$module->getId(), $request->request->get('_token'))) {
+//$moduleRepository->remove($module, true);
+//}
 
-    #[Route('/{id}', name: 'app_module_delete', methods: ['POST'])]
-    public function delete(Request $request, Module $module, ModuleRepository $moduleRepository): Response
+    #[Route('/delete', name: 'app_module_delete', methods: ['GET', 'POST'])]
+    public function delete(Request $request,ModuleRepository $moduleRepository, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$module->getId(), $request->request->get('_token'))) {
-            $moduleRepository->remove($module, true);
-        }
-
-        return $this->redirectToRoute('app_module_index', [], Response::HTTP_SEE_OTHER);
+        $id = $request->request->get('delete_value');
+        $LigneUpdate = $moduleRepository->find($id);
+        $LigneUpdate->setDeletedFromIp($this->GetIp());
+        $user = $this->getUser();
+      //  $LigneUpdate->setDeletedBy($user);
+        $LigneUpdate->setDeletedAt(new \DateTimeImmutable("now"));
+        $entityManager->flush();
+        return $this->json(["data"=>"Suppression effectuée avec succès"],200,["Content-type"=>"application-json"]);
+      // return $this->redirectToRoute('app_module_index', [], Response::HTTP_SEE_OTHER);
     }
+
 }

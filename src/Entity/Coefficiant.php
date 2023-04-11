@@ -6,7 +6,7 @@ use App\Repository\CoefficiantRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CoefficiantRepository::class)]
-class Coefficiant
+class Coefficiant extends AbstractEntity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

@@ -25,7 +25,7 @@ class ModuleType extends AbstractType
             'mapped' => true,
             'query_builder' => function (EntityRepository $er) {
                 return $er->createQueryBuilder('f')
-             //   ->where('f.deletedAt IS NULL')
+                ->where('f.deletedAt IS NULL')
                 ->orderBy('f.libelle', 'DESC');
             },
             'choice_label' => function ($matiere) {

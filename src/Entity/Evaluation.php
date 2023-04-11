@@ -7,7 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: EvaluationRepository::class)]
-class Evaluation
+class Evaluation extends AbstractEntity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

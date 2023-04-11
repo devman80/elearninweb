@@ -34,16 +34,26 @@ class CommuneController extends AbstractController
     {
         $type = $commune === null ? 'new' : 'edit';
         $commune = $commune === null ? new Commune() : $commune;
+        $user = $this->getUser();
         $form = $this->createForm(CommuneType::class, $commune);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             if ($type === 'new') {
+                $commune->setCreatedFromIp($this->GetIp()); // remplacement de la function par le trait
+              //  ->setCreatedBy($user);
+              $commune->setCreatedAt(new \DateTimeImmutable("now"));
+
                 $communeRepository->save($commune, true);
 
                 ;
             } else {
+                $commune->setUpdatedFromIp($this->GetIp()) // remplacement de la function par le trait
+              //  ->setUpdatedBy($user)
+        ;
+              $commune->setUpdatedAt(new \DateTimeImmutable("now"));
+
                 $communeRepository->save($commune, true);
             }
             $nextAction = $form->get('saveAndAdd')->isClicked() ? 'app_commune_new' : 'app_commune_index';
@@ -96,6 +106,9 @@ class CommuneController extends AbstractController
     {
         $id = $request->request->get('delete_value');
         $LigneUpdate = $communeRepository->find($id);
+        $LigneUpdate->setDeletedFromIp($this->GetIp());
+        $user = $this->getUser();
+      //  $LigneUpdate->setDeletedBy($user);
         $LigneUpdate->setDeletedAt(new \DateTimeImmutable("now"));
         $entityManager->flush();
         return $this->json(["data"=>"Suppression effectuée avec succès"],200,["Content-type"=>"application-json"]);

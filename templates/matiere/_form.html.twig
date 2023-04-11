@@ -1,33 +1,37 @@
 {{ form_start(form) }}
-   <div class="my-custom-class-for-errors">
-            {{ form_errors(form) }}
-            {% for message in app.flashes('matiere') %}
-                <div class="primary">
-                    {{ message }}
-                </div>
-            {% endfor %}
-   
-        </div>
+<div class="my-custom-class-for-errors">
+	{{ form_errors(form) }}
+	{% for message in app.flashes('matiere') %}
+		<div class="row">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<div class="alert alert-success alert-dismissible">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<strong>Succès!</strong>
+					{{ message }}
 
-<div class="row">
-	<div class="col-md-3">
-		{{ form_row(form.code, {'label':'Code ', 'attr':{'class':'form-control'}}) }}
-	</div>
-	<div class="col-md-3">
-		{{ form_row(form.libelle, {'label':'Matiere ', 'attr':{'class':'form-control'}}) }}
-	</div>
+				</div>
+			</div>
+		</div>
+	{% endfor %}
 
 </div>
 
 <div class="row">
-	<div class="col-md-2">{{ form_row(form.save, {'label':'Valider ','attr':{'value':'save'}}) }}</div>
-	<div class="col-md-2">
-		{{ form_row(form.saveAndAdd, {'label':'Valider et continuer  ','attr':{'value':'save-and-add'}}) }}
-	</div>
+	<div class="col-md-6 bg-success-subtle grasmini">
+		{{ form_row(form.code, {'label':'Code : ', 'attr':{'class':'form-control'}}) }}
 
-	<div class="col-md-2">
-		<a href="{{ path('app_commune_index') }}" class="btn btn-success">Afficher la liste</a>
+		{{ form_row(form.libelle, {'label':'Matière : ', 'attr':{'class':'form-control'}}) }}
+	</div>
+	<div class="col-md-3">
+		&nbsp;
+	</div>
+	<div class="col-md-3">
+		{{ form_row(form.save, {'label':'Valider ','attr':{'value':'save','class':'btn btnvalider'}}) }}
+		{{ form_row(form.saveAndAdd, {'label':'Valider et continuer  ','attr':{'value':'save-and-add','class':'btn btnsave'}}) }}
+		<a href="{{ path('app_matiere_index') }}" class="btn btnliste">Afficher la liste</a>
+
 	</div>
 </div>
+
 
 {{ form_end(form) }}

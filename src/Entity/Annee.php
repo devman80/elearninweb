@@ -6,7 +6,7 @@ use App\Repository\AnneeRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AnneeRepository::class)]
-class Annee
+class Annee  extends AbstractEntity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -31,5 +31,9 @@ class Annee
         $this->libelle = $libelle;
 
         return $this;
+    }
+
+    public function __toString() {
+        return $this->libelle;
     }
 }

@@ -2,10 +2,11 @@
 
 namespace App\Controller;
 
+use App\Traits\ClientIp;
 use App\Entity\Enseignant;
 use App\Form\EnseignantType;
 use App\Repository\EnseignantRepository;
-use App\Traits\ClientIp;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,13 +17,15 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 #[Route('/enseignant')]
 class EnseignantController extends AbstractController
 {
-use ClientIp;
+    use ClientIp;
 
     #[Route('/', name: 'app_enseignant_index', methods: ['GET'])]
     public function index(EnseignantRepository $enseignantRepository): Response
     {
+        $liste = ["deletedAt" => Null];
+        $limit = 1000;
         return $this->render('enseignant/index.html.twig', [
-            'enseignants' => $enseignantRepository->findAll(),
+            'enseignants' => $enseignantRepository->findBy($liste,["nom"=>"ASC"]),
         ]);
     }
 
@@ -34,25 +37,30 @@ use ClientIp;
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            
-$brochureFile = $form->get('brochure')->getData();
-if ($brochureFile) {
-    $originalFilename = pathinfo($brochureFile->getClientOriginalName(), PATHINFO_FILENAME);
-    // this is needed to safely include the file name as part of the URL
-    $safeFilename = $slugger->slug($originalFilename);
-    $newFilename = $safeFilename . '-' . uniqid() . '.' . $brochureFile->guessExtension();
 
-    // Move the file to the directory where brochures are stored
-    try {
-        $brochureFile->move(
-                $this->getParameter('brochures_directory'),
-                $newFilename
-        );
-    } catch (FileException $e) {
-        // ... handle exception if something happens during file upload
-    }
-    $enseignant->setBrochureFilename($newFilename);
-};
+            $brochureFile = $form->get('brochure')->getData();
+            if ($brochureFile) {
+                $originalFilename = pathinfo($brochureFile->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $brochureFile->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $brochureFile->move(
+                        $this->getParameter('brochures_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+                $enseignant->setCreatedFromIp($this->GetIp()); // remplacement de la function par le trait
+                //  ->setCreatedBy($user);
+                $enseignant->setCreatedAt(new \DateTimeImmutable("now"));
+                $enseignant->setBrochureFilename($newFilename);
+            };
+
+
             $enseignantRepository->save($enseignant, true);
 
             $nextAction = $form->get('saveAndAdd')->isClicked() ? 'app_enseignant_new' : 'app_enseignant_index';
@@ -86,25 +94,28 @@ if ($brochureFile) {
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            
-$brochureFile = $form->get('brochure')->getData();
-if ($brochureFile) {
-    $originalFilename = pathinfo($brochureFile->getClientOriginalName(), PATHINFO_FILENAME);
-    // this is needed to safely include the file name as part of the URL
-    $safeFilename = $slugger->slug($originalFilename);
-    $newFilename = $safeFilename . '-' . uniqid() . '.' . $brochureFile->guessExtension();
 
-    // Move the file to the directory where brochures are stored
-    try {
-        $brochureFile->move(
-                $this->getParameter('brochures_directory'),
-                $newFilename
-        );
-    } catch (FileException $e) {
-        // ... handle exception if something happens during file upload
-    }
-    $enseignant->setBrochureFilename($newFilename);
-};
+            $brochureFile = $form->get('brochure')->getData();
+            if ($brochureFile) {
+                $originalFilename = pathinfo($brochureFile->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $brochureFile->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $brochureFile->move(
+                        $this->getParameter('brochures_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+                $enseignant->setUpdatedFromIp($this->GetIp()); // remplacement de la function par le trait
+                //  ->setCreatedBy($user);
+                $enseignant->setUpdatedAt(new \DateTimeImmutable("now"));
+                $enseignant->setBrochureFilename($newFilename);
+            };
             $enseignantRepository->save($enseignant, true);
 
             return $this->redirectToRoute('app_enseignant_index', [], Response::HTTP_SEE_OTHER);
@@ -116,13 +127,17 @@ if ($brochureFile) {
         ]);
     }
 
-    #[Route('/{id}', name: 'app_enseignant_delete', methods: ['POST'])]
-    public function delete(Request $request, Enseignant $enseignant, EnseignantRepository $enseignantRepository): Response
+    #[Route('/delete', name: 'app_enseignant_delete', methods: ['GET', 'POST'])]
+    public function delete(Request $request,EnseignantRepository $enseignantRepository, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$enseignant->getId(), $request->request->get('_token'))) {
-            $enseignantRepository->remove($enseignant, true);
-        }
-
-        return $this->redirectToRoute('app_enseignant_index', [], Response::HTTP_SEE_OTHER);
+        $id = $request->request->get('delete_value');
+        $LigneUpdate = $enseignantRepository->find($id);
+        $LigneUpdate->setDeletedFromIp($this->GetIp());
+        $user = $this->getUser();
+      //  $LigneUpdate->setDeletedBy($user);
+        $LigneUpdate->setDeletedAt(new \DateTimeImmutable("now"));
+        $entityManager->flush();
+        return $this->json(["data"=>"Suppression effectuée avec succès"],200,["Content-type"=>"application-json"]);
+      // return $this->redirectToRoute('app_enseignant_index', [], Response::HTTP_SEE_OTHER);
     }
 }

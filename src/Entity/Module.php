@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ModuleRepository::class)]
-class Module
+class Module extends AbstractEntity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
