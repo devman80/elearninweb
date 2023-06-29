@@ -1,0 +1,101 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block body %}
+    {% for flash_error in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+    {% endfor %}
+
+    <h1 class="bold">INSCRIPTION</h1>
+
+    {{ form_start(registrationForm) }}
+    <div class="my-custom-class-for-errors">
+        {{ form_errors(registrationForm) }}
+        {% for message in app.flashes('echec') %}
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="alert alert-success alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>Echec!</strong> {{ message }}
+
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+    </div>
+    <fieldset>
+
+        <div class="card mb-3">
+            <div class="card-header">Identification</div>
+            <div class="card-body">
+                {{ form_row(registrationForm.email) }}
+                {{ form_row(registrationForm.password) }}
+                {{ form_row(registrationForm.plainPassword, {
+                    label: 'Confirmation mot de passe :'
+                }) }}
+            </div>
+        </div>
+        <div class="card mb-3">
+            <div class="card-header">Donn&eacute;es personnelles</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">{{ form_row(registrationForm.nom) }}</div>
+                    <div class="col-md-6">{{ form_row(registrationForm.prenom) }}</div>
+                    <div class="col-md-3">{{ form_row(registrationForm.sexe) }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">{{ form_row(registrationForm.brochureFilename) }}</div>
+                    <div class="col-md-3">{{ form_row(registrationForm.telephone) }}</div>
+                    <div class="col-md-3">{{ form_row(registrationForm.contact) }}</div>
+                    <div class="col-md-3">{{ form_row(registrationForm.statutmatri) }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">{{ form_row(registrationForm.datenaissance) }}</div>
+                    <div class="col-md-3">{{ form_row(registrationForm.lieuresidence, {'label':'Lieu de residence'}) }}</div>
+                    <div class="col-md-3">{{ form_row(registrationForm.paysnaiss) }}</div>
+                    <div class="col-md-3">{{ form_row(registrationForm.commune) }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        {{ form_row(registrationForm.paysvit) }}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="card mb-3">
+            <div class="card-header">Documents personnels</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">{{ form_row(registrationForm.typepiece) }}</div>
+                    <div class="col-md-3">{{ form_row(registrationForm.numpiece) }}</div>
+                    <div class="col-md-3">{{ form_row(registrationForm.cniFilename) }}</div>
+                    <div class="col-md-3">{{ form_row(registrationForm.cniFilenamerecto) }}</div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-4">{{ form_row(registrationForm.cmu, {'label':'N° CMU'}) }}</div>
+                    <div class="col-md-4">{{ form_row(registrationForm.certificatFilename) }}</div>
+                    <div class="col-md-4">{{ form_row(registrationForm.extraitFilename) }}</div>
+                </div>
+                <div class="row">
+
+                    <div class="col-md-3">{{ form_row(registrationForm.typehandicap) }}</div>
+                    <div class="col-md-3">{{ form_row(registrationForm.handicap) }}</div>
+                    <div class="col-md-3">{{ form_row(registrationForm.codepostal) }}</div>
+                    <div class="col-md-3">{{ form_row(registrationForm.section) }}</div>
+                </div>
+
+            </div>
+        </div>
+
+    </fieldset>
+    <div class="col-md-3">{{ form_row(registrationForm.agreeTerms) }}</div>
+
+
+
+    <button type="submit" class="btn btn-primary">Valider l'inscription</button>
+    {{ form_end(registrationForm) }}
+{% endblock %}

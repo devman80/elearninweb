@@ -63,4 +63,22 @@ class MatiereRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+    
+    
+       public function findLessonsByMatiere(DispenserRepository  $search): array
+    {
+        $query = $this->createQueryBuilder('p')
+            ->select('p', 'c')
+            ->join('p.dispensers', 'c');
+
+        if (!empty($search->p)) {
+            $query = $query
+            ->andWhere('p.id = :p')
+            ->orderBy('c.id', 'DESC')
+            ->setMaxResults()
+            ->setParameter('p', $search->p);
+        }
+
+        return $query->getQuery()->getResult();
+    }
 }

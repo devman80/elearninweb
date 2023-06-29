@@ -7,12 +7,13 @@ use App\Repository\UserRepository;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use App\Entity\AbstractEntity;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[UniqueEntity(fields:"email", message:"Ce mail a déjà été utilisé pour ouvrir un compte")]
-
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+#[UniqueEntity(fields: ['email'], message: 'Ce mail a déjà été utilisé pour ouvrir un compte')]
+class User extends AbstractEntity implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -37,6 +38,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $plainPassword;
 
+    #[Assert\Regex(
+        pattern: '/^[0-9a-zA-Z-\s\'ÀÁÂÃÄÅàáâãäåÒÓÔÕÖØòóôõöøÈÉÊËèéêëÇçÌÍÎÏìíîïÙÚÛÜùúûüÿÑñ]+$/',
+        htmlPattern: '^[a-zA-Z]+$',
+        message: 'Your name cannot contain a number',
+    )]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $nom = null;
 
@@ -48,6 +54,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 128, nullable: true)]
     private ?string $contact = null;
+
+    #[ORM\Column(type: 'boolean')]
+    private $isVerified = false;
+
+ 
 
     public function getId(): ?int
     {
@@ -88,7 +99,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return array_unique($roles);
     }
 
-    public function setRoles(array $roles): self
+    public function setRoles(?array $roles): self
     {
         $this->roles = $roles;
 
@@ -103,7 +114,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->password;
     }
 
-    public function setPassword(string $password): self
+    public function setPassword(?string $password): self
     {
         $this->password = $password;
 
@@ -174,4 +185,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(?bool $isVerified): self
+    {
+        $this->isVerified = $isVerified;
+
+        return $this;
+    }
+    
+       public function isDeleted(): bool
+    {
+        return $this->deletedAt !== null;  
+    }
+
+      
+
+     
+    
 }

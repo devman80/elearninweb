@@ -1,0 +1,76 @@
+@import "~bootstrap/scss/bootstrap";
+body{
+  background-color: lightgrey;
+}
+.corps{
+  background-color:white;
+}
+.color-vert{
+  background-color: #0f5132;
+}
+section{
+  margin-top: 20px;
+}
+.btns{
+  margin: 5px;
+  margin-bottom: 10px;
+}
+.btn-sm{
+  width:30px;
+  height: 30px;
+}
+.btnvalider{
+  width:200px;
+  height: 40px;
+  background-color: #0f5132;
+  color: white;
+}
+.btnliste{
+  width:200px;
+  height: 40px;
+  background-color: #2c0b0e;
+  color: white;
+}
+.btnsave{
+  width:200px;
+  height: 40px;
+  background-color: #5c636a;
+  color: white;
+}
+.alignements{
+  text-align: center;
+}
+a{
+  text-decoration: none;
+  color: indigo;
+}
+a:hover{
+  color: #0a58ca;
+}
+.table-hover > tbody > tr:hover{
+  background-color: #8bb9fe;
+  color: white;
+  text-decoration-color: white;
+  font-weight: bold;
+}
+.text-gras{
+  font-family: "Century Gothic";
+  font-weight: bold;
+  font-size: x-large;
+}
+.grasmini{
+  font-family: "Century Gothic";
+  font-weight: bold;
+  font-size: medium;
+}
+.couleur-fond{
+  background-color: #adb5bd;
+}
+.bd-style{
+  border: 5px;
+  border-style: dashed;
+  border-color: green;
+
+
+}
+

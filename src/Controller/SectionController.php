@@ -6,9 +6,9 @@ use App\Entity\Section;
 use App\Form\SectionType;
 use App\Repository\SectionRepository;
 use App\Traits\ClientIp;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 

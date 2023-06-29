@@ -95,31 +95,33 @@
 						</a>
 					</td>
 				</tr>
-			{% else %}
-				<tr>
-					<td colspan="12">Aucune donnée</td>
-				</tr>
 			{% endfor %}
 		</tbody>
 	</table>
 
-</div></div>{% endblock %}{% block javascripts %}{{ parent() }}<script src="{{ asset('js/elearning.js') }}"></script><script type="application/javascript">
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{ asset('js/elearning.js') }}"></script>
+	<script type="application/javascript">
 
-$(document).ready(function () {
+		$(document).ready(function () {
 
-var links = document.querySelectorAll('#moduleid');
-afficheModal(links);
-$("#my-form").submit(function (event) {
-event.preventDefault();
-// Empêcher l'envoi du formulaire
-// console.log($("#my-form").serialize());
-// Récupérer tous les liens du tableau
+			var links = document.querySelectorAll('#moduleid');
+			afficheModal(links);
+			$("#my-form").submit(function (event) {
+			event.preventDefault();
+			// Empêcher l'envoi du formulaire
+			// console.log($("#my-form").serialize());
+			// Récupérer tous les liens du tableau
 
-var url = "{{ path('app_module_delete') }}";
-var formData = $("#my-form").serialize(); // Récupérer les données du formulaire sous forme de chaîne de requête
-var urlretour = "{{ path('app_module_index') }}";
+			var url = "{{ path('app_module_delete') }}";
+			var formData = $("#my-form").serialize(); // Récupérer les données du formulaire sous forme de chaîne de requête
+			var urlretour = "{{ path('app_module_index') }}";
 
-supprimeData(url, formData, urlretour);
+			supprimeData(url, formData, urlretour);
 
-});
-});</script>{% endblock %}
+			});
+		});
+    </script>
+{% endblock %}

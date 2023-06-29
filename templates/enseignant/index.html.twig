@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Enseignant index
+{% block title %}Enseignant
 {% endblock %}
 
 {% block body %}
@@ -53,7 +53,7 @@
 	</div>
 
 			<table id="app_elearning" class="table table-striped dt-responsive nowrap table-bordered table-hover" style="width:100%">
-		<thead class="table-primary">
+		            <thead class="table-primary">
 			
 						<tr>
 
@@ -95,16 +95,10 @@
 									</a>
 								</td>
 							</tr>
-						{% else %}
-							<tr>
-								<td colspan="14">no records found</td>
-							</tr>
 						{% endfor %}
 					</tbody>
 				</table>
-			</div>
-		</div>
-	</div>
+
 
 
 {% endblock %}
@@ -117,22 +111,22 @@
 
 		$(document).ready(function () {
 
-var links = document.querySelectorAll('#enseignantid');
-afficheModal(links);
-$("#my-form").submit(function (event) {
-event.preventDefault();
-// Empêcher l'envoi du formulaire
-// console.log($("#my-form").serialize());
-// Récupérer tous les liens du tableau
+			var links = document.querySelectorAll('#enseignantid');
+			afficheModal(links);
+			$("#my-form").submit(function (event) {
+			event.preventDefault();
+			// Empêcher l'envoi du formulaire
+			// console.log($("#my-form").serialize());
+			// Récupérer tous les liens du tableau
 
-var url = "{{ path('app_enseignant_delete') }}";
-var formData = $("#my-form").serialize(); // Récupérer les données du formulaire sous forme de chaîne de requête
-var urlretour = "{{ path('app_enseignant_index') }}";
+			var url = "{{ path('app_enseignant_delete') }}";
+			var formData = $("#my-form").serialize(); // Récupérer les données du formulaire sous forme de chaîne de requête
+			var urlretour = "{{ path('app_enseignant_index') }}";
 
-supprimeData(url, formData, urlretour);
-
-});
-});
+			supprimeData(url, formData, urlretour);
+	Í
+			});
+		});
 	</script>
 
 {% endblock %}

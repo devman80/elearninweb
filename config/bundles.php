@@ -19,4 +19,6 @@ return [
     Symfony\UX\Dropzone\DropzoneBundle::class => ['all' => true],
     Symfony\UX\Cropperjs\CropperjsBundle::class => ['all' => true],
     JMS\SerializerBundle\JMSSerializerBundle::class => ['all' => true],
+    SymfonyCasts\Bundle\VerifyEmail\SymfonyCastsVerifyEmailBundle::class => ['all' => true],
+    Symfony\UX\StimulusBundle\StimulusBundle::class => ['all' => true],
 ];

@@ -19,6 +19,8 @@ use ClientIp;
     #[Route('/', name: 'app_evaluation_index', methods: ['GET'])]
     public function index(EvaluationRepository $evaluationRepository): Response
     {
+                $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         return $this->render('evaluation/index.html.twig', [
             'evaluations' => $evaluationRepository->findAll(),
         ]);
@@ -27,6 +29,8 @@ use ClientIp;
     #[Route('/new', name: 'app_evaluation_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EvaluationRepository $evaluationRepository): Response
     {
+                $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         $evaluation = new Evaluation();
         $form = $this->createForm(EvaluationType::class, $evaluation);
         $form->handleRequest($request);
@@ -46,6 +50,8 @@ use ClientIp;
     #[Route('/{id}', name: 'app_evaluation_show', methods: ['GET'])]
     public function show(Evaluation $evaluation): Response
     {
+                $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         return $this->render('evaluation/show.html.twig', [
             'evaluation' => $evaluation,
         ]);
@@ -54,6 +60,8 @@ use ClientIp;
     #[Route('/{id}/edit', name: 'app_evaluation_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Evaluation $evaluation, EvaluationRepository $evaluationRepository): Response
     {
+                $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         $form = $this->createForm(EvaluationType::class, $evaluation);
         $form->handleRequest($request);
 

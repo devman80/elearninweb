@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dispenser{% endblock %}
+
+{% block body %}
+    <h1>Dispenser</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ dispenser.id }}</td>
+            </tr>
+            <tr>
+                <th>Datedispenser</th>
+                <td>{{ dispenser.datedispenser ? dispenser.datedispenser|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>BrochureFilename</th>
+                <td>{{ dispenser.brochureFilename }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ dispenser.createdAt ? dispenser.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>CreatedFromIp</th>
+                <td>{{ dispenser.createdFromIp }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ dispenser.updatedAt ? dispenser.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedFromIp</th>
+                <td>{{ dispenser.updatedFromIp }}</td>
+            </tr>
+            <tr>
+                <th>DeletedAt</th>
+                <td>{{ dispenser.deletedAt ? dispenser.deletedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DeletedFromIp</th>
+                <td>{{ dispenser.deletedFromIp }}</td>
+            </tr>
+            <tr>
+                <th>Editable</th>
+                <td>{{ dispenser.editable ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_dispenser_index') }}">back to list</a>
+
+    <a href="{{ path('app_dispenser_edit', {'id': dispenser.id}) }}">edit</a>
+
+    {{ include('dispenser/_delete_form.html.twig') }}
+{% endblock %}

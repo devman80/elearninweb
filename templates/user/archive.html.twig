@@ -1,0 +1,112 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Comptes fermés
+{% endblock %}
+
+{% block body %}
+
+
+
+
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+
+                <!-- /.card-header -->
+                <div class="card-body">
+
+                    {% for message in app.flashes('usercreate') %}
+                        <div class="primary">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+
+                    {% for message in app.flashes('updateuser') %}
+                        <div class="primary">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+
+
+
+                    {% for message in app.flashes('activeuser') %}
+                        <div class="primary">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                 
+                    <a href="{{path('app_user_index')}}"> 
+                        <button class="btn btn-primary"> Comptes actifs</button>
+                    </a>
+           
+                    <hr style="visibility: hidden" />  
+
+                    <table id="example1" class="table table-bordered table-striped">
+
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Prénoms</th>
+                                <th>Photo</th>
+                                <th>Etat</th>
+                                <th>Action</th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in user %}
+                                <tr>
+                                    <td>{{ user.nom}}</td>
+                                    <td>{{ user.prenom}}</td>
+
+
+
+
+                                   <td>
+                                       {% if user.brochureFilename is not empty %}
+                                            <img src="{{ asset('uploads/brochures/'~user.brochureFilename )}}    class="rounded-circle img-fluid" style="width: 150px;"/>  
+                                       {% else %} {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if user.deletedAt is null %} <label class="btn bg-olive active"> Actif</label> {% else %} <label class="btn btn-danger"> Inactif</label>  {% endif %}
+
+                                    </td>
+
+
+                                    <td>
+
+
+
+
+
+                                        <form method="post" action="{{ path('app_registration_active', {'id': user.id}) }}" onsubmit="return confirm('Voulez-vous active ce compte?');">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('active' ~ user.id) }}">
+
+                                            <button class="btn">
+                                                <span style="font-size: 1em; color: blue;">
+                                                    <i class="fas fa-edit" title="Activer"></i>
+                                                </span>
+                                            </button>
+                                        </form>
+
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="5">aucune donnee trouve</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+
+        </div>
+    </section>
+
+
+{% endblock %}

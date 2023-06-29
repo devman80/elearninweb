@@ -27,10 +27,17 @@ class Matiere extends AbstractEntity
     #[ORM\OneToMany(mappedBy: 'matiere', targetEntity: Evaluation::class)]
     private Collection $evaluations;
 
+    #[ORM\ManyToOne(inversedBy: 'matieres')]
+    private ?Section $section = null;
+
+    #[ORM\OneToMany(mappedBy: 'matiere', targetEntity: Dispenser::class)]
+    private Collection $dispensers;
+
     public function __construct()
     {
         $this->modules = new ArrayCollection();
         $this->evaluations = new ArrayCollection();
+        $this->dispensers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -124,5 +131,47 @@ class Matiere extends AbstractEntity
 
     public function __toString() {
         return $this->libelle;
+    }
+
+    public function getSection(): ?Section
+    {
+        return $this->section;
+    }
+
+    public function setSection(?Section $section): self
+    {
+        $this->section = $section;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Dispenser>
+     */
+    public function getDispensers(): Collection
+    {
+        return $this->dispensers;
+    }
+
+    public function addDispenser(Dispenser $dispenser): static
+    {
+        if (!$this->dispensers->contains($dispenser)) {
+            $this->dispensers->add($dispenser);
+            $dispenser->setMatiere($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDispenser(Dispenser $dispenser): static
+    {
+        if ($this->dispensers->removeElement($dispenser)) {
+            // set the owning side to null (unless already changed)
+            if ($dispenser->getMatiere() === $this) {
+                $dispenser->setMatiere(null);
+            }
+        }
+
+        return $this;
     }
 }

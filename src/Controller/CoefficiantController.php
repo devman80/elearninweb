@@ -6,9 +6,9 @@ use App\Entity\Coefficiant;
 use App\Form\CoefficiantType;
 use App\Repository\CoefficiantRepository;
 use App\Traits\ClientIp;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -20,6 +20,8 @@ class CoefficiantController extends AbstractController
     #[Route('/', name: 'app_coefficiant_index', methods: ['GET'])]
     public function index(CoefficiantRepository $coefficiantRepository): Response
     {
+                $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         $liste = ["deletedAt" => Null];
         $limit = 1000;
         return $this->render('coefficiant/index.html.twig', [
@@ -32,6 +34,7 @@ class CoefficiantController extends AbstractController
     #[Route('/new', name: 'app_coefficiant_new', methods: ['GET', 'POST'])]
     public function new(Request $request, CoefficiantRepository $coefficiantRepository, ?Coefficiant $coefficiant = null): Response
     {
+                $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $type = $coefficiant === null ? 'new' : 'edit';
         $coefficiant = $coefficiant === null ? new Coefficiant() : $coefficiant;
         $user = $this->getUser();
@@ -75,6 +78,7 @@ class CoefficiantController extends AbstractController
     #[Route('/{id}', name: 'app_coefficiant_show', methods: ['GET'])]
     public function show(Coefficiant $coefficiant): Response
     {
+                $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         return $this->render('coefficiant/show.html.twig', [
             'coefficiant' => $coefficiant,
         ]);
@@ -104,6 +108,7 @@ class CoefficiantController extends AbstractController
     #[Route('/delete', name: 'app_coefficiant_delete', methods: ['GET', 'POST'])]
     public function delete(Request $request,CoefficiantRepository $coefficiantRepository, EntityManagerInterface $entityManager): Response
     {
+                $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $id = $request->request->get('delete_value');
         $LigneUpdate = $coefficiantRepository->find($id);
         $LigneUpdate->setDeletedFromIp($this->GetIp());

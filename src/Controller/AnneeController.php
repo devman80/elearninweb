@@ -6,9 +6,9 @@ use App\Entity\Annee;
 use App\Form\AnneeType;
 use App\Repository\AnneeRepository;
 use App\Traits\ClientIp;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -20,6 +20,8 @@ class AnneeController extends AbstractController
     #[Route('/', name: 'app_annee_index', methods: ['GET'])]
     public function index(AnneeRepository $anneeRepository): Response
     {
+                $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         $liste = ["deletedAt" => Null];
         $limit = 1000;
         return $this->render('annee/index.html.twig', [
@@ -32,6 +34,8 @@ class AnneeController extends AbstractController
     #[Route('/new', name: 'app_annee_new', methods: ['GET', 'POST'])]
     public function new(Request $request, AnneeRepository $anneeRepository, ?Annee $annee = null): Response
     {
+                $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         $type = $annee === null ? 'new' : 'edit';
         $annee = $annee === null ? new Annee() : $annee;
         $user = $this->getUser();
@@ -75,6 +79,7 @@ class AnneeController extends AbstractController
     #[Route('/{id}', name: 'app_annee_show', methods: ['GET'])]
     public function show(Annee $annee): Response
     {
+                $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         return $this->render('annee/show.html.twig', [
             'annee' => $annee,
         ]);
@@ -104,6 +109,8 @@ class AnneeController extends AbstractController
     #[Route('/delete', name: 'app_annee_delete', methods: ['GET', 'POST'])]
     public function delete(Request $request,AnneeRepository $anneeRepository, EntityManagerInterface $entityManager): Response
     {
+                $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         $id = $request->request->get('delete_value');
         $LigneUpdate = $anneeRepository->find($id);
         $LigneUpdate->setDeletedFromIp($this->GetIp());

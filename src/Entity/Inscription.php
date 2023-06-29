@@ -2,15 +2,16 @@
 
 namespace App\Entity;
 
-
+use App\Repository\InscriptionRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use App\Repository\InscriptionRepository;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-
+#[UniqueEntity(fields: ['$cmu'], message: 'Numéro CMU déjà utilisé')]
 #[ORM\Entity(repositoryClass: InscriptionRepository::class)]
 class Inscription extends AbstractEntity
 {
@@ -19,6 +20,11 @@ class Inscription extends AbstractEntity
     #[ORM\Column]
     private ?int $id = null;
 
+     #[Assert\Regex(
+        pattern: '/^[0-9a-zA-Z-\s\'ÀÁÂÃÄÅàáâãäåÒÓÔÕÖØòóôõöøÈÉÊËèéêëÇçÌÍÎÏìíîïÙÚÛÜùúûüÿÑñ]+$/',
+       // htmlPattern: '^[a-zA-Z]+$',
+        message: 'Your name cannot contain a number',
+    )]
     #[ORM\Column(length: 255)]
     #[ORM\Groups("public")]
     private ?string $nom = null;
@@ -59,6 +65,9 @@ class Inscription extends AbstractEntity
     #[ORM\Groups("public")]
     private ?string $paysvit = null;
 
+       #[ORM\ManyToOne(inversedBy: 'Stagiaires')]
+    private ?Section $section = null;
+    
     #[ORM\Column(length: 128, nullable: true)]
     #[ORM\Groups("public")]
     private ?string $typepiece = null;
@@ -83,8 +92,6 @@ class Inscription extends AbstractEntity
     #[ORM\Column(length: 128, nullable: true)]
     private ?string $cmu = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $certificatFilename = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $extraitFilename = null;
@@ -102,6 +109,25 @@ class Inscription extends AbstractEntity
     private ?string $cniFilename = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Groups("public")]
+    private ?string $cniFilenamerecto = null;
+
+    /**
+     * @return string|null
+     */
+    public function getCniFilenamerecto(): ?string
+    {
+        return $this->cniFilenamerecto;
+    }
+
+    /**
+     * @param string|null $cniFilenamerecto
+     */
+    public function setCniFilenamerecto(?string $cniFilenamerecto): void
+    {
+        $this->cniFilenamerecto = $cniFilenamerecto;
+    }
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $email = null;
 
     #[ORM\Column(nullable: true)]
@@ -116,6 +142,9 @@ class Inscription extends AbstractEntity
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $code = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $certificatFileName = null;
 
     public function __construct()
     {
@@ -319,17 +348,7 @@ class Inscription extends AbstractEntity
         return $this;
     }
 
-    public function getCertificatFilename(): ?string
-    {
-        return $this->certificatFilename;
-    }
-
-    public function setCertificatFilename(?string $certificatFilename): self
-    {
-        $this->certificatFilename = $certificatFilename;
-
-        return $this;
-    }
+    
 
     public function getExtraitFilename(): ?string
     {
@@ -453,6 +472,30 @@ class Inscription extends AbstractEntity
     public function setCode(?string $code): self
     {
         $this->code = $code;
+
+        return $this;
+    }
+    
+      public function getSection(): ?Section
+    {
+        return $this->section;
+    }
+
+    public function setSection(?Section $section): self
+    {
+        $this->section = $section;
+
+        return $this;
+    }
+
+    public function getCertificatFileName(): ?string
+    {
+        return $this->certificatFileName;
+    }
+
+    public function setCertificatFileName(?string $certificatFileName): self
+    {
+        $this->certificatFileName = $certificatFileName;
 
         return $this;
     }

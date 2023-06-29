@@ -18,7 +18,11 @@ class Stagiaire extends AbstractEntity
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: 'Veuillez saisir le nom SVP?')]
+      #[Assert\Regex(
+        pattern: '/^[0-9a-zA-Z-\s\'ÀÁÂÃÄÅàáâãäåÒÓÔÕÖØòóôõöøÈÉÊËèéêëÇçÌÍÎÏìíîïÙÚÛÜùúûüÿÑñ]+$/',
+        htmlPattern: '^[a-zA-Z]+$',
+        message: 'Your name cannot contain a number',
+    )]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -35,8 +39,7 @@ class Stagiaire extends AbstractEntity
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $brochureFilename = null;
 
-    #[ORM\ManyToOne(inversedBy: 'Stagiaires')]
-    private ?Section $section = null;
+ 
 
     #[ORM\OneToMany(mappedBy: 'stagiaire', targetEntity: Evaluation::class)]
     private Collection $evaluations;
@@ -115,17 +118,7 @@ class Stagiaire extends AbstractEntity
         return $this;
     }
 
-    public function getSection(): ?Section
-    {
-        return $this->section;
-    }
-
-    public function setSection(?Section $section): self
-    {
-        $this->section = $section;
-
-        return $this;
-    }
+  
 
     /**
      * @return Collection<int, Evaluation>

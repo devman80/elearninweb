@@ -18,12 +18,16 @@ class Section extends AbstractEntity
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $libelle = null;
 
-    #[ORM\OneToMany(mappedBy: 'section', targetEntity: Stagiaire::class)]
-    private Collection $stagiaires;
+    #[ORM\OneToMany(mappedBy: 'section', targetEntity: Inscription::class)]
+    private Collection $inscriptions;
+
+    #[ORM\OneToMany(mappedBy: 'section', targetEntity: Matiere::class)]
+    private Collection $matieres;
 
     public function __construct()
     {
-        $this->stagiaires = new ArrayCollection();
+        $this->inscriptions = new ArrayCollection();
+        $this->matieres = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -44,29 +48,29 @@ class Section extends AbstractEntity
     }
 
     /**
-     * @return Collection<int, Stagiaire>
+     * @return Collection<int, Inscription>
      */
-    public function getStagiaires(): Collection
+    public function getInscriptions(): Collection
     {
-        return $this->stagiaires;
+        return $this->inscriptions;
     }
 
-    public function addStagiaire(Stagiaire $stagiaire): self
+    public function addInscription(Inscription $inscription): self
     {
-        if (!$this->stagiaires->contains($stagiaire)) {
-            $this->stagiaires->add($stagiaire);
-            $stagiaire->setSection($this);
+        if (!$this->inscriptions->contains($inscription)) {
+            $this->inscriptions->add($inscription);
+            $inscription->setSection($this);
         }
 
         return $this;
     }
 
-    public function removeStagiaire(Stagiaire $stagiaire): self
+    public function removeInscription(Inscription $inscription): self
     {
-        if ($this->stagiaires->removeElement($stagiaire)) {
+        if ($this->inscriptions->removeElement($inscription)) {
             // set the owning side to null (unless already changed)
-            if ($stagiaire->getSection() === $this) {
-                $stagiaire->setSection(null);
+            if ($inscription->getSection() === $this) {
+                $inscription->setSection(null);
             }
         }
 
@@ -74,5 +78,35 @@ class Section extends AbstractEntity
     }
     public function __toString() {
         return $this->libelle;
+    }
+
+    /**
+     * @return Collection<int, Matiere>
+     */
+    public function getMatieres(): Collection
+    {
+        return $this->matieres;
+    }
+
+    public function addMatiere(Matiere $matiere): self
+    {
+        if (!$this->matieres->contains($matiere)) {
+            $this->matieres->add($matiere);
+            $matiere->setSection($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMatiere(Matiere $matiere): self
+    {
+        if ($this->matieres->removeElement($matiere)) {
+            // set the owning side to null (unless already changed)
+            if ($matiere->getSection() === $this) {
+                $matiere->setSection(null);
+            }
+        }
+
+        return $this;
     }
 }

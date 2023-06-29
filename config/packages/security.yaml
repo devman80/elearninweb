@@ -9,6 +9,9 @@ security:
             entity:
                 class: App\Entity\User
                 property: email
+#    role_hierarchy:
+#        ROLE_ADMIN: ROLE_USER
+#        ROLE_SUPER_ADMIN: [ ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH ]
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -16,29 +19,40 @@ security:
         main:
             lazy: true
             provider: app_user_provider
+            entry_point: App\Security\UsersAuthenticator
             logout:
                 path: app_logout
                 # where to redirect after logout
-                target: app_login
+                target: app_home128
+            user_checker: App\Security\UserChecker
 
             form_login:
                 # "app_login" is the name of the route created previously
-            
                 login_path: app_login
                 check_path: app_login
                 enable_csrf: true
-                default_target_path: app_accueil
+                default_target_path: app_home128
+            custom_authenticator: App\Security\UsersAuthenticator
+
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
 
             # https://symfony.com/doc/current/security/impersonating_user.html
             # switch_user: true
+    role_hierarchy:
+            ROLE_ETUDIANT:       ROLE_USER
+            ROLE_PROFESSEUR:       ROLE_USER
+            ROLE_ADMIN:       [ROLE_ETUDIANT, ROLE_PROFESSEUR ]
+            ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
          - { path: ^/admin, roles: ROLE_ADMIN }
          - { path: ^/profile, roles: ROLE_USER }
+         - { path: ^/login, roles: PUBLIC_ACCESS}
+         - { path: ^/register, roles: PUBLIC_ACCESS}
+         - { path: ^/, roles: PUBLIC_ACCESS }
 
 when@test:
     security:

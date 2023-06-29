@@ -20,12 +20,6 @@ class Dispenser extends AbstractEntity
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $brochureFilename = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $audio = null;
-
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $video = null;
-
     #[ORM\ManyToOne(inversedBy: 'dispensers')]
     private ?Enseignant $enseignant = null;
 
@@ -34,6 +28,12 @@ class Dispenser extends AbstractEntity
 
     #[ORM\ManyToOne(inversedBy: 'dispensers')]
     private ?Module $module = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $lesson = null;
+
+    #[ORM\ManyToOne(inversedBy: 'dispensers')]
+    private ?Matiere $matiere = null;
 
     public function getId(): ?int
     {
@@ -64,31 +64,7 @@ class Dispenser extends AbstractEntity
         return $this;
     }
 
-    public function getAudio(): ?string
-    {
-        return $this->audio;
-    }
-
-    public function setAudio(?string $audio): self
-    {
-        $this->audio = $audio;
-
-        return $this;
-    }
-
-    public function getVideo(): ?string
-    {
-        return $this->video;
-    }
-
-    public function setVideo(?string $video): self
-    {
-        $this->video = $video;
-
-        return $this;
-    }
-
-    public function getEnseignant(): ?Enseignant
+     public function getEnseignant(): ?Enseignant
     {
         return $this->enseignant;
     }
@@ -120,6 +96,30 @@ class Dispenser extends AbstractEntity
     public function setModule(?Module $module): self
     {
         $this->module = $module;
+
+        return $this;
+    }
+
+    public function getLesson(): ?string
+    {
+        return $this->lesson;
+    }
+
+    public function setLesson(?string $lesson): static
+    {
+        $this->lesson = $lesson;
+
+        return $this;
+    }
+
+    public function getMatiere(): ?Matiere
+    {
+        return $this->matiere;
+    }
+
+    public function setMatiere(?Matiere $matiere): static
+    {
+        $this->matiere = $matiere;
 
         return $this;
     }

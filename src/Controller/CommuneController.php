@@ -6,9 +6,9 @@ use App\Entity\Commune;
 use App\Form\CommuneType;
 use App\Repository\CommuneRepository;
 use App\Traits\ClientIp;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 

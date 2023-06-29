@@ -3,9 +3,13 @@
 {% block title %}New Inscription{% endblock %}
 
 {% block body %}
-    <h1>Create new Inscription</h1>
+   <div class="card-body">
+	<div class="card-header py-3">
+		<h6 class="m-0 font-weight-bold text-primary">Inscription </h6>
+	</div>
+
 
     {{ include('inscription/_form.html.twig') }}
 
-    <a href="{{ path('app_inscription_index') }}">back to list</a>
+   </div>
 {% endblock %}

@@ -19,6 +19,8 @@ use  ClientIp;
     #[Route('/', name: 'app_inscrire_index', methods: ['GET'])]
     public function index(InscrireRepository $inscrireRepository): Response
     {
+                $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         return $this->render('inscrire/index.html.twig', [
             'inscrires' => $inscrireRepository->findAll(),
         ]);
@@ -27,6 +29,8 @@ use  ClientIp;
     #[Route('/new', name: 'app_inscrire_new', methods: ['GET', 'POST'])]
     public function new(Request $request, InscrireRepository $inscrireRepository): Response
     {
+                $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         $inscrire = new Inscrire();
         $form = $this->createForm(InscrireType::class, $inscrire);
         $form->handleRequest($request);
@@ -46,6 +50,8 @@ use  ClientIp;
     #[Route('/{id}', name: 'app_inscrire_show', methods: ['GET'])]
     public function show(Inscrire $inscrire): Response
     {
+                $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         return $this->render('inscrire/show.html.twig', [
             'inscrire' => $inscrire,
         ]);
@@ -54,6 +60,8 @@ use  ClientIp;
     #[Route('/{id}/edit', name: 'app_inscrire_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Inscrire $inscrire, InscrireRepository $inscrireRepository): Response
     {
+                $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         $form = $this->createForm(InscrireType::class, $inscrire);
         $form->handleRequest($request);
 
@@ -72,6 +80,8 @@ use  ClientIp;
     #[Route('/{id}', name: 'app_inscrire_delete', methods: ['POST'])]
     public function delete(Request $request, Inscrire $inscrire, InscrireRepository $inscrireRepository): Response
     {
+                $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         if ($this->isCsrfTokenValid('delete'.$inscrire->getId(), $request->request->get('_token'))) {
             $inscrireRepository->remove($inscrire, true);
         }
