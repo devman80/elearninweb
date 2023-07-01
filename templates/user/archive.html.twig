@@ -42,9 +42,9 @@
            
                     <hr style="visibility: hidden" />  
 
-                    <table id="example1" class="table table-bordered table-striped">
+                    <table id="app_elearning" class="table table-striped dt-responsive nowrap table-bordered table-hover" style="width:100%">
 
-                        <thead>
+                        <thead class="table-primary">
                             <tr>
                                 <th>Nom</th>
                                 <th>Prénoms</th>
@@ -85,9 +85,11 @@
                                             <input type="hidden" name="_token" value="{{ csrf_token('active' ~ user.id) }}">
 
                                             <button class="btn">
-                                                <span style="font-size: 1em; color: blue;">
-                                                    <i class="fas fa-edit" title="Activer"></i>
-                                                </span>
+                                                <button class="btn">
+                                                    <img src="{{ asset('img/b_usrcheck.png') }}" title="Activer" class="user-plus">
+                                                       
+                                                    </img>
+                                                </button>
                                             </button>
                                         </form>
 

@@ -7,7 +7,7 @@
  // GITHUB: #/
 -->
 
-<html lang="en">
+<html lang="fr">
 <head>
 
   <!-- Basic Page Needs
@@ -97,7 +97,6 @@
         </div>
         <div class="col-lg-8 text-center text-lg-right">
           <ul class="list-inline">
-            <li class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="#">notes</a></li>
            {% if is_granted('ROLE_ETUDIANT') %} <li class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="{{ path('app_user_profile') }}">PROFILE </a></li>{% else %}
                        <li class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="#loginModal" data-toggle="modal" data-target="#loginModal">connexion</a></li>
            
@@ -129,6 +128,7 @@
             <li class="nav-item @@about">
               <a class="nav-link" href="{{path('app_about')}}">A propos nous</a>
             </li>
+            <!-- 
            <li class="nav-item dropdown view">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Cours 
@@ -138,7 +138,7 @@
                 <li><a class="dropdown-item" href="{{path('app_session2')}}">Session II</a></li>
                 <li><a class="dropdown-item" href="{{path('app_qcm')}}">QCM</a></li>
     
-           
+         
               </ul>
             </li>
             <li class="nav-item @@events">
@@ -147,19 +147,27 @@
             <li class="nav-item @@blog">
               <a class="nav-link" href="{{path('app_blog')}}">BLOG</a>
             </li>
+              comment -->
             <li class="nav-item dropdown view">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Pages
+                 <!-- 
+              <a class="nav-link dropdown-toggle" href="{{path('app_mot')}}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+               
               </a>
+                   comment -->
+                <!-- 
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="{{path('app_enseignant_index')}}">Enseignants</a></li>
+                <li><a class="dropdown-item" href="{{path('app_mot')}}"> Mot de la directrice</a></li>
                 <li><a class="dropdown-item" href="{{path('app_matiere_index')}}">Matières</a></li>
                 <li><a class="dropdown-item" href="{{path('app_module_index')}}">Modules</a></li>
-                <li><a class="dropdown-item" href="{{path('app_mot')}}">Mot de la directrice</a></li>
+                <li><a class="dropdown-item" href="">Mot de la directrice</a></li>
           
                 
              
               </ul>
+               comment -->
+            </li>
+             <li class="nav-item @@contact">
+              <a class="nav-link" href="{{path('app_mot')}}">MOT DE LA DIRECTRICE</a>
             </li>
             <li class="nav-item @@contact">
               <a class="nav-link" href="#">CONTACT</a>

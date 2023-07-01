@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Matiere;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query\Expr\Join;
 
 /**
  * @extends ServiceEntityRepository<Matiere>
@@ -14,15 +15,13 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Matiere[]    findAll()
  * @method Matiere[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class MatiereRepository extends ServiceEntityRepository
-{
-    public function __construct(ManagerRegistry $registry)
-    {
+class MatiereRepository extends ServiceEntityRepository {
+
+    public function __construct(ManagerRegistry $registry) {
         parent::__construct($registry, Matiere::class);
     }
 
-    public function save(Matiere $entity, bool $flush = false): void
-    {
+    public function save(Matiere $entity, bool $flush = false): void {
         $this->getEntityManager()->persist($entity);
 
         if ($flush) {
@@ -30,8 +29,7 @@ class MatiereRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Matiere $entity, bool $flush = false): void
-    {
+    public function remove(Matiere $entity, bool $flush = false): void {
         $this->getEntityManager()->remove($entity);
 
         if ($flush) {
@@ -53,7 +51,6 @@ class MatiereRepository extends ServiceEntityRepository
 //            ->getResult()
 //        ;
 //    }
-
 //    public function findOneBySomeField($value): ?Matiere
 //    {
 //        return $this->createQueryBuilder('m')
@@ -63,22 +60,23 @@ class MatiereRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+//    public function getListeDispenserByMatiere($matiere) {
+//        return $this->createQueryBuilder('g')
+//                        // ->leftJoin('App\Entity\Dispenser', 'e' ,'where', 'g.dispenser = e.id')
+//                      //  ->join('App\Entity\Dispenser', 'e', Join::WITH, 'g.dispensers = :id')
+//                        //->andWhere('e.id = :val')
+//                ->join('App\Entity\Dispenser', 'e' , Join::WITH, 'g.dispensers = :e.id')
+//                        ->andWhere('g.deletedAt IS NULL')
+//                        ->setParameter('val', $matiere)
+//                        ->orderBy('g.id', 'ASC')
+//                        ->getQuery()
+//                        ->getResult()
+//        ;
+//    }
+
     
     
-       public function findLessonsByMatiere(DispenserRepository  $search): array
-    {
-        $query = $this->createQueryBuilder('p')
-            ->select('p', 'c')
-            ->join('p.dispensers', 'c');
-
-        if (!empty($search->p)) {
-            $query = $query
-            ->andWhere('p.id = :p')
-            ->orderBy('c.id', 'DESC')
-            ->setMaxResults()
-            ->setParameter('p', $search->p);
-        }
-
-        return $query->getQuery()->getResult();
-    }
+    
+    
 }

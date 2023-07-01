@@ -1,0 +1,49 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Liste des cours
+{% endblock %}
+
+{% block body %}
+   
+
+    <div><a href="#" class="btn btn-outline-primary btns" data-turbo="true"><i class="fa-solid fa-bookmark"></i>
+        Liste des cours de {{ nommatiere|upper }}
+        </a></div>
+    <!-- The Modal -->
+
+    <!-- fin modal -->
+
+    <table id="app_elearning" class="table table-striped dt-responsive nowrap table-bordered table-hover" style="width:100%">
+        <thead class="table-primary">
+            <tr>
+
+                <th class="alignements">Date</th>
+                <th class="alignements">Titre</th>
+                <th class="alignements">Cours</th>
+                <th style="text-align: center;"># Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% set i = 1 %}
+            {% for dispenser in dispensers %}
+
+                <tr>
+
+                    <td>{{ dispenser.createdAt|date('d-m-Y') }}</td>
+                    <td>{{ dispenser.lesson }}</td>
+               
+                    <td>
+                        {% if dispenser.brochureFilename is not empty %}
+                        <a href="{{ asset('uploads/brochures/' ~ dispenser.brochureFilename) }}">Voir le cours</a>
+                        {% else %} {% endif %}
+                    </td>
+                </tr>
+
+
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}
+
