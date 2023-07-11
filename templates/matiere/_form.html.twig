@@ -18,9 +18,8 @@
 
 <div class="row">
 	<div class="col-md-6 bg-success-subtle grasmini">
-		{{ form_row(form.section, {'label':'Choix de section : '}) }}
+		{{ form_row(form.section, {'label':'Section : ', 'attr':{'class':'select2'}}) }}
 		{{ form_row(form.code, {'label':'Code : ', 'attr':{'class':'form-control'}}) }}
-
 		{{ form_row(form.libelle, {'label':'Matière : ', 'attr':{'class':'form-control'}}) }}
 	</div>
 	<div class="col-md-3">

@@ -27,11 +27,12 @@ class Matiere extends AbstractEntity
     #[ORM\OneToMany(mappedBy: 'matiere', targetEntity: Evaluation::class)]
     private Collection $evaluations;
 
-    #[ORM\ManyToOne(inversedBy: 'matieres')]
-    private ?Section $section = null;
-
+  
     #[ORM\OneToMany(mappedBy: 'matiere', targetEntity: Dispenser::class)]
     private Collection $dispensers;
+
+    #[ORM\ManyToOne(inversedBy: 'matieres')]
+    private ?Section $section = null;
 
     public function __construct()
     {
@@ -133,18 +134,6 @@ class Matiere extends AbstractEntity
         return $this->libelle;
     }
 
-    public function getSection(): ?Section
-    {
-        return $this->section;
-    }
-
-    public function setSection(?Section $section): self
-    {
-        $this->section = $section;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Dispenser>
      */
@@ -171,6 +160,18 @@ class Matiere extends AbstractEntity
                 $dispenser->setMatiere(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSection(): ?Section
+    {
+        return $this->section;
+    }
+
+    public function setSection(?Section $section): static
+    {
+        $this->section = $section;
 
         return $this;
     }

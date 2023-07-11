@@ -8,8 +8,8 @@
         <meta name="author" content="AdminKit">
         <meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
 
-             {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-        
+        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
 
@@ -28,149 +28,153 @@
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
 
-       
+
     </head>
     <body>
 
-<div class="wrapper">
-    <nav id="sidebar" class="sidebar js-sidebar">
-        <div class="sidebar-content js-simplebar">
-            <a class="sidebar-brand" href="index.html">
-                <span class="align-middle"> ADMINISTRATION</span>
-            </a>
-
-            <ul class="sidebar-nav">
-                <li class="sidebar-header">
-                    Cafop Lited
-                </li>
-
-                <li class="sidebar-item active">
-                    <a class="sidebar-link" href="{{path('app_accueil')}}">
-                        <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Tableau de bord</span>
+        <div class="wrapper">
+            <nav id="sidebar" class="sidebar js-sidebar">
+                <div class="sidebar-content js-simplebar">
+                    <a class="sidebar-brand" href="index.html">
+                        <span class="align-middle"> ADMINISTRATION</span>
                     </a>
-                </li>
 
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{path('app_user_profile')}}">
-                        <i class="align-middle" data-feather="user"></i> <span class="align-middle">Profile</span>
-                    </a>
-                </li>
+                    <ul class="sidebar-nav">
+                        <li class="sidebar-header">
+                            Cafop Lited
+                        </li>
+                        {% if is_granted('ROLE_SECRETAIRE') %}
+                            <li class="sidebar-item active">
+                                <a class="sidebar-link" href="{{path('app_accueil')}}">
+                                    <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Tableau de bord</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="{{path('app_user_profile')}}">
+                                <i class="align-middle" data-feather="user"></i> <span class="align-middle">Profile</span>
+                            </a>
+                        </li>
 
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{ path('app_logout') }}">
-                        <i class="align-middle" data-feather="log-in"></i> <span class="align-middle">Deconnexion</span>
-                    </a>
-                </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="{{ path('app_logout') }}">
+                                <i class="align-middle" data-feather="log-in"></i> <span class="align-middle">Deconnexion</span>
+                            </a>
+                        </li>
 
+                        {% if is_granted('ROLE_SECRETAIRE') %}
 
+                            <li class="sidebar-header">
+                                Paramètres
+                            </li>
 
-                <li class="sidebar-header">
-                    Paramètres
-                </li>
+                            <li class="sidebar-item">
+                                <a class="sidebar-link" href="{{ path("app_commune_index") }}">
+                                    <i class="align-middle" data-feather="square"></i> <span class="align-middle">Commune</span>
+                                </a>
+                            </li>
 
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{ path("app_commune_index") }}">
-                        <i class="align-middle" data-feather="square"></i> <span class="align-middle">Commune</span>
-                    </a>
-                </li>
+                            <li class="sidebar-item">
+                                <a class="sidebar-link" href="{{ path("app_annee_index") }}">
+                                    <i class="align-middle" data-feather="check-square"></i> <span class="align-middle">Année</span>
+                                </a>
+                            </li>
 
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{ path("app_annee_index") }}">
-                        <i class="align-middle" data-feather="check-square"></i> <span class="align-middle">Année</span>
-                    </a>
-                </li>
+                            <li class="sidebar-item">
+                                <a class="sidebar-link" href="{{ path("app_coefficiant_index") }}">
+                                    <i class="align-middle" data-feather="grid"></i> <span class="align-middle">Coéficient</span>
+                                </a>
+                            </li>
 
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{ path("app_coefficiant_index") }}">
-                        <i class="align-middle" data-feather="grid"></i> <span class="align-middle">Coéficient</span>
-                    </a>
-                </li>
+                            <li class="sidebar-item">
+                                <a class="sidebar-link" href="{{ path("app_matiere_index") }}">
+                                    <i class="align-middle" data-feather="align-left"></i> <span class="align-middle">Matière</span>
+                                </a>
+                            </li>
 
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{ path("app_matiere_index") }}">
-                        <i class="align-middle" data-feather="align-left"></i> <span class="align-middle">Matière</span>
-                    </a>
-                </li>
+                            <li class="sidebar-item">
+                                <a class="sidebar-link" href="{{ path("app_module_index") }}">
+                                    <i class="align-middle" data-feather="coffee"></i> <span class="align-middle">Module</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a class="sidebar-link" href="{{ path("app_section_index") }}">
+                                    <i class="align-middle" data-feather="coffee"></i> <span class="align-middle">Section</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a class="sidebar-link" href="{{ path("app_enseignant_index") }}">
+                                    <i class="align-middle" data-feather="coffee"></i> <span class="align-middle">Enseignant</span>
+                                </a>
+                            </li>
 
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{ path("app_module_index") }}">
-                        <i class="align-middle" data-feather="coffee"></i> <span class="align-middle">Module</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{ path("app_section_index") }}">
-                        <i class="align-middle" data-feather="coffee"></i> <span class="align-middle">Section</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{ path("app_enseignant_index") }}">
-                        <i class="align-middle" data-feather="coffee"></i> <span class="align-middle">Enseignant</span>
-                    </a>
-                </li>
+                        {% endif %}
+                        {% if is_granted('ROLE_PROFESSEUR') %}
+                            <li class="sidebar-header">
+                                Cours
+                            </li>
 
-                <li class="sidebar-header">
-                   Cours
-                </li>
-                
-                    <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{ path('app_dispenser_index') }}">
-                        <i class="align-middle" data-feather="bar-chart-2"></i> <span class="align-middle">Dispenser</span>
-                    </a>
-                </li>
-                
-                <li class="sidebar-header">
-                    Gestion des résultats
-                </li>
+                            <li class="sidebar-item">
+                                <a class="sidebar-link" href="{{ path('app_dispenser_index') }}">
+                                    <i class="align-middle" data-feather="bar-chart-2"></i> <span class="align-middle">Dispenser</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% if is_granted('ROLE_SECRETAIRE') %}
+                            <li class="sidebar-header">
+                                Gestion des résultats
+                            </li>
 
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{ path('app_inscription_index') }}">
-                        <i class="align-middle" data-feather="bar-chart-2"></i> <span class="align-middle">Liste des inscrits</span>
-                    </a>
-                </li>
+                            <li class="sidebar-item">
+                                <a class="sidebar-link" href="{{ path('app_inscription_index') }}">
+                                    <i class="align-middle" data-feather="bar-chart-2"></i> <span class="align-middle">Liste des inscrits</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <li class="sidebar-item">
+                                <a class="sidebar-link" href="#">
+                                    <i class="align-middle" data-feather="map"></i> <span class="align-middle">Paiement de la scolarité</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a class="sidebar-link" href="#">
+                                    <i class="align-middle" data-feather="map"></i> <span class="align-middle">Bilan</span>
+                                </a>
+                            </li>
+                        </ul>
+                    {% endif %}
 
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="#">
-                        <i class="align-middle" data-feather="map"></i> <span class="align-middle">Paiement de la scolarité</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="#">
-                        <i class="align-middle" data-feather="map"></i> <span class="align-middle">Bilan</span>
-                    </a>
-                </li>
-            </ul>
+                </div>
+            </nav>
 
+            <div class="main">
+                {{ include('_partials/_nav.html.twig') }}
 
-        </div>
-    </nav>
+                <main class="content">
+                    <div class="container-fluid p-0">
+                        <section class="top-50">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-12 col-lg-12">
+                                        <div class="card corps">
+                                            <div class="card-header text-gras"><h1>CAFOP-LITED</h1></div>
+                                            <div class="card-body">{% block body %}{% endblock %}</div>
 
-    <div class="main">
-       {{ include('_partials/_nav.html.twig') }}
+                                        </div>
 
-        <main class="content">
-            <div class="container-fluid p-0">
-                <section class="top-50">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-12 col-lg-12">
-                                <div class="card corps">
-                                    <div class="card-header text-gras"><h1>E-Learning</h1></div>
-                                    <div class="card-body">{% block body %}{% endblock %}</div>
-
+                                    </div>
                                 </div>
-
                             </div>
-                        </div>
+                        </section>
                     </div>
-                </section>
-            </div>
-        </main>
+                </main>
 
-        <footer class="footer">
-           {{ include('_partials/_footer.html.twig') }}
-        </footer>
-    </div>
-</div>
+                <footer class="footer">
+                    {{ include('_partials/_footer.html.twig') }}
+                </footer>
+            </div>
+        </div>
 
 
 
@@ -185,101 +189,101 @@
 
             <script type="application/javascript">
                 $(document).ready(function() {
-                    $('#app_elearning').DataTable({
-                        language: {
-                            url: " http://cdn.datatables.net/plug-ins/1.10.9/i18n/French.json"
-                        }
-                    });
+                $('#app_elearning').DataTable({
+                language: {
+                url: " http://cdn.datatables.net/plug-ins/1.10.9/i18n/French.json"
+                }
+                });
                 } );
             </script>
             <script src="../js/app.js"></script>
 
             <script>
-                document.addEventListener("DOMContentLoaded", function() {
-                    var ctx = document.getElementById("chartjs-dashboard-line").getContext("2d");
-                    var gradient = ctx.createLinearGradient(0, 0, 0, 225);
-                    gradient.addColorStop(0, "rgba(215, 227, 244, 1)");
-                    gradient.addColorStop(1, "rgba(215, 227, 244, 0)");
-                    // Line chart
-                    new Chart(document.getElementById("chartjs-dashboard-line"), {
-                        type: "line",
-                        data: {
-                            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                            datasets: [{
-                                label: "Sales ($)",
-                                fill: true,
-                                backgroundColor: gradient,
-                                borderColor: window.theme.primary,
-                                data: [
-                                    2115,
-                                    1562,
-                                    1584,
-                                    1892,
-                                    1587,
-                                    1923,
-                                    2566,
-                                    2448,
-                                    2805,
-                                    3438,
-                                    2917,
-                                    3327
-                                ]
-                            }]
-                        },
-                        options: {
-                            maintainAspectRatio: false,
-                            legend: {
-                                display: false
-                            },
-                            tooltips: {
-                                intersect: false
-                            },
-                            hover: {
-                                intersect: true
-                            },
-                            plugins: {
-                                filler: {
-                                    propagate: false
-                                }
-                            },
-                            scales: {
-                                xAxes: [{
-                                    reverse: true,
-                                    gridLines: {
-                                        color: "rgba(0,0,0,0.0)"
-                                    }
-                                }],
-                                yAxes: [{
-                                    ticks: {
-                                        stepSize: 1000
-                                    },
-                                    display: true,
-                                    borderDash: [3, 3],
-                                    gridLines: {
-                                        color: "rgba(0,0,0,0.0)"
-                                    }
-                                }]
-                            }
+document.addEventListener("DOMContentLoaded", function () {
+    var ctx = document.getElementById("chartjs-dashboard-line").getContext("2d");
+    var gradient = ctx.createLinearGradient(0, 0, 0, 225);
+    gradient.addColorStop(0, "rgba(215, 227, 244, 1)");
+    gradient.addColorStop(1, "rgba(215, 227, 244, 0)");
+    // Line chart
+    new Chart(document.getElementById("chartjs-dashboard-line"), {
+        type: "line",
+        data: {
+            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            datasets: [{
+                    label: "Sales ($)",
+                    fill: true,
+                    backgroundColor: gradient,
+                    borderColor: window.theme.primary,
+                    data: [
+                        2115,
+                        1562,
+                        1584,
+                        1892,
+                        1587,
+                        1923,
+                        2566,
+                        2448,
+                        2805,
+                        3438,
+                        2917,
+                        3327
+                    ]
+                }]
+        },
+        options: {
+            maintainAspectRatio: false,
+            legend: {
+                display: false
+            },
+            tooltips: {
+                intersect: false
+            },
+            hover: {
+                intersect: true
+            },
+            plugins: {
+                filler: {
+                    propagate: false
+                }
+            },
+            scales: {
+                xAxes: [{
+                        reverse: true,
+                        gridLines: {
+                            color: "rgba(0,0,0,0.0)"
                         }
-                    });
-                });
+                    }],
+                yAxes: [{
+                        ticks: {
+                            stepSize: 1000
+                        },
+                        display: true,
+                        borderDash: [3, 3],
+                        gridLines: {
+                            color: "rgba(0,0,0,0.0)"
+                        }
+                    }]
+            }
+        }
+    });
+});
             </script>
             <script>
-                document.addEventListener("DOMContentLoaded", function() {
+                document.addEventListener("DOMContentLoaded", function () {
                     // Pie chart
                     new Chart(document.getElementById("chartjs-dashboard-pie"), {
                         type: "pie",
                         data: {
                             labels: ["Chrome", "Firefox", "IE"],
                             datasets: [{
-                                data: [4306, 3801, 1689],
-                                backgroundColor: [
-                                    window.theme.primary,
-                                    window.theme.warning,
-                                    window.theme.danger
-                                ],
-                                borderWidth: 5
-                            }]
+                                    data: [4306, 3801, 1689],
+                                    backgroundColor: [
+                                        window.theme.primary,
+                                        window.theme.warning,
+                                        window.theme.danger
+                                    ],
+                                    borderWidth: 5
+                                }]
                         },
                         options: {
                             responsive: !window.MSInputMethodContext,
@@ -293,22 +297,22 @@
                 });
             </script>
             <script>
-                document.addEventListener("DOMContentLoaded", function() {
+                document.addEventListener("DOMContentLoaded", function () {
                     // Bar chart
                     new Chart(document.getElementById("chartjs-dashboard-bar"), {
                         type: "bar",
                         data: {
                             labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                             datasets: [{
-                                label: "This year",
-                                backgroundColor: window.theme.primary,
-                                borderColor: window.theme.primary,
-                                hoverBackgroundColor: window.theme.primary,
-                                hoverBorderColor: window.theme.primary,
-                                data: [54, 67, 41, 55, 62, 45, 55, 73, 60, 76, 48, 79],
-                                barPercentage: .75,
-                                categoryPercentage: .5
-                            }]
+                                    label: "This year",
+                                    backgroundColor: window.theme.primary,
+                                    borderColor: window.theme.primary,
+                                    hoverBackgroundColor: window.theme.primary,
+                                    hoverBorderColor: window.theme.primary,
+                                    data: [54, 67, 41, 55, 62, 45, 55, 73, 60, 76, 48, 79],
+                                    barPercentage: .75,
+                                    categoryPercentage: .5
+                                }]
                         },
                         options: {
                             maintainAspectRatio: false,
@@ -317,31 +321,31 @@
                             },
                             scales: {
                                 yAxes: [{
-                                    gridLines: {
-                                        display: false
-                                    },
-                                    stacked: false,
-                                    ticks: {
-                                        stepSize: 20
-                                    }
-                                }],
+                                        gridLines: {
+                                            display: false
+                                        },
+                                        stacked: false,
+                                        ticks: {
+                                            stepSize: 20
+                                        }
+                                    }],
                                 xAxes: [{
-                                    stacked: false,
-                                    gridLines: {
-                                        color: "transparent"
-                                    }
-                                }]
+                                        stacked: false,
+                                        gridLines: {
+                                            color: "transparent"
+                                        }
+                                    }]
                             }
                         }
                     });
                 });
             </script>
             <script>
-                document.addEventListener("DOMContentLoaded", function() {
+                document.addEventListener("DOMContentLoaded", function () {
                     var markers = [{
-                        coords: [31.230391, 121.473701],
-                        name: "Shanghai"
-                    },
+                            coords: [31.230391, 121.473701],
+                            name: "Shanghai"
+                        },
                         {
                             coords: [28.704060, 77.102493],
                             name: "Delhi"
@@ -404,7 +408,7 @@
                 });
             </script>
             <script>
-                document.addEventListener("DOMContentLoaded", function() {
+                document.addEventListener("DOMContentLoaded", function () {
                     var date = new Date(Date.now() - 5 * 24 * 60 * 60 * 1000);
                     var defaultDate = date.getUTCFullYear() + "-" + (date.getUTCMonth() + 1) + "-" + date.getUTCDate();
                     document.getElementById("datetimepicker-dashboard").flatpickr({

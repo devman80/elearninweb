@@ -56,7 +56,6 @@
         <thead class="table-primary">
             <tr>
 
-                <th class="alignements">Section</th>
                 <th class="alignements">Code</th>
                 <th class="alignements">Libellé</th>
                 <th style="text-align: center;"># Actions</th>
@@ -68,9 +67,6 @@
 
                 <tr>
 
-                    <td>
-                        {% if matiere.section is not empty  %}  {{ matiere.section.libelle }} {% else %} {% endif %}
-                       </td>
                     <td>{{ matiere.code }}</td>
                     <td>{{ matiere.libelle }}</td>
                     <td class="alignements">

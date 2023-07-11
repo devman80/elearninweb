@@ -56,15 +56,19 @@ class DispenserController extends AbstractController {
                 $user = $this->getUser();
 
                 $dispenser->setCreatedFromIp($this->GetIp()) // remplacement de la function par le trait
-                       // ->setCreatedBy($user)
+                    // ->setCreatedBy($user)
 
                 ;
+                $dispenser->setCreatedAt(new \DateTimeImmutable("now"));
             } else {
                 $user = $this->getUser();
 
                 $dispenser->setUpdatedFromIp($this->GetIp()) // remplacement de la function par le trait
                        // ->setUpdatedBy($user)
                 ;
+                
+                        $dispenser->setUpdatedAt(new \DateTimeImmutable("now"));
+
             }
 
             $dispenser->setBrochureFilename($brochureFileName);

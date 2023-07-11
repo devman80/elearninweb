@@ -4,67 +4,78 @@
 {% endblock %}
 
 {% block body %}
-	<div class="card shadow mb-4">
-		<div class="card-header py-3">
-			<h6 class="m-0 font-weight-bold text-primary">Cours
-			</div>
-			<div class="card-header py-3">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Liste des auditeurs
+        </div>
 
-				<a href="{{ path('app_inscription_new') }}">Nouveau</a>
-			</h6>
-		</div>
+        {% for message in app.flashes('success') %}
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="alert alert-success alert-dismissible">
+                        {{ message }}
 
+                    </div>
+                </div>
+            </div>
 
-		<div class="card-body">
-			<div class="table-responsive">
-				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-					<thead>
-						<tr>
+        {% endfor %}
+        <div class="card-header py-3">
 
-							<th>Matricule</th>
-							<th>Nom</th>
-							<th>Prenom</th>
-							<th>Photo</th>
-							<th>Sexe</th>
-							<th>Contact</th>
-					
-
-							<th>actions</th>
-						</tr>
-					</thead>
-					<tbody>
-						{% for inscription in inscriptions %}
-							<tr>
-
-								<td>{{ inscription.code|upper }}</td>
-								<td>{{ inscription.nom }}</td>
-								<td>{{ inscription.prenom }}</td>
-							<td>{% if inscription.brochureFilename is not empty %}
-
-			<img src="{{ asset('uploads/brochures/'~inscription.brochureFilename )}}" style="max-width: 100px;  max-height: 200px"/>
+            <a href="{{ path('app_inscrire_new') }}">Nouveau</a>
+            <a href="{{ path('app_inscription_archive') }}">En attente</a>
+            </h6>
+        </div>
 
 
-										{% else %}Aucune photo
-									{% endif %}</td>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
 
-								<td>{{ inscription.sexe }}</td>
-								<td>{{ inscription.contact }}</td>
-							
-								<td>
-									<a href="{{ path('app_inscription_show', {'id': inscription.id}) }}">show</a>
-									<a href="{{ path('app_inscription_edit', {'id': inscription.id}) }}">edit</a>
-								</td>
-							</tr>
-						{% else %}
-							<tr>
-								<td colspan="30">Aucune donnée</td>
-							</tr>
-						{% endfor %}
-					</tbody>
-				</table>
+                            <th>Nom</th>
+                            <th>Prenom</th>
+                            <th>Photo</th>
+                            <th>Sexe</th>
+                            <th>Contact</th>
+                            <th>Date inscription</th>
+                            <th>actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for inscription in inscriptions %}
+                            <tr>
 
-				
-			</div>
-		</div>
-	</div>
-{% endblock %}
+                                <td>{{ inscription.nom }}</td>
+                                <td>{{ inscription.prenom }}</td>
+                                <td>{% if inscription.brochureFilename is not empty %}
+
+                                    <img src="{{ asset('uploads/brochures/'~inscription.brochureFilename )}}" style="max-width: 100px;  max-height: 200px"/>
+
+
+                                {% else %}Aucune photo
+                                    {% endif %}</td>
+
+                                    <td>{{ inscription.sexe }}</td>
+                                    <td>{{ inscription.contact }}</td>
+                                    <td> {{ date_format(inscription.createdAt) }}</td>
+
+                                    <td>
+                                        <a href="{{ path('app_inscription_show', {'id': inscription.id}) }}">show</a>
+                                        <a href="{{ path('app_inscription_edit', {'id': inscription.id}) }}">edit</a>
+                                    </td>
+                                </tr>
+                                {% else %}
+                                    <tr>
+                                        <td colspan="30">Aucune donnée</td>
+                                    </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    {% endblock %}

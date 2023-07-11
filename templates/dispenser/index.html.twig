@@ -68,7 +68,7 @@
 
                 <tr>
 
-                    <td>{{ dispenser.createdAt|date('d-m-Y') }}</td>
+                    <td>{{ date_format(dispenser.createdAt) }}</td>
                     <td>{{ dispenser.lesson }}</td>
                     <td class="alignements">
                         <a href="#" data-value="{{ dispenser.id }}" data-libelle="{{ dispenser.createdAt|date('d-m-Y') }}" data-bs-toggle="modal" data-bs-target="#myModal" id="dispenserid">

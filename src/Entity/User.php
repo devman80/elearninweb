@@ -58,6 +58,9 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    private ?Section $section = null;
+
  
 
     public function getId(): ?int
@@ -202,6 +205,18 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
     {
         return $this->deletedAt !== null;  
     }
+
+       public function getSection(): ?Section
+       {
+           return $this->section;
+       }
+
+       public function setSection(?Section $section): static
+       {
+           $this->section = $section;
+
+           return $this;
+       }
 
       
 

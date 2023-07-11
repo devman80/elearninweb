@@ -35,6 +35,9 @@ class Dispenser extends AbstractEntity
     #[ORM\ManyToOne(inversedBy: 'dispensers')]
     private ?Matiere $matiere = null;
 
+    #[ORM\ManyToOne(inversedBy: 'dispensers')]
+    private ?Section $section = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -120,6 +123,18 @@ class Dispenser extends AbstractEntity
     public function setMatiere(?Matiere $matiere): static
     {
         $this->matiere = $matiere;
+
+        return $this;
+    }
+
+    public function getSection(): ?Section
+    {
+        return $this->section;
+    }
+
+    public function setSection(?Section $section): static
+    {
+        $this->section = $section;
 
         return $this;
     }

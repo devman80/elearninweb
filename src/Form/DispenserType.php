@@ -3,8 +3,10 @@
 namespace App\Form;
 
 use App\Entity\Classeroom;
+use App\Entity\Dispenser;
 use App\Entity\Enseignant;
-use App\Entity\Module;
+use App\Entity\Matiere;
+use App\Entity\Section;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -12,6 +14,10 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DispenserType extends AbstractType {
 
@@ -48,24 +54,39 @@ class DispenserType extends AbstractType {
                         return $classerooms[$classeroom->getId()] = $classeroom->getLibelle();
                     },
                 ])
-                ->add('module', EntityType::class, [
-                    'class' => Module::class,
+                ->add('matiere', EntityType::class, [
+                    'class' => Matiere::class,
                     'required' => true,
                     'mapped' => true,
                     'attr' => array('class' => 'select2'),
-                    'placeholder' => '--Choix module --',
+                    'placeholder' => '--Choix matiere --',
                     'query_builder' => function (EntityRepository $er) {
                         return $er->createQueryBuilder('f')
                         // ->where('f.deletedAt IS NULL')
                         ->orderBy('f.libelle', 'DESC');
                     },
-                    'choice_label' => function ($module) {
-                        return $modules[$module->getId()] = $module->getLibelle();
+                    'choice_label' => function ($matiere) {
+                        return $matieres[$matiere->getId()] = $matiere->getLibelle();
                     },
                 ])
-                   ->add('lesson', TextType::class, [
-                       'required'=>false,
-                   ])
+                ->add('section', EntityType::class, [
+                    'class' => Section::class,
+                    'required' => true,
+                    'mapped' => true,
+                    'attr' => array('class' => 'select2'),
+                    'placeholder' => '--Choix section --',
+                    'query_builder' => function (EntityRepository $er) {
+                        return $er->createQueryBuilder('f')
+                        // ->where('f.deletedAt IS NULL')
+                        ->orderBy('f.libelle', 'DESC');
+                    },
+                    'choice_label' => function ($matiere) {
+                        return $matieres[$matiere->getId()] = $matiere->getLibelle();
+                    },
+                ])
+                ->add('lesson', TextType::class, [
+                    'required' => true,
+                ])
                 ->add('save', SubmitType::class, [
                     'attr' => [
                         'value' => 'create-don'
@@ -77,13 +98,14 @@ class DispenserType extends AbstractType {
                     ]
                 ])
         ;
+
+      
     }
 
-//    public function configureOptions(OptionsResolver $resolver): void {
-//        $resolver->setDefaults([
-//            'data_class' => Dispenser::class,
-//
-//        ]);
-//    }
+    public function configureOptions(OptionsResolver $resolver): void {
+        $resolver->setDefaults([
+            'data_class' => Dispenser::class,
+        ]);
+    }
 
 }

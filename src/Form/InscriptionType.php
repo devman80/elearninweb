@@ -24,23 +24,10 @@ class InscriptionType extends AbstractType {
         $builder
                 ->add('prenom', TextType::class, [
                     'required' => true,
-                    'constraints' => [
-                        new Regex([
-                            'pattern' => '/^[0-9a-zA-Z-\s\'ÀÁÂÃÄÅàáâãäåÒÓÔÕÖØòóôõöøÈÉÊËèéêëÇçÌÍÎÏìíîïÙÚÛÜùúûüÿÑñ]+$/',
-                            'match' => true,
-                            'message' => 'sont seulement acceptés: les chiffres, les lettres minuscules et majuscules avec ou sans accents, les espaces, les tirets et les apostrophes',
-                                ])
-                    ],
-                ])
+                 ])
                    ->add('nom', TextType::class, [
-                    'required' => false,
-                    'constraints' => [
-                        new Regex([
-                            'pattern' => '/^[0-9a-zA-Z-\s\'ÀÁÂÃÄÅàáâãäåÒÓÔÕÖØòóôõöøÈÉÊËèéêëÇçÌÍÎÏìíîïÙÚÛÜùúûüÿÑñ]+$/',
-                            'match' => true,
-                            'message' => 'sont seulement acceptés: les chiffres, les lettres minuscules et majuscules avec ou sans accents, les espaces, les tirets et les apostrophes',
-                                ])
-                    ],
+                    'required' => true,
+              
                 ])
                 ->add('commune', EntityType::class, [
                     'class' => Commune::class,
@@ -79,13 +66,7 @@ class InscriptionType extends AbstractType {
                 ->add('cmu', TextType::class, [
                     'label' => 'N° CMU',
                     'required' => false,
-                    'constraints' => [
-                        new Regex([
-                            'pattern' => '/^[0-9/? ?]{13,13]+$/',
-                            'match' => true,
-                            'message' => 'Le N° CMU ne doit contenir que 13 chiffres',
-                                ])
-                    ],
+             
                 ])
 
                 ->add('diplome', FileType::class, [
@@ -140,6 +121,35 @@ class InscriptionType extends AbstractType {
                                 ])
                     ],
                 ])
+                            
+                            
+                                       ->add('certificat', FileType::class, [
+                    'label' => 'Pièce',
+                    // unmapped means that this field is not associated to any entity property
+                    'mapped' => false,
+                    // make it optional so you don't have to re-upload the PDF file
+                    // every time you edit the Product details
+                    'required' => false,
+                    // unmapped fields can't define their validation using annotations
+                    // in the associated entity, so you can use the PHP constraint classes
+                    'constraints' => [
+                        new File([
+                            'maxSize' => '1024k',
+                            'mimeTypes' => [
+                                'image/*',
+                                'application/pdf',
+                                'application/msword',
+                                'application/vnd.ms-excel',
+                                'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                                'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+                                'text/plain'
+                            ],
+                            'mimeTypesMessage' => 'Verifiez le format svp ou la taille',
+                                ])
+                    ],
+                ])
+                            
                 ->add('extrait', FileType::class, [
                     'label' => 'Extrait de naissance',
                     // unmapped means that this field is not associated to any entity property
@@ -173,18 +183,8 @@ class InscriptionType extends AbstractType {
                         'Femme' => 'Femme',
                     ],
                 ])
-                ->add('contact', TextType::class, [
-                    'required' => false,
-                    'constraints' => [
-                        new RegEx("#^[0-9/? ?]{10,16}$#")
-                    ],
-                ])
-                ->add('telephone', TextType::class, [
-                    'required' => true,
-                    'constraints' => [
-                        new RegEx("#^[0-9/? ?]{10,16}$#")
-                    ],
-                ])
+                ->add('contact')
+                ->add('telephone')
                 ->add('datenaissance', DateType::class, [
                     // renders it as a single text box
                     'widget' => 'single_text',
@@ -193,17 +193,7 @@ class InscriptionType extends AbstractType {
                     'format' => 'yyyy-MM-dd',
                         ]
                 )
-                ->add('lieuresidence', TextType::class, [
-                    'label' => 'Quartier',
-                    'required' => false,
-                    'constraints' => [
-                        new Regex([
-                            'pattern' => '/^[0-9a-zA-Z-\s\'ÀÁÂÃÄÅàáâãäåÒÓÔÕÖØòóôõöøÈÉÊËèéêëÇçÌÍÎÏìíîïÙÚÛÜùúûüÿÑñ]+$/',
-                            'match' => true,
-                            'message' => 'sont seulement acceptés: les chiffres, les lettres minuscules et majuscules avec ou sans accents, les espaces, les tirets et les apostrophes',
-                                ])
-                    ],
-                ])
+                ->add('lieuresidence')
                 ->add('numpiece', TextType::class, [
                     'label' => 'N° de pièce',
                     'required' => false,
@@ -238,16 +228,7 @@ class InscriptionType extends AbstractType {
                         'Oui' => 'Oui',
                     ],
                 ])
-                ->add('handicap', TextType::class, [
-                    'required' => false,
-                    'constraints' => [
-                        new Regex([
-                            'pattern' => '/^[0-9a-zA-Z-\s\'ÀÁÂÃÄÅàáâãäåÒÓÔÕÖØòóôõöøÈÉÊËèéêëÇçÌÍÎÏìíîïÙÚÛÜùúûüÿÑñ]+$/',
-                            'match' => true,
-                            'message' => 'sont seulement acceptés: les chiffres, les lettres minuscules et majuscules avec ou sans accents, les espaces, les tirets et les apostrophes',
-                                ])
-                    ],
-                ])
+            
                 ->add('paysnaiss', CountryType::class, array('label' => 'Pays de naissance*',
                     'preferred_choices' => array('CI'),
                     'choice_translation_locale' => null
@@ -272,7 +253,7 @@ class InscriptionType extends AbstractType {
                 ])
       
                 ->add('valider', SubmitType::class);
-        ;
+        
     }
 
     public function configureOptions(OptionsResolver $resolver): void {

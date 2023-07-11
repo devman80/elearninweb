@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Inscription;
 use App\Form\InscriptionType;
+use App\Form\UpdateinscriptionType;
 use App\Repository\InscriptionRepository;
 use App\Traits\ClientIp;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,24 +16,22 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route('/inscription')]
-class InscriptionController extends AbstractController
-{
-use ClientIp;
+class InscriptionController extends AbstractController {
+
+    use ClientIp;
 
     #[Route('/', name: 'app_inscription_index', methods: ['GET'])]
-    public function index(InscriptionRepository $inscriptionRepository): Response
-    {
-                $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-
+    public function index(InscriptionRepository $inscriptionRepository): Response {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $inscription = $inscriptionRepository->findBy(["editable" => 1]);
         return $this->render('inscription/index.html.twig', [
-            'inscriptions' => $inscriptionRepository->findAll(),
+                    'inscriptions' => $inscription,
         ]);
     }
 
     #[Route('/new', name: 'app_inscription_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, InscriptionRepository $inscriptionRepository,  SluggerInterface $slugger): Response
-    {
-                $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+    public function new(Request $request, InscriptionRepository $inscriptionRepository, SluggerInterface $slugger): Response {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $inscription = new Inscription();
         $form = $this->createForm(InscriptionType::class, $inscription);
@@ -39,7 +39,7 @@ use ClientIp;
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-           // $inscription->setCreatedFromIp($this->GetIp());
+            // $inscription->setCreatedFromIp($this->GetIp());
 
             $lesinscriptions = $inscriptionRepository->findBy(array(), array('id' => 'desc'), 1, 0);
             $id = 0;
@@ -57,7 +57,6 @@ use ClientIp;
             $code = $an[0] . $nominscription . $idEnfant;
             $inscription->setCode($code);
 
-
             $brochureFile = $form->get('brochure')->getData();
             if ($brochureFile) {
                 $originalFilename = pathinfo($brochureFile->getClientOriginalName(), PATHINFO_FILENAME);
@@ -68,15 +67,14 @@ use ClientIp;
                 // Move the file to the directory where brochures are stored
                 try {
                     $brochureFile->move(
-                        $this->getParameter('brochures_directory'),
-                        $newFilename
+                            $this->getParameter('brochures_directory'),
+                            $newFilename
                     );
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
                 }
                 $inscription->setBrochureFilename($newFilename);
             };
-
 
             $extraitFile = $form->get('extrait')->getData();
             if ($extraitFile) {
@@ -88,8 +86,8 @@ use ClientIp;
                 // Move the file to the directory where brochures are stored
                 try {
                     $extraitFile->move(
-                        $this->getParameter('brochures_directory'),
-                        $newFilename2
+                            $this->getParameter('brochures_directory'),
+                            $newFilename2
                     );
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
@@ -110,8 +108,8 @@ use ClientIp;
                 // Move the file to the directory where brochures are stored
                 try {
                     $extraitFile->move(
-                        $this->getParameter('brochures_directory'),
-                        $newFilename3
+                            $this->getParameter('brochures_directory'),
+                            $newFilename3
                     );
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
@@ -130,17 +128,17 @@ use ClientIp;
                 // this is needed to safely include the file name as part of the URL
                 $safeFilename1 = $slugger->slug($diplomeFilename);
                 $newDiplomename = $safeFilename1 . '-' . uniqid() . '.' . $diplomeFile->guessExtension();
-    
+
                 // Move the file to the directory where brochures are stored
                 try {
                     $diplomeFile->move(
-                        $this->getParameter('brochures_directory'),
-                        $newDiplomename
+                            $this->getParameter('brochures_directory'),
+                            $newDiplomename
                     );
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
                 }
-    
+
                 // updates the 'brochureFilename' property to store the PDF file name
                 // instead of its contents
                 $inscription->setDiplomeFilename($newDiplomename);
@@ -153,33 +151,31 @@ use ClientIp;
         }
 
         return $this->render('inscription/new.html.twig', [
-            'inscription' => $inscription,
-            'form' => $form,
+                    'inscription' => $inscription,
+                    'form' => $form,
         ]);
     }
 
-    #[Route('/{id}', name: 'app_inscription_show', methods: ['GET', 'POST'])]
-    public function show(Inscription $inscription): Response
-    {
-                $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+    #[Route('d/{id}', name: 'app_inscription_show', methods: ['GET', 'POST'])]
+    public function show(Inscription $inscription): Response {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         return $this->render('inscription/show.html.twig', [
-            'inscription' => $inscription,
+                    'inscription' => $inscription,
         ]);
     }
 
     #[Route('/{id}/edit', name: 'app_inscription_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Inscription $inscription, InscriptionRepository $inscriptionRepository  ,  SluggerInterface $slugger): Response
-    {
-                $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+    public function edit(Request $request, Inscription $inscription, InscriptionRepository $inscriptionRepository, SluggerInterface $slugger): Response {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $form = $this->createForm(InscriptionType::class, $inscription);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            
-           // $inscription->setCreatedFromIp($this->GetIp());
-           
+
+            // $inscription->setCreatedFromIp($this->GetIp());
+
             $brochureFile = $form->get('brochure')->getData();
             if ($brochureFile) {
                 $originalFilename = pathinfo($brochureFile->getClientOriginalName(), PATHINFO_FILENAME);
@@ -190,15 +186,14 @@ use ClientIp;
                 // Move the file to the directory where brochures are stored
                 try {
                     $brochureFile->move(
-                        $this->getParameter('brochures_directory'),
-                        $newFilename
+                            $this->getParameter('brochures_directory'),
+                            $newFilename
                     );
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
                 }
                 $inscription->setBrochureFilename($newFilename);
             };
-
 
             $extraitFile = $form->get('extrait')->getData();
             if ($extraitFile) {
@@ -210,8 +205,8 @@ use ClientIp;
                 // Move the file to the directory where brochures are stored
                 try {
                     $extraitFile->move(
-                        $this->getParameter('brochures_directory'),
-                        $newFilename2
+                            $this->getParameter('brochures_directory'),
+                            $newFilename2
                     );
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
@@ -232,8 +227,8 @@ use ClientIp;
                 // Move the file to the directory where brochures are stored
                 try {
                     $extraitFile->move(
-                        $this->getParameter('brochures_directory'),
-                        $newFilename3
+                            $this->getParameter('brochures_directory'),
+                            $newFilename3
                     );
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
@@ -252,17 +247,17 @@ use ClientIp;
                 // this is needed to safely include the file name as part of the URL
                 $safeFilename1 = $slugger->slug($diplomeFilename);
                 $newDiplomename = $safeFilename1 . '-' . uniqid() . '.' . $diplomeFile->guessExtension();
-    
+
                 // Move the file to the directory where brochures are stored
                 try {
                     $diplomeFile->move(
-                        $this->getParameter('brochures_directory'),
-                        $newDiplomename
+                            $this->getParameter('brochures_directory'),
+                            $newDiplomename
                     );
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
                 }
-    
+
                 // updates the 'brochureFilename' property to store the PDF file name
                 // instead of its contents
                 $inscription->setDiplomeFilename($newDiplomename);
@@ -274,20 +269,49 @@ use ClientIp;
         }
 
         return $this->renderForm('inscription/edit.html.twig', [
-            'inscription' => $inscription,
-            'form' => $form,
+                    'inscription' => $inscription,
+                    'form' => $form,
+        ]);
+    }
+
+    #[Route('/{id}/inscription/', name: 'app_inscription_active', methods: ['POST'])]
+    public function validateInscription(Request $request, Inscription $inscription, EntityManagerInterface $entityManager): Response {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            throw $this->createAccessDeniedException('Accès réfusé, vous n\'avez pas les droits d\'accès ici!');
+        }
+        if ($this->isCsrfTokenValid('active' . $inscription->getId(), $request->request->get('_token'))) {
+
+            //  $entityManager = $this->getDoctrine()->getManager();
+            $user = $this->getUser();
+            $inscription->setUpdatedBy($user);
+            $inscription->setEditable(1);
+            $inscription->setUpdatedFromIp($this->GetIp());
+
+            $entityManager->flush();
+            $this->addFlash('success', 'Validation succès.');
+        }
+
+        return $this->redirectToRoute('app_inscription_index');
+    }
+
+    #[Route('/archive', name: 'app_inscription_archive', methods: ['GET', 'POST'])]
+    public function archiveInscription(InscriptionRepository $inscriptionRepository): Response {
+        $inscription = $inscriptionRepository->findBy(["editable" => 0]);
+        return $this->render('inscription/archive.html.twig', [
+                    'inscriptions' => $inscription,
         ]);
     }
 
     #[Route('/{id}', name: 'app_inscription_delete', methods: ['POST'])]
-    public function delete(Request $request, Inscription $inscription, InscriptionRepository $inscriptionRepository): Response
-    {
-                $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+    public function delete(Request $request, Inscription $inscription, InscriptionRepository $inscriptionRepository): Response {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        if ($this->isCsrfTokenValid('delete'.$inscription->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $inscription->getId(), $request->request->get('_token'))) {
             $inscriptionRepository->remove($inscription, true);
         }
 
         return $this->redirectToRoute('app_inscription_index', [], Response::HTTP_SEE_OTHER);
     }
+
 }

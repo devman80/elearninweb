@@ -5,7 +5,7 @@
 
 {% block body %}
    
-
+    <div class="row m-lg-6"> 
     <div><a href="#" class="btn btn-outline-primary btns" data-turbo="true"><i class="fa-solid fa-bookmark"></i>
         Liste des cours de {{ nommatiere|upper }}
         </a></div>
@@ -20,7 +20,6 @@
                 <th class="alignements">Date</th>
                 <th class="alignements">Titre</th>
                 <th class="alignements">Cours</th>
-                <th style="text-align: center;"># Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -29,12 +28,12 @@
 
                 <tr>
 
-                    <td>{{ dispenser.createdAt|date('d-m-Y') }}</td>
+                    <td> {% if dispenser.createdAt is not empty %} {{ date_format(dispenser.createdAt)  }} {% else %} {% endif %}</td>
                     <td>{{ dispenser.lesson }}</td>
                
                     <td>
                         {% if dispenser.brochureFilename is not empty %}
-                        <a href="{{ asset('uploads/brochures/' ~ dispenser.brochureFilename) }}">Voir le cours</a>
+                        <a href="{{ asset('uploads/brochures/' ~ dispenser.brochureFilename) }}">Telecharger</a>
                         {% else %} {% endif %}
                     </td>
                 </tr>
@@ -44,6 +43,6 @@
         </tbody>
     </table>
 
-
+    </div>
 {% endblock %}
 

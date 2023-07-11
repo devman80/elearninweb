@@ -1,7 +1,7 @@
 
 
 
-{{ form_start(form) }}
+{{ form_start(form, { 'attr': { 'id': 'dispenser_form' } }) }}
 <div class="my-custom-class-for-errors">
     {{ form_errors(form) }}
     {% for message in app.flashes('module') %}
@@ -21,8 +21,9 @@
 <div class="row">
     <div class="col-md-6 bg-success-subtle grasmini">
         {{ form_row(form.enseignant, {'label':'Choix professeur ', 'attr':{'class':'select2'}}) }}
+        {{ form_row(form.section) }}
+        {{ form_row(form.matiere) }}
         {{ form_row(form.classeroom, {'label':'CLasse : ', 'attr':{'class':'form-control'}}) }}
-        {{ form_row(form.module, {'label':'Module ', 'attr':{'class':'form-control'}}) }}
         {{ form_row(form.lesson, {'label':'Leçon ou chapitre ', 'attr':{'class':'form-control'}}) }}
         {{ form_row(form.brochureFilename, {'label':'Téléchargez le cours ', 'attr':{'class':'form-control'}}) }}
 
@@ -42,3 +43,4 @@
 
 
 {{ form_end(form) }}
+

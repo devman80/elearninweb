@@ -83,6 +83,8 @@ class RegistrationController extends AbstractController {
             $user->setIsVerified(false);
             $user->setNom($data['nom']);
             $user->setEditable(1);
+            $user->setSection($entityManager->find(Section::class, $data['section']->getId()));
+
             $user->setPrenom($data['prenom']);
             $user->setContact($data['contact']);
             $user->setEmail($data['email']);
@@ -156,7 +158,7 @@ class RegistrationController extends AbstractController {
             $inscription->setPaysvit($data['paysvit']);
             $inscription->setCommune($entityManager->find(Commune::class, $data['commune']->getId()));
             $inscription->setExtraitFilename($extraitFileName);
-            $inscription->setHandicap($data['handicap']);
+           // $inscription->setHandicap($data['handicap']);
             $inscription->setTypehandicap($data['typehandicap']);
             $inscription->setStatutmatri($data['statutmatri']);
             $inscription->setTypepiece($data['typepiece']);

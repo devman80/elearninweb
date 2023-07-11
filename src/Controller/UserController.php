@@ -47,7 +47,7 @@ class UserController extends AbstractController {
 
     #[Route('/new', name: 'app_user_new', methods: ['GET', 'POST'])]
     public function new(Request $request, SluggerInterface $slugger, UserRepository $userRepository, UserPasswordHasherInterface $userPasswordHasher): Response {
-        if (!$this->isGranted('ROLE_SUPER_ADMIN')) {
+        if (!$this->isGranted('ROLE_ADMIN')) {
             throw $this->createAccessDeniedException('Accès réfusé, vous n\'avez pas les droits d\'accès ici!');
         }
         $user = new User();
@@ -167,7 +167,8 @@ class UserController extends AbstractController {
         }
 
         $listeMatieres = $matiereRepos->findBy(['section' => $section]);
-
+        $listecours = $matiereRepos->matieresGroupByCours();
+      
         if (null === $user) {
             return $this->redirectToRoute('app_home128');
         }
@@ -178,6 +179,7 @@ class UserController extends AbstractController {
                     'nationalite' => $nationalite,
                     'habitation' => $habitation,
                     'matieres' => $listeMatieres,
+                    'cours' => $listecours,
         ]);
     }
 
@@ -191,10 +193,9 @@ class UserController extends AbstractController {
         $listeDispenser = $dispenserRepository->findBy(['matiere' => $idmatiere, 'deletedAt' => NULL]);
         $lignematiere = $matiereRepository->find($idmatiere);
         $nommatiere = $lignematiere->getLibelle();
-        dd($lignematiere);
+
         return $this->render('user/listelesson.html.twig', [
                     'dispensers' => $listeDispenser,
-                    'id' => $idmatiere,
                     'nommatiere' => $nommatiere,
         ]);
     }

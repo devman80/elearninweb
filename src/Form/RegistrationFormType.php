@@ -106,7 +106,6 @@ class RegistrationFormType extends AbstractType {
                         'Oui' => 'Oui',
                     ]
                 ])
-                ->add('handicap', TextType::class, ['label' => 'Handicap:', 'attr' => ['placeholder' => 'Preciser handicap', 'required' => false,]])
                 ->add('cmu', TextType::class, [
                     'required' => false,
                     'constraints' => [

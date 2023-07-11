@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Auditeurs en attente
+{% endblock %}
+
+{% block body %}
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">En attente de validation
+        </div>
+        <div class="card-header py-3">
+
+            <a href="{{ path('app_inscription_index') }}">Inscriptions validées</a>
+            </h6>
+        </div>
+
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+
+                            <th>Date inscription</th>
+                            <th>Nom & prénom</th>
+                            <th>Sexe</th>
+                            <th>Contact</th>
+                            <th>Photo</th>
+                            <th>actions</th>
+                            <th>Valider</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for inscription in inscriptions %}
+                            <tr>
+
+                                <td>{{ date_format(inscription.createdAt)}} à {{ inscription.createdAt|date('H:i:s') }}</td>
+                                <td>{{ inscription.nom }} {{ inscription.prenom }}</td>
+
+                                <td>{{ inscription.sexe }}</td>
+                                <td>{{ inscription.contact }}</td>
+
+                                <td>{% if inscription.brochureFilename is not empty %}
+
+                                    <img src="{{ asset('uploads/brochures/'~inscription.brochureFilename )}}" style="max-width: 100px;  max-height: 200px"/>
+
+
+                                {% else %}Aucune photo
+                                    {% endif %}</td>
+
+
+                                    <td>
+                                        <a href="{{ path('app_inscription_show', {'id': inscription.id}) }}">details</a>
+                                        <a href="{{ path('app_inscription_edit', {'id': inscription.id}) }}">modifier</a>
+                                    </td>
+                                    <td>
+
+                                        <form method="post" action="{{ path('app_inscription_active', {'id': inscription.id}) }}" onsubmit="return confirm('Voulez-vous active ce compte?');">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('active' ~ inscription.id) }}">
+
+                                            <button class="btn">
+                                                <button class="btn">
+                                                    <img src="{{ asset('img/b_usrcheck.png') }}" title="Activer" class="user-plus">
+
+                                                    </img>
+                                                </button>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                {% else %}
+                                    <tr>
+                                        <td colspan="30">Aucune donnée</td>
+                                    </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    {% endblock %}

@@ -54,8 +54,8 @@ class UserType extends AbstractType
                     'Administrateur' => 'ROLE_ADMIN',
                     'Secretaire' => 'ROLE_SECRETAIRE',
                     'Etudiant' => 'ROLE_ETUDIANT',
-                    'Enseignant' => 'ROLE_ENSEIGNANT',
-                    'Tresorier' => 'ROLE_TRESORIER',
+                    'Enseignant' => 'ROLE_PROFESSEUR',
+                    'Tresorier' => 'ROLE_COMPTABILITE',
                 ],
             ])
             ->add('plainPassword', RepeatedType::class, [

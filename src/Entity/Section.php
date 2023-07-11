@@ -21,13 +21,23 @@ class Section extends AbstractEntity
     #[ORM\OneToMany(mappedBy: 'section', targetEntity: Inscription::class)]
     private Collection $inscriptions;
 
+   
+
+    #[ORM\OneToMany(mappedBy: 'section', targetEntity: Dispenser::class)]
+    private Collection $dispensers;
+
     #[ORM\OneToMany(mappedBy: 'section', targetEntity: Matiere::class)]
     private Collection $matieres;
+
+    #[ORM\OneToMany(mappedBy: 'section', targetEntity: User::class)]
+    private Collection $users;
 
     public function __construct()
     {
         $this->inscriptions = new ArrayCollection();
+        $this->dispensers = new ArrayCollection();
         $this->matieres = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -80,6 +90,37 @@ class Section extends AbstractEntity
         return $this->libelle;
     }
 
+
+    /**
+     * @return Collection<int, Dispenser>
+     */
+    public function getDispensers(): Collection
+    {
+        return $this->dispensers;
+    }
+
+    public function addDispenser(Dispenser $dispenser): static
+    {
+        if (!$this->dispensers->contains($dispenser)) {
+            $this->dispensers->add($dispenser);
+            $dispenser->setSection($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDispenser(Dispenser $dispenser): static
+    {
+        if ($this->dispensers->removeElement($dispenser)) {
+            // set the owning side to null (unless already changed)
+            if ($dispenser->getSection() === $this) {
+                $dispenser->setSection(null);
+            }
+        }
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Matiere>
      */
@@ -88,7 +129,7 @@ class Section extends AbstractEntity
         return $this->matieres;
     }
 
-    public function addMatiere(Matiere $matiere): self
+    public function addMatiere(Matiere $matiere): static
     {
         if (!$this->matieres->contains($matiere)) {
             $this->matieres->add($matiere);
@@ -98,12 +139,42 @@ class Section extends AbstractEntity
         return $this;
     }
 
-    public function removeMatiere(Matiere $matiere): self
+    public function removeMatiere(Matiere $matiere): static
     {
         if ($this->matieres->removeElement($matiere)) {
             // set the owning side to null (unless already changed)
             if ($matiere->getSection() === $this) {
                 $matiere->setSection(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): static
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+            $user->setSection($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): static
+    {
+        if ($this->users->removeElement($user)) {
+            // set the owning side to null (unless already changed)
+            if ($user->getSection() === $this) {
+                $user->setSection(null);
             }
         }
 

@@ -2,10 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\Dispenser;
 use App\Entity\Matiere;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Doctrine\ORM\Query\Expr\Join;
 
 /**
  * @extends ServiceEntityRepository<Matiere>
@@ -75,6 +75,16 @@ class MatiereRepository extends ServiceEntityRepository {
 //        ;
 //    }
 
+  
+public function matieresGroupByCours()
+    {
+       return $this->createQueryBuilder('M')
+            ->join(Dispenser::class, 'C', 'WITH', 'C.matiere = M.id')
+            ->groupBy('M.id')
+            ->getQuery()
+            ->getResult()
+       ;
+    }
     
     
     

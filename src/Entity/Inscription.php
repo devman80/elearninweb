@@ -7,11 +7,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-#[UniqueEntity(fields: ['$cmu'], message: 'Numéro CMU déjà utilisé')]
+#[UniqueEntity(fields: ['cmu'], message: 'Numéro CMU déjà utilisé')]
 #[ORM\Entity(repositoryClass: InscriptionRepository::class)]
 class Inscription extends AbstractEntity
 {
@@ -20,11 +19,6 @@ class Inscription extends AbstractEntity
     #[ORM\Column]
     private ?int $id = null;
 
-     #[Assert\Regex(
-        pattern: '/^[0-9a-zA-Z-\s\'ÀÁÂÃÄÅàáâãäåÒÓÔÕÖØòóôõöøÈÉÊËèéêëÇçÌÍÎÏìíîïÙÚÛÜùúûüÿÑñ]+$/',
-       // htmlPattern: '^[a-zA-Z]+$',
-        message: 'Les caractères speciaux ne sont pas autorisés',
-    )]
     #[ORM\Column(length: 255)]
     #[ORM\Groups("public")]
     private ?string $nom = null;

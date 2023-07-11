@@ -42,7 +42,9 @@ security:
     role_hierarchy:
             ROLE_ETUDIANT:       ROLE_USER
             ROLE_PROFESSEUR:       ROLE_USER
-            ROLE_ADMIN:       [ROLE_ETUDIANT, ROLE_PROFESSEUR ]
+            ROLE_SECRETAIRE:       ROLE_USER
+            ROLE_COMPTABILITE:       ROLE_USER
+            ROLE_ADMIN:       [ROLE_ETUDIANT, ROLE_PROFESSEUR, ROLE_SECRETAIRE, ROLE_COMPTABILITE ]
             ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     # Easy way to control access for large sections of your site

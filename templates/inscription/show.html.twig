@@ -4,141 +4,146 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Auditeur</h1>
+    <h1>Auditeur</h1>
 
-	<table class="table">
-		<tbody>
+    <table class="table">
+        <tbody>
 
-			<tr>
-				<th>Nom</th>
-				<td>{{ inscription.nom }}</td>
-			</tr>
-			<tr>
-				<th>Prenom</th>
-				<td>{{ inscription.prenom }}</td>
-			</tr>
-			<tr>
-				<th>BrochureFilename</th>
-				<td>{{ inscription.brochureFilename }}</td>
-			</tr>
-			<tr>
-				<th>Sexe</th>
-				<td>{{ inscription.sexe }}</td>
-			</tr>
-			<tr>
-				<th>Contact</th>
-				<td>{{ inscription.contact }}</td>
-			</tr>
-			<tr>
-				<th>Statutmatri</th>
-				<td>{{ inscription.statutmatri }}</td>
-			</tr>
-			<tr>
-				<th>Date naissance</th>
-				<td>{{ inscription.datenaissance ? inscription.datenaissance|date('d-m-Y') : '' }}</td>
-			</tr>
-			<tr>
-				<th>Lieu residence</th>
-				<td>{{ inscription.lieuresidence }}</td>
-			</tr>
-			<tr>
-				<th>Pays d'origine</th>
-				<td>{{ inscription.paysnaiss|country_name }}</td>
-			</tr>
-			<tr>
-				<th>Pays de residence</th>
-				<td>{{ inscription.paysvit|country_name }}</td>
-			</tr>
-			<tr>
-				<th>Type pièce</th>
-				<td>{{ inscription.typepiece }}</td>
-			</tr>
-			<tr>
-				<th>N° pièce</th>
-				<td>{{ inscription.numpiece }}</td>
-			</tr>
-			<tr>
-				<th>Handicap</th>
-				<td>{{ inscription.handicap }}</td>
-			</tr>
-			<tr>
-				<th>Type handicap</th>
-				<td>{{ inscription.typehandicap }}</td>
-			</tr>
-			<tr>
-				<th>Telephone</th>
-				<td>{{ inscription.telephone }}</td>
-			</tr>
-			<tr>
-				<th>Cmu</th>
-				<td>{{ inscription.cmu }}</td>
-			</tr>
-			<tr>
-				<th>Certificat  medical</th>
-				<td>
+            <tr>
+                <th>Date</th>
+                <td> {{ date_format(inscription.createdAt)  }} à {{ (inscription.createdAt|date('H:i:s')) }} </td>     
+            </tr>
 
-					{% if inscription.brochureFilename is not empty %}
-						<a href="{{ asset('uploads/brochures/' ~ inscription.certificatFilename) }}">Voir photo</a>
-					{% else %}
-						(Photo non importée)
-					{% endif %}
+            <tr>
+                <th>Nom</th>
+                <td>{{ inscription.nom }}</td>
+            </tr>                             
+
+            <tr>
+                <th>Prenom</th>
+                <td>{{ inscription.prenom }}</td>
+            </tr>
+            <tr>
+                <th>Photo</th>
+                <td>{% if inscription.brochureFilename is not empty %}
+
+                    <img src="{{ asset('uploads/brochures/'~inscription.brochureFilename )}}" style="max-width: 100px;  max-height: 200px"/>
 
 
-				</td>
-			</tr>
-			<tr>
-				<th>Extrait de naissance</th>
-				<td>
-					{% if inscription.extraitFilename is not empty %}
-						<a href="{{ asset('uploads/brochures/' ~ inscription.extraitFilename) }}">Voir photo</a>
-					{% else %}
-						(Photo non importée)
-					{% endif %}
+                    {% else %}Aucune photo
+                        {% endif %}</td>
+                    </tr>
+                    <tr>
+                        <th>Sexe</th>
+                        <td>{{ inscription.sexe }}</td>
+                    </tr>
+                    <tr>
+                        <th>Contact</th>
+                        <td>{{ inscription.contact }}</td>
+                    </tr>
+                    <tr>
+                        <th>Statut matrimonial</th>
+                        <td>{{ inscription.statutmatri }}</td>
+                    </tr>
+                    <tr>
+                        <th>Date naissance</th>
+                        <td>{{ inscription.datenaissance ? inscription.datenaissance|date('d-m-Y') : '' }}</td>
+                    </tr>
+                    <tr>
+                        <th>Lieu residence</th>
+                        <td>{{ inscription.lieuresidence }}</td>
+                    </tr>
+                    <tr>
+                        <th>Pays d'origine</th>
+                        <td>{{ inscription.paysnaiss|country_name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Pays de residence</th>
+                        <td>{{ inscription.paysvit|country_name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Type pièce</th>
+                        <td>{{ inscription.typepiece }}</td>
+                    </tr>
+                    <tr>
+                        <th>N° pièce</th>
+                        <td>{{ inscription.numpiece }}</td>
+                    </tr>
+                    <tr>
+                        <th>Handicap</th>
+                        <td>{{ inscription.handicap }}</td>
+                    </tr>
+                    <tr>
+                        <th>Type handicap</th>
+                        <td>{{ inscription.typehandicap }}</td>
+                    </tr>
+                    <tr>
+                        <th>Telephone</th>
+                        <td>{{ inscription.telephone }}</td>
+                    </tr>
+                    <tr>
+                        <th>Cmu</th>
+                        <td>{{ inscription.cmu }}</td>
+                    </tr>
+                    <tr>
+                        <th>Certificat  medical</th>
+                        <td>
 
-				</td>
-			</tr>
-			<tr>
-				<th>Matricule</th>
-				<td>{{ inscription.matricule }}</td>
-			</tr>
-			<tr>
-				<th>Diplome</th>
-				<td>
+                            {% if inscription.brochureFilename is not empty %}
+                                <a href="{{ asset('uploads/brochures/' ~ inscription.certificatFilename) }}">Voir photo</a>
+                            {% else %}
+                                (Photo non importée)
+                            {% endif %}
 
-					{% if inscription.diplomeFilename is not empty %}
-						<a href="{{ asset('uploads/brochures/' ~ inscription.diplomeFilename) }}">Voir photo</a>
-					{% else %}
-						(Photo non importée)
-					{% endif %}
 
-				</td>
-			</tr>
-			<tr>
-				<th>Photo CNI</th>
-				<td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Extrait de naissance</th>
+                        <td>
+                            {% if inscription.extraitFilename is not empty %}
+                                <a href="{{ asset('uploads/brochures/' ~ inscription.extraitFilename) }}">Voir photo</a>
+                            {% else %}
+                                (Photo non importée)
+                            {% endif %}
 
-					{% if inscription.cniFilename is not empty %}
-						<a href="{{ asset('uploads/brochures/' ~ inscription.cniFilename) }}">Voir photo</a>
-					{% else %}
-						(Photo non importée)
-					{% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Matricule</th>
+                        <td>{{ inscription.matricule }}</td>
+                    </tr>
+                    <tr>
+                        <th>Diplome</th>
+                        <td>
 
-				</td>
-			</tr>
-			<tr>
-				<th>Email</th>
-				<td>{{ inscription.email }}</td>
-			</tr>
-			<tr>
-				<th>MontantInscription</th>
-				<td>{{ inscription.montantInscription }}</td>
-			</tr>
-		</tbody>
-	</table>
+                            {% if inscription.diplomeFilename is not empty %}
+                                <a href="{{ asset('uploads/brochures/' ~ inscription.diplomeFilename) }}">Voir photo</a>
+                            {% else %}
+                                (Photo non importée)
+                            {% endif %}
 
-	<a href="{{ path('app_inscription_index') }}">Retour</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Photo CNI</th>
+                        <td>
 
-	<a href="{{ path('app_inscription_edit', {'id': inscription.id}) }}">Modifier</a>
+                            {% if inscription.cniFilename is not empty %}
+                                <a href="{{ asset('uploads/brochures/' ~ inscription.cniFilename) }}">Voir photo</a>
+                            {% else %}
+                                (Photo non importée)
+                            {% endif %}
 
-	{{ include('inscription/_delete_form.html.twig') }}
-{% endblock %}
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+            <a href="{{ path('app_inscription_index') }}">Retour</a>
+
+            <a href="{{ path('app_inscription_edit', {'id': inscription.id}) }}">Modifier</a>
+
+
+            {% endblock %}
