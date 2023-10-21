@@ -27,71 +27,72 @@
     </div>
     <fieldset>
 
-        <div class="card mb-3">
-            <div class="card-header">Identification</div>
-            <div class="card-body">
+        <div class="card mb-3" style="border:5px solid #1c7430;border-color: #1c7430;">
+            <div class="card-header" style="background-color: #1c7430;color: white;font-size: medium;font-weight: bold;">Identification</div>
+            <div class="card-body" style="font-weight: bold;color: black;">
                 {{ form_row(registrationForm.email) }}
                 {{ form_row(registrationForm.password) }}
                 {{ form_row(registrationForm.plainPassword, {
-                    label: 'Confirmation mot de passe :'
+                    label: 'Confirmation mot de passe *:'
                 }) }}
             </div>
         </div>
-        <div class="card mb-3">
-            <div class="card-header">Donn&eacute;es personnelles</div>
-            <div class="card-body">
+        <div class="card mb-3" style="border:5px solid #1c7430;border-color: #1c7430;">
+            <div class="card-header" style="background-color: #1c7430;color: white;font-size: medium;font-weight: bold;">Donn&eacute;es personnelles</div>
+            <div class="card-body" style="font-weight: bold;color: black;">
                 <div class="row">
                     <div class="col-md-3">{{ form_row(registrationForm.nom) }}</div>
                     <div class="col-md-6">{{ form_row(registrationForm.prenom) }}</div>
-                    <div class="col-md-3">{{ form_row(registrationForm.sexe) }}</div>
+                    <div class="col-md-3">{{ form_row(registrationForm.sexe,{'attr':{'class':'form-control'}}) }}</div>
                 </div>
                 <div class="row">
                     <div class="col-md-3">{{ form_row(registrationForm.brochureFilename) }}</div>
                     <div class="col-md-3">{{ form_row(registrationForm.telephone) }}</div>
                     <div class="col-md-3">{{ form_row(registrationForm.contact) }}</div>
-                    <div class="col-md-3">{{ form_row(registrationForm.statutmatri) }}</div>
+                    <div class="col-md-3">{{ form_row(registrationForm.statutmatri,{'attr':{'class':'form-control'}}) }}</div>
                 </div>
                 <div class="row">
                     <div class="col-md-3">{{ form_row(registrationForm.datenaissance) }}</div>
-                    <div class="col-md-3">{{ form_row(registrationForm.lieuresidence, {'label':'Lieu de residence'}) }}</div>
-                    <div class="col-md-3">{{ form_row(registrationForm.paysnaiss) }}</div>
-                    <div class="col-md-3">{{ form_row(registrationForm.commune) }}</div>
+                    <div class="col-md-3">{{ form_row(registrationForm.lieuresidence, {'label':'Lieu de residence *:','attr':{'class':'form-control'}}) }}</div>
+                    <div class="col-md-3">{{ form_row(registrationForm.paysnaiss,{'attr':{'class':'form-control'}}) }}</div>
+                    <div class="col-md-3">{{ form_row(registrationForm.commune,{'attr':{'class':'form-control'}}) }}</div>
                 </div>
                 <div class="row">
                     <div class="col-md-3">
-                        {{ form_row(registrationForm.paysvit) }}
+                        {{ form_row(registrationForm.paysvit,{'attr':{'class':'form-control'}}) }}
                     </div>
                 </div>
 
             </div>
         </div>
-        <div class="card mb-3">
-            <div class="card-header">Documents personnels</div>
-            <div class="card-body">
+        <div class="card mb-3" style="border:5px solid #1c7430;border-color: #1c7430;">
+            <div class="card-header" style="background-color: #1c7430;color: white;font-size: medium;font-weight: bold;">Documents personnels</div>
+            <div class="card-body" style="font-weight: bold;color: black;">
                 <div class="row">
-                    <div class="col-md-3">{{ form_row(registrationForm.typepiece) }}</div>
+                    <div class="col-md-3">{{ form_row(registrationForm.typepiece,{'attr':{'class':'form-control'}}) }}</div>
                     <div class="col-md-3">{{ form_row(registrationForm.numpiece) }}</div>
                     <div class="col-md-3">{{ form_row(registrationForm.cniFilename) }}</div>
                     <div class="col-md-3">{{ form_row(registrationForm.cniFilenamerecto) }}</div>
 
                 </div>
                 <div class="row">
-                    <div class="col-md-4">{{ form_row(registrationForm.cmu, {'label':'N° CMU'}) }}</div>
-                    <div class="col-md-4">{{ form_row(registrationForm.certificatFilename) }}</div>
-                    <div class="col-md-4">{{ form_row(registrationForm.extraitFilename) }}</div>
+                    <div class="col-md-3">{{ form_row(registrationForm.cmu, {'label':'N° CMU'}) }}</div>
+                    <div class="col-md-3">{{ form_row(registrationForm.certificatFilename) }}</div>
+                    <div class="col-md-3">{{ form_row(registrationForm.extraitFilename) }}</div>
+                    <div class="col-md-3">{{ form_row(registrationForm.diplomeFilename) }}</div>
                 </div>
                 <div class="row">
 
-                    <div class="col-md-3">{{ form_row(registrationForm.typehandicap) }}</div>
+                    <div class="col-md-3">{{ form_row(registrationForm.typehandicap,{'attr':{'class':'form-control'}}) }}</div>
                     <div class="col-md-3">{{ form_row(registrationForm.codepostal) }}</div>
-                    <div class="col-md-3">{{ form_row(registrationForm.section) }}</div>
+                    <div class="col-md-3">{{ form_row(registrationForm.section,{'attr':{'class':'form-control'}}) }}</div>
                 </div>
 
             </div>
         </div>
 
     </fieldset>
-    <div class="col-md-3">{{ form_row(registrationForm.agreeTerms) }}</div>
+    <div class="col-md-4" style="font-weight: bold;color: black;">{{ form_row(registrationForm.agreeTerms) }}</div>
 
 
 

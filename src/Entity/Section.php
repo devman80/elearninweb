@@ -26,18 +26,30 @@ class Section extends AbstractEntity
     #[ORM\OneToMany(mappedBy: 'section', targetEntity: Dispenser::class)]
     private Collection $dispensers;
 
-    #[ORM\OneToMany(mappedBy: 'section', targetEntity: Matiere::class)]
-    private Collection $matieres;
 
     #[ORM\OneToMany(mappedBy: 'section', targetEntity: User::class)]
     private Collection $users;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $scolarite = null;
+
+    #[ORM\OneToMany(mappedBy: 'section', targetEntity: Paiement::class)]
+    private Collection $paiements;
+
+    #[ORM\OneToMany(mappedBy: 'section', targetEntity: Composition::class)]
+    private Collection $compositions;
+
+    #[ORM\OneToMany(mappedBy: 'section', targetEntity: Note::class)]
+    private Collection $notes;
 
     public function __construct()
     {
         $this->inscriptions = new ArrayCollection();
         $this->dispensers = new ArrayCollection();
-        $this->matieres = new ArrayCollection();
         $this->users = new ArrayCollection();
+        $this->paiements = new ArrayCollection();
+        $this->compositions = new ArrayCollection();
+        $this->notes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -87,7 +99,7 @@ class Section extends AbstractEntity
         return $this;
     }
     public function __toString() {
-        return $this->libelle;
+        return $this->libelle .' Montant '. $this->scolarite ;
     }
 
 
@@ -121,35 +133,7 @@ class Section extends AbstractEntity
         return $this;
     }
 
-    /**
-     * @return Collection<int, Matiere>
-     */
-    public function getMatieres(): Collection
-    {
-        return $this->matieres;
-    }
-
-    public function addMatiere(Matiere $matiere): static
-    {
-        if (!$this->matieres->contains($matiere)) {
-            $this->matieres->add($matiere);
-            $matiere->setSection($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMatiere(Matiere $matiere): static
-    {
-        if ($this->matieres->removeElement($matiere)) {
-            // set the owning side to null (unless already changed)
-            if ($matiere->getSection() === $this) {
-                $matiere->setSection(null);
-            }
-        }
-
-        return $this;
-    }
+    
 
     /**
      * @return Collection<int, User>
@@ -175,6 +159,108 @@ class Section extends AbstractEntity
             // set the owning side to null (unless already changed)
             if ($user->getSection() === $this) {
                 $user->setSection(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getScolarite(): ?int
+    {
+        return $this->scolarite;
+    }
+
+    public function setScolarite(?int $scolarite): static
+    {
+        $this->scolarite = $scolarite;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Paiement>
+     */
+    public function getPaiements(): Collection
+    {
+        return $this->paiements;
+    }
+
+    public function addPaiement(Paiement $paiement): static
+    {
+        if (!$this->paiements->contains($paiement)) {
+            $this->paiements->add($paiement);
+            $paiement->setSection($this);
+        }
+
+        return $this;
+    }
+
+    public function removePaiement(Paiement $paiement): static
+    {
+        if ($this->paiements->removeElement($paiement)) {
+            // set the owning side to null (unless already changed)
+            if ($paiement->getSection() === $this) {
+                $paiement->setSection(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Composition>
+     */
+    public function getCompositions(): Collection
+    {
+        return $this->compositions;
+    }
+
+    public function addComposition(Composition $composition): static
+    {
+        if (!$this->compositions->contains($composition)) {
+            $this->compositions->add($composition);
+            $composition->setSection($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComposition(Composition $composition): static
+    {
+        if ($this->compositions->removeElement($composition)) {
+            // set the owning side to null (unless already changed)
+            if ($composition->getSection() === $this) {
+                $composition->setSection(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Note>
+     */
+    public function getNotes(): Collection
+    {
+        return $this->notes;
+    }
+
+    public function addNote(Note $note): static
+    {
+        if (!$this->notes->contains($note)) {
+            $this->notes->add($note);
+            $note->setSection($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNote(Note $note): static
+    {
+        if ($this->notes->removeElement($note)) {
+            // set the owning side to null (unless already changed)
+            if ($note->getSection() === $this) {
+                $note->setSection(null);
             }
         }
 

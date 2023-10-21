@@ -38,19 +38,6 @@ class MatiereType extends AbstractType {
                     ],
                 ])
        
-            ->add('section', EntityType::class, [
-            'class' => Section::class,
-            'required' => true,
-            'mapped' => true,
-            'query_builder' => function (EntityRepository $er) {
-                return $er->createQueryBuilder('f')
-                ->where('f.deletedAt IS NULL')
-                ->orderBy('f.libelle', 'DESC');
-            },
-            'choice_label' => function ($section) {
-                return $sections[$section->getId()] = $section->getLibelle();
-            },
-        ])
                 ->add('save', SubmitType::class, [
                     'attr' => [
                         'value' => 'create-don'

@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste compos{% endblock %}
+
+{% block body %}
+    <h1>Liste des compositions</h1>
+
+    <div><a href="{{ path('app_composition_new') }}" class="btn btn-outline-primary btns" data-turbo="true"><i class="fa-solid fa-bookmark"></i>&nbsp;&nbsp;Nouveau</a></div>
+
+	<table id="app_elearning" class="table table-striped dt-responsive nowrap table-bordered table-hover" style="width:100%">
+        <thead  class="table-primary">
+            <tr>
+                
+                <th>Libelle</th>
+                <th>Date compos</th>
+                <th>Heure debut</th>
+                <th>Heure fin</th>
+
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for composition in compositions %}
+            <tr>
+             
+                <td>{{ composition.libelle }}</td>
+                <td>{{ date_format(composition.datecompos) }}</td>
+                <td>{{ composition.heuredebut ? composition.heuredebut|date('H:i:s') : '' }}</td>
+                <td>{{ composition.heurefin ? composition.heurefin|date('H:i:s') : '' }}</td>
+
+                <td>
+                    <a href="{{ path('app_composition_show', {'id': composition.id}) }}">show</a>
+                    <a href="{{ path('app_composition_edit', {'id': composition.id}) }}">edit</a>
+                </td>
+            </tr>
+       
+        {% endfor %}
+        </tbody>
+    </table>
+
+        
+{% endblock %}

@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/coefficiant')]
+#[Route('/admin/coefficiant')]
 class CoefficiantController extends AbstractController
 {
     use ClientIp;
@@ -45,18 +45,18 @@ class CoefficiantController extends AbstractController
 
             if ($type === 'new') {
                 $coefficiant->setCreatedFromIp($this->GetIp()); // remplacement de la function par le trait
-              //  ->setCreatedBy($user);
+                $coefficiant->setCreatedBy($user);
               $coefficiant->setCreatedAt(new \DateTimeImmutable("now"));
                 $coefficiantRepository->save($coefficiant, true);
 
-                ;
+                
             } else {
                 $coefficiant->setUpdatedFromIp($this->GetIp()); // remplacement de la function par le trait
-              //  ->setUpdatedBy($user)
+                $coefficiant->setUpdatedBy($user);
               $coefficiant->setUpdatedAt(new \DateTimeImmutable("now"));
 
 
-        ;
+        
                 $coefficiantRepository->save($coefficiant, true);
             }
             $nextAction = $form->get('saveAndAdd')->isClicked() ? 'app_coefficiant_new' : 'app_coefficiant_index';
@@ -113,7 +113,7 @@ class CoefficiantController extends AbstractController
         $LigneUpdate = $coefficiantRepository->find($id);
         $LigneUpdate->setDeletedFromIp($this->GetIp());
         $user = $this->getUser();
-      //  $LigneUpdate->setDeletedBy($user);
+        $LigneUpdate->setDeletedBy($user);
         $LigneUpdate->setDeletedAt(new \DateTimeImmutable("now"));
         $entityManager->flush();
         return $this->json(["data"=>"Suppression effectuée avec succès"],200,["Content-type"=>"application-json"]);

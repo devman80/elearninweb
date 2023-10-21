@@ -8,744 +8,722 @@
 -->
 
 <html lang="fr">
-<head>
+    <head>
 
-  <!-- Basic Page Needs
-	================================================== -->
-  <meta charset="utf-8">
-  <title>CAFOP LITED</title>
+        <!-- Basic Page Needs
+              ================================================== -->
+        <meta charset="utf-8">
+        <title>CAFOP LITED</title>
 
-  <!-- Mobile Specific Metas
-	================================================== -->
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="description" content="Construction Html5 Template">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-  <meta name="author" content="Themefisher">
-  <meta name="generator" content="Themefisher Educenter HTML Template v1.0">
-  
-  <!-- theme meta -->
-  <meta name="theme-name" content="educenter" />
-	{% block stylesheets %}
+        <!-- Mobile Specific Metas
+              ================================================== -->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="Formation des enseignants en ligne">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+        <meta name="author" content="CafLited">
+        <meta name="generator" content="Formation diplomante et de qualité">
 
-		{{ encore_entry_link_tags('app') }}
-  <!-- ** Plugins Needed for the Project ** -->
-  <!-- Bootstrap -->
-  <link rel="stylesheet" href="{{asset('assets2/plugins/bootstrap/bootstrap.min.css')}}">
-  <!-- slick slider -->
-  <link rel="stylesheet" href="{{asset('assets2/plugins/slick/slick.css')}}">
-  <!-- themefy-icon -->
-  <link rel="stylesheet" href="{{asset('assets2/plugins/themify-icons/themify-icons.css')}}">
-  <!-- animation css -->
-  <link rel="stylesheet" href="{{asset('assets2/plugins/animate/animate.css')}}">
-  <!-- aos -->
-  <link rel="stylesheet" href="{{asset('assets2/plugins/aos/aos.css')}}">
-  <!-- venobox popup -->
-  <link rel="stylesheet" href="{{asset('assets2/plugins/venobox/venobox.css')}}">
+        {% block stylesheets %}
 
-  <!-- Main Stylesheet -->
-  <link href="{{asset('assets2/css/style.css')}}" rel="stylesheet">
+            {{ encore_entry_link_tags('app') }}
+            <!-- ** Plugins Needed for the Project ** -->
+            <!-- Bootstrap -->
+            <link rel="stylesheet" href="{{asset('assets2/plugins/bootstrap/bootstrap.min.css')}}">
+            <!-- slick slider -->
+            <link rel="stylesheet" href="{{asset('assets2/plugins/slick/slick.css')}}">
+            <!-- themefy-icon -->
+            <link rel="stylesheet" href="{{asset('assets2/plugins/themify-icons/themify-icons.css')}}">
+            <!-- animation css -->
+            <link rel="stylesheet" href="{{asset('assets2/plugins/animate/animate.css')}}">
+            <!-- aos -->
+            <link rel="stylesheet" href="{{asset('assets2/plugins/aos/aos.css')}}">
+            <!-- venobox popup -->
+            <link rel="stylesheet" href="{{asset('assets2/plugins/venobox/venobox.css')}}">
 
-  <!--Favicon-->
-  <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
-  <link rel="icon" href="images/favicon.png" type="image/x-icon">
-	{% endblock %}
+            <!-- Main Stylesheet -->
+            <link href="{{asset('assets2/css/style.css')}}" rel="stylesheet">
 
-	{% block javascripts %}
-		{{ encore_entry_script_tags('app') }}
-<!-- jQuery -->
-<script src="{{asset('assets2/plugins/jQuery/jquery.min.js')}}"></script>
-<!-- Bootstrap JS -->
-<script src="{{asset('assets2/plugins/bootstrap/bootstrap.min.js')}}"></script>
-<!-- slick slider -->
-<script src="{{asset('assets2/plugins/slick/slick.min.js')}}"></script>
-<!-- aos -->
-<script src="{{asset('assets2/plugins/aos/aos.js')}}"></script>
-<!-- venobox popup -->
-<script src="{{asset('assets2/plugins/venobox/venobox.min.js')}}"></script>
-<!-- filter -->
-<script src="{{asset('assets2/plugins/filterizr/jquery.filterizr.min.js')}}"></script>
-<!-- google map -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcABaamniA6OL5YvYSpB3pFMNrXwXnLwU"></script>
-<script src="{{asset('assets2/plugins/google-map/gmap.js')}}"></script>
+            <!--Favicon-->
+            <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
+            <link rel="icon" href="images/favicon.png" type="image/x-icon">
+        {% endblock %}
 
-<!-- Main Script -->
-<script src="{{asset('assets2/js/script.js')}}"></script>
-{% endblock %}
-</head>
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+            <!-- jQuery -->
+            <script src="{{asset('assets2/plugins/jQuery/jquery.min.js')}}"></script>
+            <!-- Bootstrap JS -->
+            <script src="{{asset('assets2/plugins/bootstrap/bootstrap.min.js')}}"></script>
+            <!-- slick slider -->
+            <script src="{{asset('assets2/plugins/slick/slick.min.js')}}"></script>
+            <!-- aos -->
+            <script src="{{asset('assets2/plugins/aos/aos.js')}}"></script>
+            <!-- venobox popup -->
+            <script src="{{asset('assets2/plugins/venobox/venobox.min.js')}}"></script>
+            <!-- filter -->
+            <script src="{{asset('assets2/plugins/filterizr/jquery.filterizr.min.js')}}"></script>
+            <!-- google map -->
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcABaamniA6OL5YvYSpB3pFMNrXwXnLwU"></script>
+            <script src="{{asset('assets2/plugins/google-map/gmap.js')}}"></script>
+            <script type="application/javascript" src="{{ asset('js/connexion.js') }}"></script>
+            <!-- Main Script -->
+            <script src="{{asset('assets2/js/script.js')}}"></script>
 
-<body>
-  <!-- preloader start -->
-  <div class="preloader">
-    <img src="assets2/images/preloader.gif" alt="preloader">
-  </div>
-  <!-- preloader end -->
+        {% endblock %}
+    </head>
 
-<!-- header -->
-<header class="fixed-top header">
-  <!-- top header -->
-  <div class="top-header py-2 bg-white">
-    <div class="container">
-      <div class="row no-gutters">
-        <div class="col-lg-4 text-center text-lg-left">
-          <a class="text-color mr-3" href="tel:+443003030266"><strong>CALL</strong> +225 300 303 0266</a>
-          <ul class="list-inline d-inline">
-            <li class="list-inline-item mx-0"><a class="d-inline-block p-2 text-color" href="#"><i class="ti-facebook"></i></a></li>
-            <li class="list-inline-item mx-0"><a class="d-inline-block p-2 text-color" href="#"><i class="ti-twitter-alt"></i></a></li>
-            <li class="list-inline-item mx-0"><a class="d-inline-block p-2 text-color" href="#"><i class="ti-github"></i></a></li>
-            <li class="list-inline-item mx-0"><a class="d-inline-block p-2 text-color" href="#"><i class="ti-instagram"></i></a></li>
-          </ul>
+    <body>
+        <!-- preloader start -->
+        <div class="preloader">
+            <img src="assets2/images/preloader.gif" alt="preloader">
         </div>
-        <div class="col-lg-8 text-center text-lg-right">
-          <ul class="list-inline">
-           {% if is_granted('ROLE_ETUDIANT') %} <li class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="{{ path('app_user_profile') }}">PROFILE </a></li>{% else %}
-                       <li class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="#loginModal" data-toggle="modal" data-target="#loginModal">connexion</a></li>
-           
-           {% endif %}
-           {% if is_granted('ROLE_ETUDIANT') %} <li class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href=" {{ path('app_logout') }}">  DECONNEXION </a></li>{% else %} {% endif %}
+        <!-- preloader end -->
 
-            <li class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="{{ path('app_register') }}" >inscription</a></li>
-        
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- navbar -->
-  <div class="navigation w-100">
-    <div class="container">
-      <nav class="navbar navbar-expand-lg navbar-dark p-0">
-        <a class="navbar-brand" href="{{path('app_home128')}}"><img src="logo.jpg" alt="logo"></a>
-        <button class="navbar-toggler rounded-0" type="button" data-toggle="collapse" data-target="#navigation"
-          aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+        <!-- header -->
+        <header class="fixed-top header">
+            <!-- top header -->
+            <div class="top-header py-2 bg-white">
+                <div class="container">
+                    <div class="row no-gutters">
+                        <div class="col-lg-4 text-center text-lg-left">
+                            <a class="text-color mr-3" href="tel:+225 0768573696"><strong>Tel</strong>: 0768573696/ 0505813313</a>
+                            <ul class="list-inline d-inline">
+                                <li class="list-inline-item mx-0"><a class="d-inline-block p-2 text-color" href="https://www.facebook.com/profile.php?id=61550237282355"><i class="ti-facebook"></i></a></li>
+                                <li class="list-inline-item mx-0"><a class="d-inline-block p-2 text-color" href="#"><i class="ti-twitter-alt"></i></a></li>
+                                <li class="list-inline-item mx-0"><a class="d-inline-block p-2 text-color" href="#"><i class="ti-instagram"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-8 text-center text-lg-right">
+                            <ul class="list-inline">
+                                {% if is_granted('ROLE_USER') %} <li class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="{{ path('app_user_profile') }}">PROFIL </a></li>{% else %}
+                                    <li class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="#loginModal" data-toggle="modal" data-target="#loginModal">connexion</a></li>
 
-        <div class="collapse navbar-collapse" id="navigation">
-          <ul class="navbar-nav ml-auto text-center">
-            <li class="nav-item active">
-              <a class="nav-link" href="{{path('app_home128')}}">Accueil</a>
-            </li>
-            <li class="nav-item @@about">
-              <a class="nav-link" href="{{path('app_about')}}">A propos nous</a>
-            </li>
-            <!-- 
-           <li class="nav-item dropdown view">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Cours 
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="{{path('app_session1')}}"> Session I</a></li>
-                <li><a class="dropdown-item" href="{{path('app_session2')}}">Session II</a></li>
-                <li><a class="dropdown-item" href="{{path('app_qcm')}}">QCM</a></li>
-    
-         
-              </ul>
-            </li>
-            <li class="nav-item @@events">
-              <a class="nav-link" href="{{path('app_event')}}">Evenements</a>
-            </li>
-            <li class="nav-item @@blog">
-              <a class="nav-link" href="{{path('app_blog')}}">BLOG</a>
-            </li>
-              comment -->
-            <li class="nav-item dropdown view">
-                 <!-- 
-              <a class="nav-link dropdown-toggle" href="{{path('app_mot')}}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-               
-              </a>
-                   comment -->
-                <!-- 
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="{{path('app_mot')}}"> Mot de la directrice</a></li>
-                <li><a class="dropdown-item" href="{{path('app_matiere_index')}}">Matières</a></li>
-                <li><a class="dropdown-item" href="{{path('app_module_index')}}">Modules</a></li>
-                <li><a class="dropdown-item" href="">Mot de la directrice</a></li>
-          
-                
-             
-              </ul>
-               comment -->
-            </li>
-             <li class="nav-item @@contact">
-              <a class="nav-link" href="{{path('app_mot')}}">MOT DE LA DIRECTRICE</a>
-            </li>
-            <li class="nav-item @@contact">
-              <a class="nav-link" href="#">CONTACT</a>
-            </li>
-          </ul>
-        </div>
-      </nav>
-    </div>
-  </div>
-</header>
-<!-- /header -->
-<!-- Modal -->
+                                {% endif %}
+                                {% if is_granted('ROLE_USER') %} <li class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href=" {{ path('app_logout') }}">  DECONNEXION </a></li>{% else %} {% endif %}
 
-  
+                                {% if is_granted('ROLE_USER') %} {% else %} <li class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="{{ path('app_register') }}" >inscription</a></li> {% endif %}
 
-<div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content rounded-0 border-0 p-4">
-            <div class="modal-header border-0">
-                <h3>Register</h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="modal-body">
-                <div class="login">
-                    <form action="#" class="row">
-                        <div class="col-12">
-                            <input type="text" class="form-control mb-3" id="signupPhone" name="signupPhone" placeholder="Phone">
+            <!-- navbar -->
+            <div class="navigation w-100">
+                <div class="container">
+                    <nav class="navbar navbar-expand-lg navbar-dark p-0">
+                        <span class="navbar-brand" href="{{path('app_home128')}}" data-turbo="false"><span class="img_logo"></span><img src="{{ asset('logo.jpg') }}" alt="logo"></span></a>
+                        <button class="navbar-toggler rounded-0" type="button" data-toggle="collapse" data-target="#navigation"
+                                aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+
+                        <div class="collapse navbar-collapse" id="navigation">
+                            <ul class="navbar-nav ml-auto text-center">
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="{{path('app_home128')}}"
+                                       data-turbo="false">Accueil</a>
+                                </li>
+                                <li class="nav-item @@about">
+                                    <a class="nav-link" href="{{path('app_about')}}" data-turbo="false">A propos de nous</a>
+                                </li>
+
+                                <li class="nav-item dropdown view">
+                                    <a class="nav-link" href="{{path('app_formation')}}" data-turbo="false">FORMATION QUALIFIANTE</a>
+
+                                </li>
+                                <li class="nav-item @@contact">
+                                    <a class="nav-link" href="{{path('app_mot')}}" data-turbo="false">MOT DE LA DIRECTRICE</a>
+                                </li>
+                                <li class="nav-item @@contact">
+                                    <a class="nav-link" href="{{path('contact')}}" data-turbo="false">CONTACT</a>
+
+                                </li>
+                            </ul>
                         </div>
-                        <div class="col-12">
-                            <input type="text" class="form-control mb-3" id="signupName" name="signupName" placeholder="Name">
+                    </nav>
+                </div>
+            </div>
+        </header>
+        <!-- /header -->
+        <!-- Modal -->
+
+
+
+        <div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content rounded-0 border-0 p-4">
+                    <div class="modal-header border-0">
+                        <h3>Register</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="login">
+                            <form action="#" class="row">
+                                <div class="col-12">
+                                    <input type="text" class="form-control mb-3" id="signupPhone" name="signupPhone" placeholder="Phone">
+                                </div>
+                                <div class="col-12">
+                                    <input type="text" class="form-control mb-3" id="signupName" name="signupName" placeholder="Name">
+                                </div>
+                                <div class="col-12">
+                                    <input type="email" class="form-control mb-3" id="signupEmail" name="signupEmail" placeholder="Email">
+                                </div>
+                                <div class="col-12">
+                                    <input type="password" class="form-control mb-3" id="signupPassword" name="signupPassword" placeholder="Password">
+                                </div>
+
+
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary">SIGN UP</button>
+                                </div>
+                            </form>
                         </div>
-                        <div class="col-12">
-                            <input type="email" class="form-control mb-3" id="signupEmail" name="signupEmail" placeholder="Email">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content rounded-0 border-0 p-4">
+                    <div class="modal-header border-0">
+                        <h3>Login</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ path('app_login')}}" method="post" class="row" id="formModal" name="formModal">
+
+                            <div class="col-12">
+                                <input type="text" class="form-control mb-3" id="inputEmail" name="email" placeholder="E-mail">
+                            </div>
+                            <div class="col-12">
+                                <input type="password" class="form-control mb-3" id="inputPassword" name="password" placeholder="Password">
+                                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                            </div>
+                            <div class="col-12">
+                                <input type="hidden" name="_csrf_token"
+                                       value="{{ csrf_token('authenticate') }}"
+                                       >
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary" id="logginConnexion" name="logginConnexion" data-turbo="false">CONNEXION</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- hero slider -->
+        <section class="hero-section overlay bg-cover" data-background="photo001.jpg">
+            <div class="container">
+                <div class="hero-slider">
+                    <!-- slider item -->
+                    <div class="hero-slider-item">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h1 class="text-white" data-animation-out="fadeOutRight" data-delay-out="5" data-duration-in=".3" data-animation-in="fadeInLeft" data-delay-in=".1">Une formation</h1>
+                            </div>
                         </div>
-                        <div class="col-12">
-                            <input type="password" class="form-control mb-3" id="signupPassword" name="signupPassword" placeholder="Password">
+                    </div>
+                    <!-- slider item -->
+                    <div class="hero-slider-item">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h1 class="text-white" data-animation-out="fadeOutUp" data-delay-out="5" data-duration-in=".3" data-animation-in="fadeInDown" data-delay-in=".1">diplômante</h1>
+                            </div>
                         </div>
-                        <div class="col-12">
-                            <button type="submit" class="btn btn-primary">SIGN UP</button>
+                    </div>
+                    <!-- slider item -->
+                    <div class="hero-slider-item">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h1 class="text-white" data-animation-out="fadeOutDown" data-delay-out="5" data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".1">et de qualité !</h1>
+                            </div>
                         </div>
-                    </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- /hero slider -->
+        <div class="container">
+
+
+            {% block body %}
+                <!-- banner-feature -->
+
+                <!-- courses -->
+                <section class="section-sm">
+                    <div class="container">
+
+                        <!-- course list -->
+                        <div class="row justify-content-center">
+                            <!-- course item -->
+                            <div class="col-lg-4 col-sm-6 mb-5">
+                                <div class="card p-0 border-primary rounded-0 hover-shadow">
+                                    <div class="card-body">
+
+                                        <i class="ti-book mb-xl-4 mb-lg-3 mb-4 feature-icon"></i>
+                                        <h3 class="mb-xl-4 mb-lg-3 mb-4">Dépôt de dossiers</h3>
+
+                                        <p class="card-text mb-4">
+                                            <b class="text-center align-items-center">ABIDJAN</b> <br />
+                                            <b>- Abobo</b>: Cours sociaux : 0748420707<br />
+                                            <b>- Cafop d'Abidjan</b> : Plateau
+                                            Voir M Bakayoko <br />
+                                            <b> - Yopougon </b>: Groupe Scolaire Béthanie, wassakara  (derrière super RIMCASH): 0153364942 <br />
+                                            <b>- André Latrille</b> : Gesco, voir le secrétariat. <br />
+                                           
+                                            <b>Yamoussoukro</b> <br />
+                                             <b>- Collège Notre Dame des Lacs</b>: 0505813313/ 0709115382<br />
+                                            <b>Autres contacts: </b> 0768573696 / infos@cafop-lited.com / cafoplited@gmail.com<br />
+                                            NB : Tous les candidats doivent se conformer aux indications données
+
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- course item -->
+                            <div class="col-lg-4 col-sm-6 mb-5">
+                                <div class="card p-0 border-primary rounded-0 hover-shadow">
+                                    <div class="card-body">
+                                        <i class="ti-blackboard mb-xl-4 mb-lg-3 mb-4 feature-icon"></i>
+                                        <h3 class="mb-xl-4 mb-lg-3 mb-4">Nos conditions</h3>
+                                        <p class="card-text mb-4">
+
+
+
+                                            Pour exercer le métier d'<b>enseignant</b>, vous devrez être titulaire du
+                                            BEPC au moins et remplir les conditions physiques et mentales pour dispenser les cours
+
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- course item -->
+                            <div class="col-lg-4 col-sm-6 mb-5">
+                                <div class="card p-0 border-primary rounded-0 hover-shadow">
+                                    <div class="card-body">
+                                        <i class="ti-agenda mb-xl-4 mb-lg-3 mb-4 feature-icon"></i>
+                                        <h3 class="mb-xl-4 mb-lg-3 mb-4">Nos lauréats</h3>
+                                        <p class="card-text mb-4">
+
+
+
+                                            Un diplôme sera remis à chaque auditeur après sa formation.
+                                            Il pourra donc présenter ce diplôme aux écoles primaires privées,
+                                            semi-privées où il voudra donner des cours
+                                    </div>
+
+                                    <div class="card-body">
+                                        <i class="ti-write mb-xl-4 mb-lg-3 mb-4 feature-icon"></i>
+                                        <h3 class="mb-xl-4 mb-lg-3 mb-4">Admission</h3>
+                                        <p class="card-text mb-4">
+                                            Sont admis les candidats ayant rempli toutes les conditions nécessaires
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+                    </div>
+                    <!-- /course list -->
+
+            </div>
+        </section>
+        <!-- /courses -->
+
+
+
+        <!-- courses -->
+        <section class="section-sm">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="d-flex align-items-center section-title justify-content-between">
+                            <h2 class="mb-0 text-nowrap mr-3">Nos Cours</h2>
+                            <div class="border-top w-100 border-primary d-none d-sm-block"></div>
+                            <div>
+                                <a href="#" class="btn btn-sm btn-outline-primary ml-sm-3 d-none d-sm-block">Voir tous</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- course list -->
+                <div class="row justify-content-center">
+                    <!-- course item -->
+                    <div class="col-lg-4 col-sm-6 mb-5">
+                        <div class="card p-0 border-primary rounded-0 hover-shadow">
+                            <img class="card-img-top rounded-0" src="photo003.jpg" alt="course thumb">
+                            <div class="card-body">
+
+                                <a href="#">
+                                    <h4 class="card-title">CHRONOGRAMME</h4>
+                                </a>
+                                <ul class="list-inline mb-2">
+                                    <li class="list-inline-item"><b>1.</b> Le Test de sélection des auditeurs le 20 Novembre 2023 (Français, cultures générales et Mathématiques)</li> <br />
+                                    <li class="list-inline-item"><b>2.</b> L'Inscription, le paiement (<b>Wave</b>, <b>Moov Money</b>,<b> Orange Money</b> et<b> MTN Money</b>) et le dépôt des dossiers du 23 Septembre au 15 Novembre 2023</li><br />
+                                    <li class="list-inline-item"><b>3.</b> Les résultats du test de sélection: 25 Novembre 2023</li><br />
+                                    <li class="list-inline-item"><b>4.</b> Début des cours : 11 Décembre 2023</li><br />
+                                </ul>
+
+                                <a href="{{ path('app_register') }}" class="btn btn-primary btn-sm">Participez</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- course item -->
+                    <div class="col-lg-4 col-sm-6 mb-5">
+                        <div class="card p-0 border-primary rounded-0 hover-shadow">
+                            <img class="card-img-top rounded-0" src="photo004.jpg" alt="course thumb">
+                            <div class="card-body">
+                                <ul class="list-inline mb-2">
+                                    <li class="list-inline-item"><a class="text-color" href="#">Formation en ligne</a></li>
+                                </ul>
+                                <a href="#">
+                                    <h4 class="card-title">Téléformation</h4>
+                                </a>
+                                <p class="card-text mb-4">
+                                    Les cours peuvent être faits sur tout type d'équipements accédant à Internet: ordinateur, téléphone ou tablette.
+                                </p>
+                                <a href="{{ path('app_register') }}" class="btn btn-primary btn-sm">Participez</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- course item -->
+                    <div class="col-lg-4 col-sm-6 mb-5">
+                        <div class="card p-0 border-primary rounded-0 hover-shadow">
+                            <img class="card-img-top rounded-0" src="photo005.jpg" alt="course thumb">
+                            <div class="card-body">
+                                <ul class="list-inline mb-2">
+                                    <li class="list-inline-item"><a class="text-color" href="#">Pratiques</a></li>
+                                </ul>
+                                <a href="#">
+                                    <h4 class="card-title">Stages pratiques</h4>
+                                </a>
+                                <p class="card-text mb-4">
+                                    CAF LITED donne la possibilité de faire des stages pratiques dans des écoles partenaires, 
+                                    afin de renforcer les compétences des auditeurs.
+
+                                    .</p>
+                                <a href="{{ path('app_register') }}" class="btn btn-primary btn-sm">Participez</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- course item -->
+                    <div class="col-lg-4 col-sm-6 mb-5">
+                        <div class="card p-0 border-primary rounded-0 hover-shadow">
+                            <img class="card-img-top rounded-0" src="photo006.jpg" alt="course thumb">
+                            <div class="card-body">
+                                <ul class="list-inline mb-2">
+                                    <li class="list-inline-item"><i class="ti-calendar mr-1 text-color"></i></li>
+                                    <li class="list-inline-item"><a class="text-color" href="#"></a></li>
+                                </ul>
+                                <a href="#">
+                                    <h4 class="card-title">Compositions</h4>
+                                </a>
+                                <p class="card-text mb-4"> 
+                                    Les auditeurs seront soumis à des tests pratiques. Ce qui permettra aux enseignants d'apprécier leur niveau. 
+                                    Exemple : le test d'évaluation qui donne accès à l'entrée à CAF LITED.
+                                </p>
+                                <a href="{{ path('app_register') }}" class="btn btn-primary btn-sm">Participez</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- course item -->
+                    <div class="col-lg-4 col-sm-6 mb-5">
+                        <div class="card p-0 border-primary rounded-0 hover-shadow">
+                            <img class="card-img-top rounded-0" src="photo007.jpg" alt="course thumb">
+                            <div class="card-body">
+                                <ul class="list-inline mb-2">
+                                    <li class="list-inline-item"><i class="ti-calendar mr-1 text-color"></i></li>
+                                    <li class="list-inline-item"><a class="text-color" href="#"></a></li>
+                                </ul>
+                                <a href="#">
+                                    <h4 class="card-title">Compositions en ligne</h4>
+                                </a>
+                                <p class="card-text mb-4">
+                                    Il y aura des questions à choix multiples <b>(QCM)</b> auxquelless les auditeurs répondront selon le temps donné. 
+                                    A la fin du temps imparti, il sera impossible de continuer à composer.
+                                </p>
+                                <a href="{{ path('app_register') }}" class="btn btn-primary btn-sm">Participez</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- course item -->
+                    <div class="col-lg-4 col-sm-6 mb-5">
+                        <div class="card p-0 border-primary rounded-0 hover-shadow">
+                            <img class="card-img-top rounded-0" src="photo008.jpg" alt="course thumb">
+                            <div class="card-body">
+                                <ul class="list-inline mb-2">
+                                    <li class="list-inline-item"><i class="ti-calendar mr-1 text-color"></i></li>
+                                    <li class="list-inline-item"><a class="text-color" href="#"></a></li>
+                                </ul>
+                                <a href="#">
+                                    <h4 class="card-title">Prises de notes</h4>
+                                </a>
+                                <p class="card-text mb-4"> 
+                                    Les auditeurs pourront prendre des notes en suivant les cours. 
+                                    Certains cours peuvent être téléchargés. 
+                                    Des cours en audio seront de même disponibles.
+
+                                </p>
+                                <a href="{{ path('app_register') }}" class="btn btn-primary btn-sm">Participez</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /course list -->
+                <!-- mobile see all button -->
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <a href="#" class="btn btn-sm btn-outline-primary d-sm-none d-inline-block">sell all</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- /courses -->
+
+        <!-- cta -->
+        <section class="section bg-primary">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <h6 class="text-white font-secondary mb-0">Cliquez ici pour devenir auditeur</h6>
+                        <h2 class="section-title text-white">Devenez auditeur et suivez les cours en direct</h2>
+                        <a href="{{ path('app_register') }}">Inscription</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- /cta -->
+
+        <!-- success story -->
+        <section class="section bg-cover" data-background="photo009.jpg">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-12 col-sm-8">
+                        <div class="bg-white p-5">
+                            <h2 class="section-title">Politiques d'emploi</h2>
+
+                            
+                            <p>- Réduction du taux de chômage  en Côte d’Ivoire,</p>
+                            <p>-Création d’une autre source de revenus pour les professeurs de Cafop retraités ou en fonction,</p>
+                            <p>-Un vivier pour les écoles privées d’ici d’ailleurs,</p>
+                            <p>-Une opportunité de formation professionnelle, </p>
+                            <p>-Réutilisation du gain pour la création de nouveaux groupes scolaires au profit des auditeurs,</p>
+                            <p>-Une aide pour l’Etat de Côte d’Ivoire dans sa politique d’employabilité,</p>
+                            <p>-La qualification du personnel enseignant du privé et sémi-privé,</p>
+                            <p>-Réhaussement du niveau de formation du personnel enseignant du privé qui englobe plus de 80 % de la population scolaire en Côte d’Ivoire,</p>
+                            <p>- Un amoindrissement du taux d’échec scolaire à l’examen du CEPE, BEPC..</p>
+                            <p>- Une Ouverture de l’esprit des auditeurs sur l’entreprenariat, en vue de leur permettre d’avoir d'autres sources de revenus,</p>
+                            <p>- Une occasion pour les auditeurs de voyager avec l’aide des ambassades ou d’autres partenaires pour un mieux être professionnel.</p>
+
+                            <a href="{{path('app_about')}}" class="btn btn-outline-primary">Lire..</a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section pt-0">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h2 class="section-title">Informations</h2>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <!-- blog post -->
+                    <article class="col-lg-4 col-sm-6 mb-5 mb-lg-0">
+                        <div class="card rounded-0 border-bottom border-primary border-top-0 border-left-0 border-right-0 hover-shadow">
+                            <img class="card-img-top rounded-0" src="photo002.jpg" alt="Post thumb">
+                            <div class="card-body">
+                                <!-- post meta -->
+                                <ul class="list-inline mb-3">
+                                    <!-- post date -->
+                                    <li class="list-inline-item mr-3 ml-0">Novembre à Mars 2024</li>
+                                    <li class="list-inline-item mr-3 ml-0"> Cours prépa CAFOP en ligne et en présentiel </li>
+                                    <!-- author
+
+                                    <li class="list-inline-item mr-3 ml-0">Rentrée académique 2023-2024</li>
+                                     -->
+                                </ul>
+                                 <!--
+                                <a href={{ path('app_register') }}">
+                                   <h4 class="card-title">Les inscriptions se feront en ligne.</h4>
+                                </a>
+                                    -->
+                                <a href="" class="btn btn-primary btn-sm"></a>
+                            </div>
+                        </div>
+                    </article>
+                    <!-- blog post -->
+                    <article class="col-lg-4 col-sm-6 mb-5 mb-lg-0">
+                        <div class="card rounded-0 border-bottom border-primary border-top-0 border-left-0 border-right-0 hover-shadow">
+                            <img class="card-img-top rounded-0" src="photo003.jpg" alt="Post thumb">
+                            <div class="card-body">
+                                <!-- post meta -->
+                                <ul class="list-inline mb-3">
+                                    <!-- post date -->
+                                    <li class="list-inline-item mr-3 ml-0">Juin 2024</li>
+                                    <!-- author -->
+                                    <li class="list-inline-item mr-3 ml-0">Vacances et lectures 2024</li>
+                                </ul>
+                                <a href=#">
+                                    <h4 class="card-title">Un programme pour motiver les enfants à lire et à écrire.</h4>
+                                </a>
+                                <a href=#" class="btn btn-primary btn-sm"></a>
+                            </div>
+                        </div>
+                    </article>
+                    <!-- blog post -->
+                    <article class="col-lg-4 col-sm-6 mb-5 mb-lg-0">
+                        <div class="card rounded-0 border-bottom border-primary border-top-0 border-left-0 border-right-0 hover-shadow">
+                            <img class="card-img-top rounded-0" src="photo003.jpg" alt="Post thumb">
+                            <div class="card-body">
+                                <!-- post meta -->
+                                <ul class="list-inline mb-3">
+                                    <!-- post date -->
+                                    <li class="list-inline-item mr-3 ml-0">Novembre 2023 à Mars 2024</li>
+                                    <!-- author -->
+                                    <li class="list-inline-item mr-3 ml-0">Cours prépa Cafop ordinaire </li>
+                                </ul>
+                             
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+        <!-- /blog -->
+
+
+        <section class="section">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-6 order-2 order-md-1">
+                        <h2 class="section-title"> Mme BOAN épouse IRITIÉ, DG de CAF LITED</h2>
+                        <p>CAF LITED est un centre de formation en ligne et en présentiel chargé de dispenser les cours et formations aux personnes désirant enseigner dans le préscolaire, primaire et secondaire.
+                            L'Etat peut aussi vous intégrer à la Fonction Publique après un test d'intégration
+                            en cas de besoin.
+                        </p>
+                        <a href="{{path('app_about')}}" class="btn btn-outline-primary">Lire..</a>
+                    </div>
+                    <div class="col-md-6 order-1 order-md-2 mb-4 mb-md-0">
+                        <img class="img-fluid w-80" src="dg2.jpg" alt="about image">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- /about us -->
+
+    {% endblock %}
+
+</div>
+<!-- footer -->
+<footer>
+    <!-- newsletter -->
+
+    <!-- footer 
+    <div class="footer bg-footer section border-bottom">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-4 col-sm-8 mb-5 mb-lg-0">
+    <!-- 
+    <a class="logo-footer" href="{{path('app_home128')}}"><img class="img-fluid mb-4" src="logo.jpg" alt="logo"></a>
+    <ul class="list-unstyled">
+      <li class="mb-2"> Abidjan, Côte d'Ivoire</li>
+      <li class="mb-2">+225  0768573696</li>
+      <li class="mb-2">infos@cafop-lited.com</li>
+      <li class="mb-2">cafoplited@gmail.com</li>
+    </ul>
+  </div>
+    <!-- company 
+    <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-5 mb-md-0">
+      <h4 class="text-white mb-5">caf lited</h4>
+      <ul class="list-unstyled">
+        <li class="mb-3"><a class="text-color" href="{{path('app_about')}}">A propos de nous</a></li>
+        <li class="mb-3"><a class="text-color" href="#">Blog</a></li>
+      </ul>
+    </div>
+    <!-- links 
+    <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-5 mb-md-0">
+      <h4 class="text-white mb-5">Liens utiles</h4>
+      <ul class="list-unstyled">
+        <li class="mb-3"><a class="text-color" href="#">Cours</a></li>
+        <li class="mb-3"><a class="text-color" href="{{path('app_register')}}">Inscription</a></li>
+   
+      </ul>
+    </div>
+    <!-- support
+    <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-5 mb-md-0">
+      <h4 class="text-white mb-5">SUPPORT</h4>
+      <ul class="list-unstyled">
+        <li class="mb-3"><a class="text-color" href="#">Documentation</a></li>
+        <li class="mb-3"><a class="text-color" href="#!">Methodes</a></li>
+        <li class="mb-3"><a class="text-color" href="#!">Stages</a></li>
+      </ul>
+    </div>
+    <!-- support 
+   <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-5 mb-md-0">
+      <h4 class="text-white mb-5">Autres</h4>
+      <ul class="list-unstyled">
+        <li class="mb-3"><a class="text-color" href="#">Blog</a></li>
+        <li class="mb-3"><a class="text-color" href="{{path('app_mot')}}">Mots de la directrice</a></li>
+        <li class="mb-3"><a class="text-color" href="#">QCM</a></li>
+      </ul>
+    </div>
+    
+  </div>
+</div>
+</div>
+    <!-- copyright -->
+    <div class="copyright py-4 bg-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-7 text-sm-left text-center">
+                    <p class="mb-0">Copyright &copy;
+
+                        designed & developed by <a href="https://lynovatech.com/" class="text-muted"> Lynovatech </a>
+                    </p>
+                </div>
+                <div class="col-sm-5 text-sm-right text-center">
+                    <ul class="list-inline">
+                        <li class="list-inline-item"><a class="d-inline-block p-2" href="https://www.facebook.com/profile.php?id=61550237282355"><i class="ti-facebook text-primary"></i></a></li>
+                        <li class="list-inline-item"><a class="d-inline-block p-2" href="#"><i class="ti-twitter-alt text-primary"></i></a></li>
+                        <li class="list-inline-item"><a class="d-inline-block p-2" href="#"><i class="ti-instagram text-primary"></i></a></li>
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<!-- Modal -->
-<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content rounded-0 border-0 p-4">
-            <div class="modal-header border-0">
-                <h3>Login</h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form action="" class="row">
-                    <div class="col-12">
-                        <input type="text" class="form-control mb-3" id="loginPhone" name="loginPhone" placeholder="Phone">
-                    </div>
-                    <div class="col-12">
-                        <input type="text" class="form-control mb-3" id="loginName" name="loginName" placeholder="Name">
-                    </div>
-                    <div class="col-12">
-                        <input type="password" class="form-control mb-3" id="loginPassword" name="loginPassword" placeholder="Password">
-                    </div>
-                    <div class="col-12">
-                        <button type="submit" class="btn btn-primary">LOGIN</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- hero slider -->
-<section class="hero-section overlay bg-cover" data-background="photo001.jpg">
-  <div class="container">
-    <div class="hero-slider">
-      <!-- slider item -->
-      <div class="hero-slider-item">
-        <div class="row">
-          <div class="col-md-8">
-            <h1 class="text-white" data-animation-out="fadeOutRight" data-delay-out="5" data-duration-in=".3" data-animation-in="fadeInLeft" data-delay-in=".1">Avec CAF LITED</h1>
-          </div>
-        </div>
-      </div>
-      <!-- slider item -->
-      <div class="hero-slider-item">
-        <div class="row">
-          <div class="col-md-8">
-            <h1 class="text-white" data-animation-out="fadeOutUp" data-delay-out="5" data-duration-in=".3" data-animation-in="fadeInDown" data-delay-in=".1">Une formation de qualité</h1>
-           </div>
-        </div>
-      </div>
-      <!-- slider item -->
-      <div class="hero-slider-item">
-        <div class="row">
-          <div class="col-md-8">
-            <h1 class="text-white" data-animation-out="fadeOutDown" data-delay-out="5" data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".1">Avec certification</h1>
-      </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- /hero slider -->
-<div class="container">
-     
-
- {% block body %}
-<!-- banner-feature -->
-<section class="bg-gray overflow-md-hidden">
-  <div class="container-fluid p-0">
-    <div class="row no-gutters">
-      <div class="col-xl-4 col-lg-5 align-self-end">
-        <img class="img-fluid w-100" src="photo004.jpg" alt="banner-feature">
-      </div>
-      <div class="col-xl-8 col-lg-7">
-        <div class="row feature-blocks bg-gray justify-content-between">
-          <div class="col-sm-6 col-xl-5 mb-xl-5 mb-lg-3 mb-4 text-center text-sm-left">
-            <i class="ti-book mb-xl-4 mb-lg-3 mb-4 feature-icon"></i>
-            <h3 class="mb-xl-4 mb-lg-3 mb-4">Modes de paiement</h3>
-            <p>
-            CAF LITED vous donne la possibilité de payer sans vous deplacer. Vous avez le choix entre:
-            <b>Orange Money</b> , 
-             <b>MTN Money</b> et <b>Moov Money</b>
-            
-            </p>
-          </div>
-          <div class="col-sm-6 col-xl-5 mb-xl-5 mb-lg-3 mb-4 text-center text-sm-left">
-            <i class="ti-blackboard mb-xl-4 mb-lg-3 mb-4 feature-icon"></i>
-            <h3 class="mb-xl-4 mb-lg-3 mb-4">Nos conditions</h3>
-            <p>Pour prendre part aux cours de <b>CAF LITED</b>, vous devrez être titulaire du BEPC au moins et remplir les conditions physiques et mentales pour dispenser les cours
-            </p>
-          </div>
-          <div class="col-sm-6 col-xl-5 mb-xl-5 mb-lg-3 mb-4 text-center text-sm-left">
-            <i class="ti-agenda mb-xl-4 mb-lg-3 mb-4 feature-icon"></i>
-            <h3 class="mb-xl-4 mb-lg-3 mb-4">Nos lauréats</h3>
-            <p>Un certificat sera remis à chaque auditeur après sa formation. Il pourra donc presenter ce diplôme aux écoles primaires privées où il voudra donner des cours</p>
-          </div>
-          <div class="col-sm-6 col-xl-5 mb-xl-5 mb-lg-3 mb-4 text-center text-sm-left">
-            <i class="ti-write mb-xl-4 mb-lg-3 mb-4 feature-icon"></i>
-            <h3 class="mb-xl-4 mb-lg-3 mb-4">Admission</h3>
-            <p>Sont admis les candidats ayant rempli toutes les conditions neccessaires</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- /banner-feature -->
- 
-<!-- about us -->
-<section class="section">
-  <div class="container">
-    <div class="row align-items-center">
-      <div class="col-md-6 order-2 order-md-1">
-        <h2 class="section-title">CAF LITED</h2>
-        <p>CAF LITED est une école privée en ligne chargée de dispenser les cours et formations à des personnes desirant enseigner dans le primaire
-        Nos formations peuvent vous donner droit à enseigner dans le public en tant qu'enseignant bénévole. L'Etat peut aussi vous integrer à la fonction publique par la suite 
-        si besoin y est.
-        </p>
-        <a href="{{path('app_about')}}" class="btn btn-outline-primary">Lire..</a>
-      </div>
-      <div class="col-md-6 order-1 order-md-2 mb-4 mb-md-0">
-        <img class="img-fluid w-100" src="directrice.jpg" alt="about image">
-      </div>
-    </div>
-  </div>
-</section>
-<!-- /about us -->
-
-<!-- courses -->
-<section class="section-sm">
-  <div class="container">
-    <div class="row">
-      <div class="col-12">
-        <div class="d-flex align-items-center section-title justify-content-between">
-          <h2 class="mb-0 text-nowrap mr-3">Nos Cours</h2>
-          <div class="border-top w-100 border-primary d-none d-sm-block"></div>
-          <div>
-            <a href="#" class="btn btn-sm btn-outline-primary ml-sm-3 d-none d-sm-block">Voir tous</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- course list -->
-<div class="row justify-content-center">
-  <!-- course item -->
-  <div class="col-lg-4 col-sm-6 mb-5">
-    <div class="card p-0 border-primary rounded-0 hover-shadow">
-      <img class="card-img-top rounded-0" src="photo003.jpg" alt="course thumb">
-      <div class="card-body">
-        <ul class="list-inline mb-2">
-          <li class="list-inline-item"><a class="text-color" href="#">Travail d'équipe</a></li>
-        </ul>
-        <a href="#">
-          <h4 class="card-title">APC</h4>
-        </a>
-        <p class="card-text mb-4"> Des équipes peuvent être formées pour faire des Approches par Competance. Suivant les matières et les modules, les auditeurs
-         pourront travailler parfois en équipe pour un but bien precis
-         </p>
-        <a href="{{ path('app_register') }}" class="btn btn-primary btn-sm">Participez</a>
-      </div>
-    </div>
-  </div>
-  <!-- course item -->
-  <div class="col-lg-4 col-sm-6 mb-5">
-    <div class="card p-0 border-primary rounded-0 hover-shadow">
-      <img class="card-img-top rounded-0" src="photo004.jpg" alt="course thumb">
-      <div class="card-body">
-        <ul class="list-inline mb-2">
-          <li class="list-inline-item"><a class="text-color" href="#">Formation en ligne</a></li>
-        </ul>
-        <a href="#">
-          <h4 class="card-title">Teleformation</h4>
-        </a>
-        <p class="card-text mb-4"> Les cours peuvent être faits sur tout type d'équipements accédant à Internet: Oridnateur, téléphone ou tablette .</p>
-        <a href="{{ path('app_register') }}" class="btn btn-primary btn-sm">Participez</a>
-      </div>
-    </div>
-  </div>
-  <!-- course item -->
-  <div class="col-lg-4 col-sm-6 mb-5">
-    <div class="card p-0 border-primary rounded-0 hover-shadow">
-      <img class="card-img-top rounded-0" src="photo005.jpg" alt="course thumb">
-      <div class="card-body">
-        <ul class="list-inline mb-2">
-          <li class="list-inline-item"><a class="text-color" href="#">Pratiques</a></li>
-        </ul>
-        <a href="#">
-          <h4 class="card-title">Stages pratiques</h4>
-        </a>
-        <p class="card-text mb-4"> CAF LITED donne la possibilité de faire des stages pratiques dans des écoles partenanires afin d'évaluer 
-        les compétences des auditeurs
-         .</p>
-        <a href="{{ path('app_register') }}" class="btn btn-primary btn-sm">Participez</a>
-      </div>
-    </div>
-  </div>
-  <!-- course item -->
-  <div class="col-lg-4 col-sm-6 mb-5">
-    <div class="card p-0 border-primary rounded-0 hover-shadow">
-      <img class="card-img-top rounded-0" src="photo006.jpg" alt="course thumb">
-      <div class="card-body">
-        <ul class="list-inline mb-2">
-          <li class="list-inline-item"><i class="ti-calendar mr-1 text-color"></i></li>
-          <li class="list-inline-item"><a class="text-color" href="#"></a></li>
-        </ul>
-        <a href="#">
-          <h4 class="card-title">Compositions</h4>
-        </a>
-        <p class="card-text mb-4"> Les auditeurs seront soumis à des test pratiques. Ce qui permettra aux enseignants d'apprecier leurs écritures</p>
-        <a href="{{ path('app_register') }}" class="btn btn-primary btn-sm">Participez</a>
-      </div>
-    </div>
-  </div>
-  <!-- course item -->
-  <div class="col-lg-4 col-sm-6 mb-5">
-    <div class="card p-0 border-primary rounded-0 hover-shadow">
-      <img class="card-img-top rounded-0" src="photo007.jpg" alt="course thumb">
-      <div class="card-body">
-        <ul class="list-inline mb-2">
-          <li class="list-inline-item"><i class="ti-calendar mr-1 text-color"></i></li>
-          <li class="list-inline-item"><a class="text-color" href="#"></a></li>
-        </ul>
-        <a href="#">
-          <h4 class="card-title">Compositions en ligne</h4>
-        </a>
-        <p class="card-text mb-4">Il y aura des QCM auxquelles les auditeurs repondront selon le temps donné. A la fin du temps, il sera 
-        impossible de continuer à composer. 
-        </p>
-        <a href="{{ path('app_register') }}" class="btn btn-primary btn-sm">Participez</a>
-      </div>
-    </div>
-  </div>
-  <!-- course item -->
-  <div class="col-lg-4 col-sm-6 mb-5">
-    <div class="card p-0 border-primary rounded-0 hover-shadow">
-      <img class="card-img-top rounded-0" src="photo008.jpg" alt="course thumb">
-      <div class="card-body">
-        <ul class="list-inline mb-2">
-          <li class="list-inline-item"><i class="ti-calendar mr-1 text-color"></i></li>
-          <li class="list-inline-item"><a class="text-color" href="#"></a></li>
-        </ul>
-        <a href="#">
-          <h4 class="card-title">Prises de notes</h4>
-        </a>
-        <p class="card-text mb-4"> Les auditeurs pourront copier les léçons en suivant les cours. Certains cours peuvent être téléchargeables
-        . Les cours en audios seront de même disponibles</p>
-        <a href="{{ path('app_register') }}" class="btn btn-primary btn-sm">Participez</a>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- /course list -->
-    <!-- mobile see all button -->
-    <div class="row">
-      <div class="col-12 text-center">
-        <a href="#" class="btn btn-sm btn-outline-primary d-sm-none d-inline-block">sell all</a>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- /courses -->
-
-<!-- cta -->
-<section class="section bg-primary">
-  <div class="container">
-    <div class="row">
-      <div class="col-12 text-center">
-        <h6 class="text-white font-secondary mb-0">Cliquez ici pour devenir auditeur</h6>
-        <h2 class="section-title text-white">Devenez auditeur et suivez les cours en direct</h2>
-        <a href="{{ path('app_register') }}">Inscription</a>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- /cta -->
-
-<!-- success story -->
-<section class="section bg-cover" data-background="photo009.jpg">
-  <div class="container">
-    <div class="row">
-      
-      <div class="col-lg-12 col-sm-8">
-        <div class="bg-white p-5">
-          <h2 class="section-title">Nos objectifs</h2>
-
-
-<p>Réduction du taux de chômage  en Côte d’Ivoire</p>
-<p>Création d’une autre source de revenus pour les professeurs de CAFOP retraités ou en fonction</p>
-<p>Un vivier pour les écoles privées d’ici d’ailleurs</p>
-<p>Offrir une opportunité de formation professionnelle </p>
-<p> Réutilisation du gain pour la création de nouveaux groupes scolaires au profit des auditeurs</p>
-<p> Aider l’Etat de Côte d’Ivoire dans sa politique d’employabilité  sans emploi</p>
-<p> La qualification du personnel enseignant du privé.</p>
-<p> Réhausser le niveau de formation du personnel enseignant du privé qui englobe plus de 80 % de la population scolaire en Côte d’Ivoire.</p>
-<p>Amoindrissement du taux d’échec scolaire à l’examen du CEPE</p>
-<p>Ouvrir l’esprit des jeunes auditeurs sur l’entreprenariat, en vue de leur permettre d’avoir autres sources de revenus</p>
-<p>Donner l’occasion aux jeunes de voyager avec l’aide des ambassades ou d’autres bienfaiteurs pour un mieux être professionnel</p>
- 
-<a href="{{path('app_about')}}" class="btn btn-outline-primary">Lire..</a>
-        
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- /success story -->
-
-<!-- teachers -->
-<section class="section">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-12">
-        <h2 class="section-title">Les Enseignants</h2>
-      </div>
-      <!-- teacher -->
-      <div class="col-lg-4 col-sm-6 mb-5 mb-lg-0">
-        <div class="card border-0 rounded-0 hover-shadow">
-          <img class="card-img-top rounded-0" src="assets2/images/teachers/teacher-1.jpg" alt="teacher">
-          <div class="card-body">
-            <a href="#">
-              <h4 class="card-title">Jacke Masito</h4>
-            </a>
-            <p>Teacher</p>
-            <ul class="list-inline">
-              <li class="list-inline-item"><a class="text-color" href="https://facebook.com/themefisher"><i class="ti-facebook"></i></a></li>
-              <li class="list-inline-item"><a class="text-color" href="#"><i class="ti-twitter-alt"></i></a></li>
-              <li class="list-inline-item"><a class="text-color" href="#"><i class="ti-google"></i></a></li>
-              <li class="list-inline-item"><a class="text-color" href="#"><i class="ti-linkedin"></i></a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <!-- teacher -->
-      <div class="col-lg-4 col-sm-6 mb-5 mb-lg-0">
-        <div class="card border-0 rounded-0 hover-shadow">
-          <img class="card-img-top rounded-0" src="assets2/images/teachers/teacher-2.jpg" alt="teacher">
-          <div class="card-body">
-            <a href="#">
-              <h4 class="card-title">Clark Malik</h4>
-            </a>
-            <p>Teacher</p>
-            <ul class="list-inline">
-              <li class="list-inline-item"><a class="text-color" href="https://facebook.com/themefisher"><i class="ti-facebook"></i></a></li>
-              <li class="list-inline-item"><a class="text-color" href="#"><i class="ti-twitter-alt"></i></a></li>
-              <li class="list-inline-item"><a class="text-color" href="#"><i class="ti-google"></i></a></li>
-              <li class="list-inline-item"><a class="text-color" href="#"><i class="ti-linkedin"></i></a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <!-- teacher -->
-      <div class="col-lg-4 col-sm-6 mb-5 mb-lg-0">
-        <div class="card border-0 rounded-0 hover-shadow">
-          <img class="card-img-top rounded-0" src="assets2/images/teachers/teacher-3.jpg" alt="teacher">
-          <div class="card-body">
-            <a href="#">
-              <h4 class="card-title">John Doe</h4>
-            </a>
-            <p>Teacher</p>
-            <ul class="list-inline">
-              <li class="list-inline-item"><a class="text-color" href="https://facebook.com/themefisher"><i class="ti-facebook"></i></a></li>
-              <li class="list-inline-item"><a class="text-color" href="#"><i class="ti-twitter-alt"></i></a></li>
-              <li class="list-inline-item"><a class="text-color" href="#"><i class="ti-google"></i></a></li>
-              <li class="list-inline-item"><a class="text-color" href="#"><i class="ti-linkedin"></i></a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- /teachers -->
-
-<!-- blog -->
-<section class="section pt-0">
-  <div class="container">
-    <div class="row">
-      <div class="col-12">
-        <h2 class="section-title">Informations</h2>
-      </div>
-    </div>
-    <div class="row justify-content-center">
-  <!-- blog post -->
-  <article class="col-lg-4 col-sm-6 mb-5 mb-lg-0">
-    <div class="card rounded-0 border-bottom border-primary border-top-0 border-left-0 border-right-0 hover-shadow">
-      <img class="card-img-top rounded-0" src="photo002.jpg" alt="Post thumb">
-      <div class="card-body">
-        <!-- post meta -->
-        <ul class="list-inline mb-3">
-          <!-- post date -->
-          <li class="list-inline-item mr-3 ml-0">Juillet 2023</li>
-          <!-- author -->
-          <li class="list-inline-item mr-3 ml-0">Rentrée academique 2023-2024</li>
-        </ul>
-        <a href={{ path('app_register') }}">
-          <h4 class="card-title">Les inscriptions se feront en ligne.</h4>
-        </a>
-        <a href="" class="btn btn-primary btn-sm">Lire...</a>
-      </div>
-    </div>
-  </article>
-  <!-- blog post -->
-  <article class="col-lg-4 col-sm-6 mb-5 mb-lg-0">
-    <div class="card rounded-0 border-bottom border-primary border-top-0 border-left-0 border-right-0 hover-shadow">
-      <img class="card-img-top rounded-0" src="photo003.jpg" alt="Post thumb">
-      <div class="card-body">
-        <!-- post meta -->
-        <ul class="list-inline mb-3">
-          <!-- post date -->
-          <li class="list-inline-item mr-3 ml-0">Juin 2023</li>
-          <!-- author -->
-          <li class="list-inline-item mr-3 ml-0">Vaccances et lecture</li>
-        </ul>
-        <a href=#">
-          <h4 class="card-title">Un programme pour booster les enfants à lire et à aimer la lecture.</h4>
-        </a>
-        <a href=#" class="btn btn-primary btn-sm">lire...</a>
-      </div>
-    </div>
-  </article>
-  <!-- blog post -->
-  <article class="col-lg-4 col-sm-6 mb-5 mb-lg-0">
-    <div class="card rounded-0 border-bottom border-primary border-top-0 border-left-0 border-right-0 hover-shadow">
-      <img class="card-img-top rounded-0" src="photo003.jpg" alt="Post thumb">
-      <div class="card-body">
-        <!-- post meta -->
-        <ul class="list-inline mb-3">
-          <!-- post date -->
-          <li class="list-inline-item mr-3 ml-0">Decembre 2023</li>
-          <!-- author -->
-          <li class="list-inline-item mr-3 ml-0">Première Composition</li>
-        </ul>
-        <a href=#">
-          <h4 class="card-title">Une composition en ligne aura lieu et les auditeurs y accederont depuis leur téléphone, ordinateurs.</h4>
-        </a>
-        <a href=#" class="btn btn-primary btn-sm">lire...</a>
-      </div>
-    </div>
-  </article>
-</div>
-  </div>
-</section>
-<!-- /blog -->
-	{% endblock %}
-        
-</div>
-<!-- footer -->
-<footer>
-  <!-- newsletter -->
-
-  <!-- footer content -->
-  <div class="footer bg-footer section border-bottom">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-4 col-sm-8 mb-5 mb-lg-0">
-          <!-- logo -->
-          <a class="logo-footer" href="{{path('app_home128')}}"><img class="img-fluid mb-4" src="logo.jpg" alt="logo"></a>
-          <ul class="list-unstyled">
-            <li class="mb-2">15 BP 245 Abidjan, Yopougon, Abidjan, Côte d'Ivoire</li>
-            <li class="mb-2">+225  345 6789</li>
-            <li class="mb-2">+225  345 6789</li>
-            <li class="mb-2">infos@caflited.com</li>
-          </ul>
-        </div>
-        <!-- company -->
-        <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-5 mb-md-0">
-          <h4 class="text-white mb-5">caflited</h4>
-          <ul class="list-unstyled">
-            <li class="mb-3"><a class="text-color" href="{{path('app_about')}}">A propos de nous</a></li>
-            <li class="mb-3"><a class="text-color" href="{{path('app_enseignant_index')}}">Nos enseignants</a></li>
-            <li class="mb-3"><a class="text-color" href="{{path('app_blog')}}">Blog</a></li>
-          </ul>
-        </div>
-        <!-- links -->
-        <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-5 mb-md-0">
-          <h4 class="text-white mb-5">Liens utiles</h4>
-          <ul class="list-unstyled">
-            <li class="mb-3"><a class="text-color" href="#">Cours</a></li>
-            <li class="mb-3"><a class="text-color" href="{{path('app_event')}}">Evenements</a></li>
-            <li class="mb-3"><a class="text-color" href="{{path('app_qcm')}}">Notes</a></li>
-            <li class="mb-3"><a class="text-color" href="{{ path('app_user_profile') }}">PROFILE</a></li>
-          </ul>
-        </div>
-        <!-- support -->
-        <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-5 mb-md-0">
-          <h4 class="text-white mb-5">SUPPORT</h4>
-          <ul class="list-unstyled">
-            <li class="mb-3"><a class="text-color" href="{{path('app_session1')}}">Cours</a></li>
-            <li class="mb-3"><a class="text-color" href="#">Documentation</a></li>
-            <li class="mb-3"><a class="text-color" href="#!">Methodes</a></li>
-            <li class="mb-3"><a class="text-color" href="#!">Stages</a></li>
-          </ul>
-        </div>
-        <!-- support -->
-       <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-5 mb-md-0">
-          <h4 class="text-white mb-5">Autres</h4>
-          <ul class="list-unstyled">
-            <li class="mb-3"><a class="text-color" href="{{path('app_blog')}}">Blog</a></li>
-            <li class="mb-3"><a class="text-color" href="#">Contact</a></li>
-            <li class="mb-3"><a class="text-color" href="{{path('app_mot')}}">Mots de la directrice</a></li>
-            <li class="mb-3"><a class="text-color" href="{{path('app_qcm')}}">QCM</a></li>
-          </ul>
-        </div>
-        
-      </div>
-    </div>
-  </div>
-  <!-- copyright -->
-  <div class="copyright py-4 bg-footer">
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-7 text-sm-left text-center">
-          <p class="mb-0">Copyright &copy;
-       
-            , designed & developed by <a href="https://lynovatech.com/" class="text-muted">Lynovatech</a>
-          </p>
-        </div>
-        <div class="col-sm-5 text-sm-right text-center">
-          <ul class="list-inline">
-            <li class="list-inline-item"><a class="d-inline-block p-2" href="#"><i class="ti-facebook text-primary"></i></a></li>
-            <li class="list-inline-item"><a class="d-inline-block p-2" href="#"><i class="ti-twitter-alt text-primary"></i></a></li>
-            <li class="list-inline-item"><a class="d-inline-block p-2" href="#"><i class="ti-github text-primary"></i></a></li>
-            <li class="list-inline-item"><a class="d-inline-block p-2" href="#"><i class="ti-instagram text-primary"></i></a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
 </footer>
 <!-- /footer -->
 
+<script>
+    function sendData() {
+        var formData = jQuery("#formModal").serialize();
+        jQuery.ajax({
+            type: "POST",
+            url: "{{ path("app_login") }}", // L'URL du fichier PHP de traitement
+            data: formData,
+            success: function (response) {
+                console.log(response);
+                // Traiter la réponse du serveur ici si nécessaire
+            }
+        }});
+    }
+</script>
 </body>
 </html>

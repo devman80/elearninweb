@@ -1,6 +1,6 @@
-{% extends "layout.html.twig" %}
+{% extends "base.html.twig" %}
 
-{% block title %} Profile de {{ app.user.nomuser}} {{ app.user.prenom}}
+{% block title %} Profile de {{ app.user.nom}} {{ app.user.prenom}}
 {% endblock %}
 
 {% block body %}
@@ -9,7 +9,7 @@
 
 
 
-    <div class="card card-primary">
+  <div class="col-md-6 bg-success-subtle grasmini">
         <div class="card-header">
             <h4 class="card-title">Modification mot de passe</h4>
         </div>
@@ -23,19 +23,23 @@
             <div>
                 {% for flashError in app.flashes('edit_pass') %}
                 {% endfor %}
-            
+
                 {% for flashError in app.flashes('error') %}
                 {% endfor %}
             </div>
-            <div class="card-body">
-                <div class="form-group">
-                    <label for="pass">Mot de passe</label>
+            
+            
+   <div class="row">
+	<div class="col-md-6 bg-success-subtle grasmini">
+               
+                    <label for="pass">Nouveau de passe</label>
                     <input type="password" class="form-control" id="pass" name="pass" placeholder="Mot de passe" required="required">
                 </div>
-               
-                
-                <div class="form-group">
-                    <label for="pass2">Confirmaer mot de passe</label>
+
+
+               	<div class="col-md-6 bg-success-subtle grasmini">
+
+                    <label for="pass2">Confirmer mot de passe</label>
                     <input type="password" class="form-control" id="pass2" name="pass2" placeholder="Confirmation mot de passe"  required="required">
                 </div>
 

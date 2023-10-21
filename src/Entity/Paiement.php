@@ -7,7 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PaiementRepository::class)]
-class Paiement
+class Paiement extends AbstractEntity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -25,6 +25,12 @@ class Paiement
 
     #[ORM\ManyToOne(inversedBy: 'paiements')]
     private ?Inscription $inscription = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $restepaie = null;
+
+    #[ORM\ManyToOne(inversedBy: 'paiements')]
+    private ?Section $section = null;
 
     public function getId(): ?int
     {
@@ -75,6 +81,30 @@ class Paiement
     public function setInscription(?Inscription $inscription): self
     {
         $this->inscription = $inscription;
+
+        return $this;
+    }
+
+    public function getRestepaie(): ?int
+    {
+        return $this->restepaie;
+    }
+
+    public function setRestepaie(?int $restepaie): static
+    {
+        $this->restepaie = $restepaie;
+
+        return $this;
+    }
+
+    public function getSection(): ?Section
+    {
+        return $this->section;
+    }
+
+    public function setSection(?Section $section): static
+    {
+        $this->section = $section;
 
         return $this;
     }

@@ -57,6 +57,7 @@
 			<tr>
 
 				<th class="alignements">Libellé</th>
+				<th class="alignements">Motant scolartié</th>
 				<th style="text-align: center;"># Actions</th>
 			</tr>
 		</thead>
@@ -67,6 +68,7 @@
 				<tr>
 
 					<td>{{ section.libelle }}</td>
+					<td>{{ section.scolarite }}</td>
 					<td class="alignements">
 							<a href="#" data-value="{{ section.id }}" data-libelle="{{ section.libelle }}" data-bs-toggle="modal" data-bs-target="#myModal" id="sectionid">
 								<img src="{{ asset('img/s_cancel.png') }}" title="Supprimer">

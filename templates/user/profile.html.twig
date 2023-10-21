@@ -31,155 +31,181 @@
                             <h5 class="my-3">{{ app.user.nom|upper }}</h5>
                             <p class="text-muted mb-1">Auditeur en <b>{{ section|upper }} </b></p>
                             <div class="d-flex justify-content-center mb-2">
+                            <p class="text-muted mb-1">Matricule <b>{{ code|upper }} </b></p>
 
-                                <button type="button" class="btn btn-outline-primary ms-1">
-
-                                    <a href="{{ path("user_modifier_editpass" ) }}">
-                                        Modifier password
-                                    </a>
-                                </button>
+                            </div>
+                              <div class="d-flex justify-content-center mb-2">
+                            <p class="text-muted mb-1"> <b><a href="{{path("app_paiementpro")}}"><button class="btn btn-primary">Effectuer un paiement</button></a></b></p>
                             </div>
                         </div>
                     </div>
+
+
                     <div class="card mb-4 mb-lg-0">
                         <div class="card-body p-0">
+
                             <ul class="list-group list-group-flush rounded-3">
                                 <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                                     <i class="fas fa-globe fa-lg text-warning"></i>
-                                    <p class="mb-0">Secolarités: reste: 180 000</p>
+                                    <p class="mb-0">Scolarité: <b>{{ section.scolarite|number_format(0, '.', ' ') }} F CFA </b></p>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                    <i class="fab fa-github fa-lg" style="color: #333333;"></i>
-                                    <p class="mb-0">25000f le 05-07-2022</p>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                    <i class="fab fa-twitter fa-lg" style="color: #55acee;"></i>
-                                    <p class="mb-0">60 000 le 05-08-2022</p>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                    <i class="fab fa-instagram fa-lg" style="color: #ac2bac;"></i>
-                                    <p class="mb-0"> 40 000 le 17-09-2022</p>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                    <i class="fab fa-facebook-f fa-lg" style="color: #3b5998;"></i>
-                                    <p class="mb-0"> 24 000 le 05-02-2023</p>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-8">
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <p class="mb-0">Nom</p>
-                                </div>
-                                <div class="col-sm-9">
-                                    <p class="text-muted mb-0">{{ app.user.nom|upper }}</p>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <p class="mb-0">Prénoms</p>
-                                </div>
-                                <div class="col-sm-9">
-                                    <p class="text-muted mb-0">{{ app.user.prenom|upper }}</p>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <p class="mb-0">Phone</p>
-                                </div>
-                                <div class="col-sm-9">
-                                    <p class="text-muted mb-0">
-                                        {{ phone }}
-                                    </p>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <p class="mb-0">Section</p>
-                                </div>
-                                <div class="col-sm-9">
-                                    <p class="text-muted mb-0"> <b> {{ section }} </b> </p>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <p class="mb-0">Nationalité</p>
-                                </div>
-                                <div class="col-sm-9">
-                                    <p class="text-muted mb-0">{{ nationalite|country_name('fr') }}</p>
-                                </div>
-                            </div>
+                                    <i class="fas fa-globe fa-lg text-warning"></i>
 
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <p class="mb-0">Lieu d'habitation</p>
-                                </div>
-                                <div class="col-sm-9">
-                                    <p class="text-muted mb-0">{{ habitation|upper }}</p>
-                                </div>
+
+                                    <p class="mb-0">Total payé: <b> {% for paiement in paiements %}
+                                            {% set sum = paiement.montantpaiement + sum ?? 0 %}
+                                            {% if loop.last  %} <b> {{ sum|number_format(0, '.', ' ')}}F</b>  {% endif %}
+                                            {% endfor %}</b></p>
+                                        <p class="mb-0">Reste: 
+                                            
+                                                {% set montant = section.scolarite  %}
+                                                {% for paiement in paiements %}
+                                                    {% set sum = paiement.montantpaiement + sum ?? 0 %}
+                                                    {% if loop.last  %} 
+                                                        
+                                                        {% set reste = montant - sum %}
+                                                        <b> {% if reste > 0 %} {{ reste|number_format(0, '.', ' ') }}F</b> {% else %} Soldée {% endif %} {% endif %}
+                                                   
+                                                {% endfor %}
+                                          
+                                        </p>
+
+                                    </li>
+
+                                </ul>
+
+                            </div>
+                        </div>
+
+                        <div class="card mb-4 mb-lg-0">
+                            <div class="card-body p-0">
+                                {% for paiement in paiements %}
+                                    <ul class="list-group list-group-flush rounded-3">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                            <i class="fas fa-globe fa-lg text-warning"></i>
+                                            <p class="mb-0">{{ paiement.datepaiement | date("d-m-Y") }}:            <b>{{ paiement.montantpaiement|number_format(0, '.', ' ') }} F CFA </b></p>
+                                        </li>
+
+
+                                    </ul>
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="col-lg-8">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <p class="mb-0">Nom</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <p class="text-muted mb-0">{{ app.user.nom|upper }}</p>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <p class="mb-0">Prénoms</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <p class="text-muted mb-0">{{ app.user.prenom|upper }}</p>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <p class="mb-0">Phone</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <p class="text-muted mb-0">
+                                            {{ phone }}
+                                        </p>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <p class="mb-0">Section</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <p class="text-muted mb-0"> <b> {{ section }} </b> </p>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <p class="mb-0">Nationalité</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <p class="text-muted mb-0">{{ nationalite|country_name('fr') }}</p>
+                                    </div>
+                                </div>
 
-                        <div class="col-md-12">
-                            <table  style="width:100%">
-                                <thead class="table-primary">
-                                    <tr>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <p class="mb-0">Lieu d'habitation</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <p class="text-muted mb-0">{{ habitation|upper }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
 
-                                        <th class="alignements">Matières</th>
-
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% set i = 1 %}
-                                    {% for matiere in matieres %}
-
+                            <div class="col-md-12">
+                                <table  style="width:100%">
+                                    <thead class="table-primary">
                                         <tr>
 
-                                            <td>
-                                                {{ matiere.libelle  }}
-                                               
-
-                                                {% for cour in matiere.dispensers %}
-
-                                                    {% if cour.brochureFilename is not empty %}
-                                                        <a href="{{ asset('uploads/brochures/' ~ cour.brochureFilename) }}"> {{ cour.lesson  }}      </a>
-                                                    {% else %} {% endif %}
-                                                    
-                                                {% endfor %}
-                                            </td>
-                                            <td>
-                                                {% if matiere.dispensers is not empty %}
-                                                    <a href="membre/se?id={{ matiere.id }}">
-                                                        Voir cours
-                                                    </a>
-                                                {% else %}
-                                                    Aucun cours
-                                                {% endif %}
-                                            </td>
-
+                                            <th class="alignements">Matières</th>
 
                                         </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for matiere in matieres %}
+
+                                            <tr>
+
+                                                <td>
+                                                    {{ matiere.libelle  }}
 
 
-                                    {% endfor %}
-                                </tbody>
-                            </table>
+                                                    {% for cour in matiere.dispensers %}
 
+                                                        {% if cour.brochureFilename is not empty %}
+                                                            <a href="{{ asset('uploads/brochures/' ~ cour.brochureFilename) }}"> {{ cour.lesson  }}      </a>
+                                                        {% else %} {% endif %}
+
+                                                    {% endfor %}
+                                                </td>
+                                                <td>
+                                                    {% if matiere.dispensers is not empty %}
+                                                        <a href="membre/se?id={{ matiere.id }}">
+                                                            Voir cours
+                                                        </a>
+                                                    {% else %}
+                                                        Aucun cours
+                                                    {% endif %}
+                                                </td>
+
+
+                                            </tr>
+
+
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+
+                            </div>
                         </div>
                     </div>
+                                    
+                                    
                 </div>
             </div>
-        </div>
-    </section>
-{% endblock %}
+        </section>
+        {% endblock %}

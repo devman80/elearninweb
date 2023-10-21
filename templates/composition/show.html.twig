@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Composition{% endblock %}
+
+{% block body %}
+    <h1>Composition</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ composition.id }}</td>
+            </tr>
+            <tr>
+                <th>Libelle</th>
+                <td>{{ composition.libelle }}</td>
+            </tr>
+            <tr>
+                <th>Datecompos</th>
+                <td>{{ composition.datecompos ? composition.datecompos|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Heuredebut</th>
+                <td>{{ composition.heuredebut ? composition.heuredebut|date('H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Heurefin</th>
+                <td>{{ composition.heurefin ? composition.heurefin|date('H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ composition.createdAt ? composition.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>CreatedFromIp</th>
+                <td>{{ composition.createdFromIp }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ composition.updatedAt ? composition.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedFromIp</th>
+                <td>{{ composition.updatedFromIp }}</td>
+            </tr>
+            <tr>
+                <th>DeletedAt</th>
+                <td>{{ composition.deletedAt ? composition.deletedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DeletedFromIp</th>
+                <td>{{ composition.deletedFromIp }}</td>
+            </tr>
+            <tr>
+                <th>Editable</th>
+                <td>{{ composition.editable ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_composition_index') }}">back to list</a>
+
+    <a href="{{ path('app_composition_edit', {'id': composition.id}) }}">edit</a>
+
+    {{ include('composition/_delete_form.html.twig') }}
+{% endblock %}

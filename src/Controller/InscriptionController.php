@@ -264,7 +264,7 @@ class InscriptionController extends AbstractController {
             }
 
             $inscriptionRepository->save($inscription, true);
-
+            $this->addFlash('message', 'Modification avec scucès');
             return $this->redirectToRoute('app_inscription_index', [], Response::HTTP_SEE_OTHER);
         }
 

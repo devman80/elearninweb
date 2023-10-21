@@ -1,0 +1,5 @@
+26/08/2023: Profile controller
+	    TemplateUser: editpass.twig et editprofile.twig
+	    _partial_navbar
+Resumé: Modification de mot de passe et profile: J'ai crée profilecontroller et j'ai supprimé les actions editprofil et editpass dans controller
+

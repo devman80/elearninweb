@@ -10,6 +10,7 @@ use App\Form\UserType;
 use App\Repository\DispenserRepository;
 use App\Repository\InscriptionRepository;
 use App\Repository\MatiereRepository;
+use App\Repository\PaiementRepository;
 use App\Repository\UserRepository;
 use DateTime;
 use DateTimeImmutable;
@@ -28,7 +29,7 @@ class UserController extends AbstractController {
 
     #[Route('/', name: 'app_user_index', methods: ['GET'])]
     public function index(UserRepository $userRepository): Response {
-        if (!$this->isGranted('ROLE_ADMIN')) {
+        if (!$this->isGranted('ROLE_SUPER_ADMIN')) {
             throw $this->createAccessDeniedException('Accès réfusé, vous n\'avez pas les droits d\'accès ici!');
         }
         $user = $userRepository->findBy(["editable" => 1]);
@@ -47,7 +48,7 @@ class UserController extends AbstractController {
 
     #[Route('/new', name: 'app_user_new', methods: ['GET', 'POST'])]
     public function new(Request $request, SluggerInterface $slugger, UserRepository $userRepository, UserPasswordHasherInterface $userPasswordHasher): Response {
-        if (!$this->isGranted('ROLE_ADMIN')) {
+        if (!$this->isGranted('ROLE_SUPER_ADMIN')) {
             throw $this->createAccessDeniedException('Accès réfusé, vous n\'avez pas les droits d\'accès ici!');
         }
         $user = new User();
@@ -77,11 +78,12 @@ class UserController extends AbstractController {
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
                 }
-
+                $user->setIsVerified(1);
                 // updates the 'brochureFilename' property to store the PDF file name
                 // instead of its contents
                 $user->setBrochureFilename($newFilename);
             }
+            $user->setIsVerified(1);
             $user->setCreatedAt(new DateTime("now"));
             $user->setPassword(
                     $userPasswordHasher->hashPassword(
@@ -148,8 +150,8 @@ class UserController extends AbstractController {
         ]);
     }
 
-    #[Route('/profile', name: 'app_user_profile', methods: ['GET', 'POST'])]
-    public function profileAction(InscriptionRepository $inscriptionRepos, MatiereRepository $matiereRepos) {
+     #[Route('/profile', name: 'app_user_profile', methods: ['GET', 'POST'])]
+    public function profileAction(InscriptionRepository $inscriptionRepos, MatiereRepository $matiereRepos, PaiementRepository $paiementRepo) {
         // Recupere l'utilisateur courant
         $user = $this->getUser();
         $idUser = $user->getId();
@@ -158,17 +160,21 @@ class UserController extends AbstractController {
         $section = '';
         $nationalite = '';
         $habitation = '';
+        $code = '';
 
+        $paiement = $paiementRepo->findByInscription($inscrit);
+        
         foreach ($inscrit as $key => $value) {
             $phone = $value->getTelephone();
             $section = $value->getSection();
             $nationalite = $value->getPaysnaiss();
             $habitation = $value->getLieuresidence();
+            $code = $value->getCode();
         }
 
-        $listeMatieres = $matiereRepos->findBy(['section' => $section]);
+        $listeMatieres = $matiereRepos->findBy(["deletedAt" => Null]);
         $listecours = $matiereRepos->matieresGroupByCours();
-      
+
         if (null === $user) {
             return $this->redirectToRoute('app_home128');
         }
@@ -180,6 +186,8 @@ class UserController extends AbstractController {
                     'habitation' => $habitation,
                     'matieres' => $listeMatieres,
                     'cours' => $listecours,
+                    'paiements' => $paiement,
+                    'code' => $code,
         ]);
     }
 
@@ -257,7 +265,7 @@ class UserController extends AbstractController {
     #[Route('/{id}', name: 'app_registration_delete', methods: ['POST'])]
     public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        if (!$this->isGranted('ROLE_ADMIN')) {
+        if (!$this->isGranted('ROLE_SUPER_ADMIN')) {
             throw $this->createAccessDeniedException('Accès réfusé, vous n\'avez pas les droits d\'accès ici!');
         }
         if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
@@ -275,7 +283,7 @@ class UserController extends AbstractController {
     #[Route('/{id}/user/', name: 'app_registration_active', methods: ['POST'])]
     public function validateUser(Request $request, User $user, EntityManagerInterface $entityManager): Response {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        if (!$this->isGranted('ROLE_ADMIN')) {
+        if (!$this->isGranted('ROLE_SUPER_ADMIN')) {
             throw $this->createAccessDeniedException('Accès réfusé, vous n\'avez pas les droits d\'accès ici!');
         }
         if ($this->isCsrfTokenValid('active' . $user->getId(), $request->request->get('_token'))) {

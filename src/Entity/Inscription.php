@@ -140,9 +140,25 @@ class Inscription extends AbstractEntity
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $certificatFileName = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $montantpayer = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $restepaye = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $scolarite = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $codeversement = null;
+
+    #[ORM\OneToMany(mappedBy: 'inscription', targetEntity: Note::class)]
+    private Collection $notes;
+
     public function __construct()
     {
         $this->paiements = new ArrayCollection();
+        $this->notes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -490,6 +506,88 @@ class Inscription extends AbstractEntity
     public function setCertificatFileName(?string $certificatFileName): self
     {
         $this->certificatFileName = $certificatFileName;
+
+        return $this;
+    }
+
+    public function getMontantpayer(): ?int
+    {
+        return $this->montantpayer;
+    }
+
+    public function setMontantpayer(?int $montantpayer): static
+    {
+        $this->montantpayer = $montantpayer;
+
+        return $this;
+    }
+
+    public function getRestepaye(): ?int
+    {
+        return $this->restepaye;
+    }
+
+    public function setRestepaye(?int $restepaye): static
+    {
+        $this->restepaye = $restepaye;
+
+        return $this;
+    }
+
+    public function getScolarite(): ?int
+    {
+        return $this->scolarite;
+    }
+
+    public function setScolarite(?int $scolarite): static
+    {
+        $this->scolarite = $scolarite;
+
+        return $this;
+    }
+    
+    public function __toString() {
+        return $this->nom .' '. $this->prenom .' '. $this->code;
+    }
+
+    public function getCodeversement(): ?int
+    {
+        return $this->codeversement;
+    }
+
+    public function setCodeversement(?int $codeversement): static
+    {
+        $this->codeversement = $codeversement;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Note>
+     */
+    public function getNotes(): Collection
+    {
+        return $this->notes;
+    }
+
+    public function addNote(Note $note): static
+    {
+        if (!$this->notes->contains($note)) {
+            $this->notes->add($note);
+            $note->setInscription($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNote(Note $note): static
+    {
+        if ($this->notes->removeElement($note)) {
+            // set the owning side to null (unless already changed)
+            if ($note->getInscription() === $this) {
+                $note->setInscription(null);
+            }
+        }
 
         return $this;
     }

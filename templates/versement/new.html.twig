@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion versement{% endblock %}
+
+{% block body %}
+  <section class="bd-style  container">
+	<div class="row ">
+		<div class="col-md-6">
+			<h1 class="text-gras">
+				Gestion des versement
+			</h1>
+
+		</div>
+
+	</div>
+
+    {{ include('versement/_form.html.twig') }}
+  </section>
+{% endblock %}

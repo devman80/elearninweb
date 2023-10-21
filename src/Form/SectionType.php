@@ -14,6 +14,7 @@ class SectionType extends AbstractType
     {
         $builder
         ->add('libelle')
+        ->add('scolarite')
         ->add('save', SubmitType::class, [
              'attr' => [
                  'value' => 'create-don'

@@ -38,11 +38,7 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
      */
     private $plainPassword;
 
-    #[Assert\Regex(
-        pattern: '/^[0-9a-zA-Z-\s\'ÀÁÂÃÄÅàáâãäåÒÓÔÕÖØòóôõöøÈÉÊËèéêëÇçÌÍÎÏìíîïÙÚÛÜùúûüÿÑñ]+$/',
-        htmlPattern: '^[a-zA-Z]+$',
-        message: 'Your name cannot contain a number',
-    )]
+
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $nom = null;
 
@@ -204,6 +200,11 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
        public function isDeleted(): bool
     {
         return $this->deletedAt !== null;  
+    }
+    
+         public function isExpired(): bool
+    {
+        return $this->isVerified == 0;  
     }
 
        public function getSection(): ?Section

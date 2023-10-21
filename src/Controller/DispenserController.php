@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/dispenser')]
+#[Route('/admin/dispenser')]
 class DispenserController extends AbstractController {
 
     use ClientIp;
@@ -38,7 +38,7 @@ class DispenserController extends AbstractController {
 
         $type = $dispenser === null ? 'new' : 'edit';
         $dispenser = $dispenser === null ? new Dispenser() : $dispenser;
-
+                $user = $this->getUser();
         $form = $this->createForm(DispenserType::class, $dispenser,);
         $form->handleRequest($request);
 
@@ -55,16 +55,15 @@ class DispenserController extends AbstractController {
             if ($type === 'new') {
                 $user = $this->getUser();
 
-                $dispenser->setCreatedFromIp($this->GetIp()) // remplacement de la function par le trait
-                    // ->setCreatedBy($user)
+                $dispenser->setCreatedFromIp($this->GetIp()); // remplacement de la function par le trait
+                     $dispenser->setCreatedBy($user)
 
                 ;
                 $dispenser->setCreatedAt(new \DateTimeImmutable("now"));
             } else {
-                $user = $this->getUser();
 
-                $dispenser->setUpdatedFromIp($this->GetIp()) // remplacement de la function par le trait
-                       // ->setUpdatedBy($user)
+                $dispenser->setUpdatedFromIp($this->GetIp()) ;// remplacement de la function par le trait
+                        $dispenser->setUpdatedBy($user)
                 ;
                 
                         $dispenser->setUpdatedAt(new \DateTimeImmutable("now"));
@@ -124,7 +123,7 @@ class DispenserController extends AbstractController {
         $LigneUpdate = $dispenserRepository->find($id);
         $LigneUpdate->setDeletedFromIp($this->GetIp());
         $user = $this->getUser();
-        //  $LigneUpdate->setDeletedBy($user);
+          $LigneUpdate->setDeletedBy($user);
         $LigneUpdate->setDeletedAt(new \DateTimeImmutable("now"));
         $entityManager->flush();
         return $this->json(["data" => "Suppression effectuée avec succès"], 200, ["Content-type" => "application-json"]);

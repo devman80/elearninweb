@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 
-#[Route('/stagiaire')]
+#[Route('/admin/stagiaire')]
 class StagiaireController extends AbstractController
 {
 use ClientIp;
@@ -37,11 +37,11 @@ use ClientIp;
 
         $type = $stagiaire === null ? 'new' : 'edit';
         $stagiaire = $stagiaire === null ? new Stagiaire() : $stagiaire;
+        $user = $this->getUser();
         $form = $this->createForm(StagiaireType::class, $stagiaire);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             if ($type === 'new') {
-                $stagiaireRepository->save($stagiaire, true);
 
                 $brochureFile = $form->get('brochure')->getData();
                 if ($brochureFile) {
@@ -86,6 +86,7 @@ use ClientIp;
                     // instead of its contents
                     $stagiaire->setBrochureFilename($newFilename);
                 }
+                $stagiaire->getCreatedBy($user);
                 $stagiaireRepository->save($stagiaire, true);
             }
             $nextAction = $form->get('saveAndAdd')->isClicked() ? 'app_stagiaire_new' : 'app_stagiaire_index';

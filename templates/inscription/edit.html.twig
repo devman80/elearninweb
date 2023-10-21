@@ -1,13 +1,83 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Inscription{% endblock %}
+{% block title %}Modification Auditeur{% endblock %}
 
 {% block body %}
-    <h1>Edit Inscription</h1>
+    <h1>Modification auditeur</h1>
 
-    {{ include('inscription/_form.html.twig', {'button_label': 'Update'}) }}
+{{ form_start(form) }}
+<div class="row">
 
-    <a href="{{ path('app_inscription_index') }}">back to list</a>
+	<div class="col-md-3">
+		{{ form_row(form.commune, {'label':'Commune '}) }}
+	</div>
+	<div class="col-md-3">
+		{{ form_row(form.nom, {'label':'Nom '}) }}
+	</div>
+	<div class="col-md-3">
+		{{ form_row(form.prenom, {'label':'Prenom '}) }}
+	</div>
+	<div class="col-md-3">
+		{{ form_row(form.sexe, {'label':'Sexe '}) }}
+	</div>
+</div>
+<div class="row">
 
-    {{ include('inscription/_delete_form.html.twig') }}
+	<div class="col-md-3">
+		{{ form_row(form.contact, {'label':'Contact '}) }}
+	</div>
+	<div class="col-md-3">
+		{{ form_row(form.telephone, {'label':'Contact 2 '}) }}
+	</div>
+	<div class="col-md-3">
+		{{ form_row(form.datenaissance, {'label':'Date de naissance '}) }}
+	</div>
+	<div class="col-md-3">
+		{{ form_row(form.cmu, {'label':'N° CMU '}) }}
+	</div>
+</div>
+<div class="row">
+
+	<div class="col-md-3">
+		{{ form_row(form.brochure, {'label':'Photo '}) }}
+	</div>
+	
+	
+	<div class="col-md-3">
+		{{ form_row(form.extrait, {'label':'Extrait de naissance '}) }}
+	</div>
+        <div class="col-md-3">
+		{{ form_row(form.numpiece, {'label':'Numero pièce'}) }}
+	</div>
+</div>
+<div class="row">
+
+	<div class="col-md-3">
+		{{ form_row(form.paysnaiss, {'label':'Pays d\'origine '}) }}
+	</div>
+	<div class="col-md-3">
+		{{ form_row(form.paysvit, {'label':'Pays de residence '}) }}
+	</div>
+	<div class="col-md-3">
+		{{ form_row(form.lieuresidence, {'label':'Lieu de residence '}) }}
+	</div>
+	<div class="col-md-3">
+		{{ form_row(form.typepiece, {'label':'Type pièce '}) }}
+	</div>
+</div>
+
+
+
+<div class="row">
+
+	
+	<div class="col-md-3">
+		{{ form_row(form.typehandicap, {'label':'Handicap'}) }}
+	</div>
+
+</div>
+
+
+{{ form_end(form) }}
+
 {% endblock %}

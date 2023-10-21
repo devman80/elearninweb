@@ -1,4 +1,65 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+<div class="my-custom-class-for-errors">
+	{{ form_errors(form) }}
+	{% for message in app.flashes('enseignant') %}
+		<div class="row">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<div class="alert alert-success alert-dismissible">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<strong>Succès!</strong>
+					{{ message }}
+
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+
+</div>
+
+
+<div class="row">
+
+	<div class="col-md-6 bg-success-subtle grasmini">
+		{{ form_row(form.nom, {'label':'Nom ', 'attr':{'class':'form-control'}}) }}
+	</div>
+	<div class="col-md-6 bg-success-subtle grasmini">
+		{{ form_row(form.prenom, {'label':'Prenoms ', 'attr':{'class':'form-control'}}) }}
+	</div>
+	<div class="col-md-6 bg-success-subtle grasmini">
+		{{ form_row(form.email, {'label':'Email ', 'attr':{'class':'form-control'}}) }}
+	</div>
+	<div class="col-md-6 bg-success-subtle grasmini">
+		{{ form_row(form.roles, {'label':'Role ', 'attr':{'class':'form-control'}}) }}
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-6 bg-success-subtle grasmini">
+		{{ form_row(form.brochure, {'label':'Photo ', 'attr':{'class':'form-control'}}) }}
+	</div>
+	<div class="col-md-6 bg-success-subtle grasmini">
+		{{ form_row(form.plainPassword, {'label':'Twitter ', 'attr':{'class':'form-control'}}) }}
+	</div>
+
+</div>
+
+
+<div class="col-md-3">
+	&nbsp;
+</div>
+<div class="row">
+	<div class="col-md-3">
+		{{ form_row(form.save, {'label':'Valider ','attr':{'value':'save','class':'btn btnvalider'}}) }}
+	</div>
+	<div class="col-md-3">
+		{{ form_row(form.saveAndAdd, {'label':'Valider et continuer  ','attr':{'value':'save-and-add','class':'btn btnsave'}}) }}
+	</div>
+	<div class="col-md-3">
+
+		<a href="{{ path('app_user_index') }}" class="btn btnliste">Afficher la liste</a>
+
+	</div>
+</div>
+
+
 {{ form_end(form) }}

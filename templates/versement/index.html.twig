@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Versement index{% endblock %}
+
+{% block body %}
+    <h1>Modalités de paiement</h1>
+        {% for message in app.flashes('versement') %}
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="alert alert-success alert-dismissible">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Succès!</strong>
+                    {{ message }}
+
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+ <table id="app_elearning" class="table table-striped dt-responsive nowrap table-bordered table-hover" style="width:100%">
+		<thead class="table-primary">
+     
+            <tr>
+                <th>Montant</th>
+                <th>Code</th>
+                <th>Date limite</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for versement in versements %}
+            <tr>
+                <td>{{ versement.montantversement }}</td>
+                <td>{{ versement.code }}</td>
+                <td>{{ versement.dateversement ?  date_format(versement.dateversement)}}</td>
+                <td>
+                    <a href="{{ path('app_versement_edit', {'id': versement.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Aucune donnée trouvée</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+ 
+{% endblock %}

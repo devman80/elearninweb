@@ -11,18 +11,16 @@ use Doctrine\Persistence\ManagerRegistry;
  *
  * @method Annee|null find($id, $lockMode = null, $lockVersion = null)
  * @method Annee|null findOneBy(array $criteria, array $orderBy = null)
- * @method Annee[]    findAll()
+
  * @method Annee[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class AnneeRepository extends ServiceEntityRepository
-{
-    public function __construct(ManagerRegistry $registry)
-    {
+class AnneeRepository extends ServiceEntityRepository {
+
+    public function __construct(ManagerRegistry $registry) {
         parent::__construct($registry, Annee::class);
     }
 
-    public function save(Annee $entity, bool $flush = false): void
-    {
+    public function save(Annee $entity, bool $flush = false): void {
         $this->getEntityManager()->persist($entity);
 
         if ($flush) {
@@ -30,8 +28,7 @@ class AnneeRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Annee $entity, bool $flush = false): void
-    {
+    public function remove(Annee $entity, bool $flush = false): void {
         $this->getEntityManager()->remove($entity);
 
         if ($flush) {
@@ -53,7 +50,6 @@ class AnneeRepository extends ServiceEntityRepository
 //            ->getResult()
 //        ;
 //    }
-
 //    public function findOneBySomeField($value): ?Annee
 //    {
 //        return $this->createQueryBuilder('a')
@@ -63,4 +59,10 @@ class AnneeRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+    public function findAll() {
+        return $this->findBy(['deletedAt' => NULL], ['id' => 'desc'], 1, 0);
+//       return $this->findBy([], ['year' => 'ASC', 'city' => 'ASC']);
+    }
+
 }

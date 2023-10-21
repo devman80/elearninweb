@@ -1,0 +1,125 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Paiement{% endblock %}
+
+{% block body %}
+ <section class="bd-style  container">
+	<div class="row ">
+		<div class="col-md-6">
+			<h1 class="text-gras">
+				Gestion scolarité
+			</h1>
+
+		</div>
+
+	</div>
+
+    {{ include('paiement/_form.html.twig') }}
+
+ </section>
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	<script type="text/javascript">
+		// window.onload =()=>{
+		// 	let section = document.querySelector("#paiement_section");
+		// 	//let inscription = document.querySelector("#paiement_inscription");
+		// 	section.addEventListener("change", function () {
+		// 		let form = this.closest("form");
+		// 		let data = this.name + "=" + this.value;
+		// 		fetch(form.action, {
+		// 			method: form.getAttribute("method"),
+		// 			body: data,
+		// 			headers: {
+		// 				"Content-Type": "application/x-www-form-urlencoded; charset:utf-8"
+		// 			}
+		// 		})
+		// 				.then(response => response.text())
+		// 				.then(html => {
+		//
+		// 					let content = document.createElement("html");
+		// 					content.innerHTML = html;
+		// 					let nouveauselect = content.querySelector("#paiement_inscription");
+		// 					document.querySelector("#paiement_inscription").replaceWith(nouveauselect);
+		// 				})
+		// 	});
+		//
+		// 	//let inscription = document.querySelector("#paiement_inscription");
+		// 	//inscription.addEventListener("change",function () {
+		//
+		// };
+          function filtreSection() {
+
+			  var id = $("#paiement_section").val();
+			  $("#paiement_inscription").html("<option value='"+0+"'>---Auditeur---</option>");
+
+			  $.ajax({
+				  type: 'POST',
+				  url: '{{ path("app_filtre_inscription") }}',
+				  cache: false,
+				  data: {"id": id},
+				  success: function (response) {
+					  //	console.log('La requête a réussi :', response.code);
+					  // console.log(response);
+					  $.each(response, function (index, value) {
+						  //console.log(value);
+						  $("#paiement_inscription").append("<option value='" + value.id + "'>" + value.libelle + "</option>");
+					  });
+				  },
+				  error: function (jqXHR, textStatus, errorThrown) {
+					  console.log('La requête a échoué :', textStatus, errorThrown);
+				  }
+			  });
+		  }
+		  {#}#}
+		function sendData() {
+			let inscrit = document.querySelector("#paiement_inscription");
+			    inscrit.addEventListener("change",function () {
+					$('#paiement_inscrit').val($("#paiement_inscription").val());
+				})
+
+		}
+    function AfficheReste() {
+
+			// Récupérer tous les liens du tableau
+		$('#paiement_inscrit').val($("#paiement_inscription").val());
+
+			var url = "{{ path('app_filtre') }}";
+			var formData = $("#paiement_inscription").val(); // Récupérer les données du formulaire sous forme de chaîne de requête
+			$.ajax({
+				type: 'POST',
+				url: url,
+				cache: false,
+				data: {"id": formData},
+				success: function (response) {
+					console.log('La requête a réussi :', response.code);
+					$("#paiement_restepaie").val(response.code);
+
+				},
+				error: function (jqXHR, textStatus, errorThrown) {
+					console.log('La requête a échoué :', textStatus, errorThrown);
+				}
+			});
+
+	}
+	function VerifieMontant() {
+         let mont = $("#paiement_montantpaiement").val();
+		 let rest = $("#paiement_restepaie").val();
+
+		if(Number(mont) > Number(rest)) {
+			alert("Montant trop eleve");
+			$("#paiement_montantpaiement").val(0);
+			$("#paiement_save").attr("disabled", true);
+			$("#paiement_saveAndAdd").attr("disabled", true);
+
+		}else{
+
+			$("#paiement_save").removeAttr("disabled");
+			$("#paiement_saveAndAdd").removeAttr("disabled");
+		}
+
+	}
+
+	</script>
+
+{% endblock %}

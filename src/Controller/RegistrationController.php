@@ -7,14 +7,19 @@ use App\Entity\Inscription;
 use App\Entity\Section;
 use App\Entity\Stagiaire;
 use App\Entity\User;
+use App\Entity\Paiement;
 use App\Form\RegistrationFormType;
 use App\Repository\InscriptionRepository;
+use App\Repository\PaiementRepository;
+use App\Repository\SectionRepository;
 use App\Repository\UserRepository;
+use App\Repository\VersementRepository;
 use App\Security\EmailVerifier;
 use App\Security\UsersAuthenticator;
 use App\Service\FileUploader;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Query\Expr\OrderBy;
 use Monolog\DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,7 +44,7 @@ class RegistrationController extends AbstractController {
             UserAuthenticatorInterface $userAuthenticator,
             UsersAuthenticator $authenticator,
             EntityManagerInterface $entityManager,
-            FileUploader $fileUploader, InscriptionRepository $inscriptionRepository): Response {
+            FileUploader $fileUploader, InscriptionRepository $inscriptionRepository, SectionRepository $setionRepos): Response {
         //   $user = new User();
         $liste = ['message' => 'create form'];
         $form = $this->createForm(RegistrationFormType::class, $liste);
@@ -77,6 +82,12 @@ class RegistrationController extends AbstractController {
             } else {
                 $certificatFileName = null;
             }
+            $diplome = $data['diplomeFilename'];
+            if ($diplome) {
+                $diplomeFileName = $fileUploader->upload($diplome);
+            } else {
+                $diplomeFileName = null;
+            }
             //enregistrement de user
             $user = new User();
             $user->setRoles(['ROLE_USER']);
@@ -84,7 +95,7 @@ class RegistrationController extends AbstractController {
             $user->setNom($data['nom']);
             $user->setEditable(1);
             $user->setSection($entityManager->find(Section::class, $data['section']->getId()));
-
+            $user->setIsVerified(true);
             $user->setPrenom($data['prenom']);
             $user->setContact($data['contact']);
             $user->setEmail($data['email']);
@@ -121,10 +132,16 @@ class RegistrationController extends AbstractController {
             $entityManager->persist($stagiaire);
 
             //Enregistrement inscription
+            // recuperation du montant de la section
+            
+            $montScolarite = $setionRepos->find($data['section']->getId());
+             $resultScolarite = $montScolarite->getScolarite();
+           
+            
             $inscription = new Inscription();
             $inscription->setEmail($data['email']);
             $inscription->setNom($data['nom']);
-
+            $inscription->setDiplomeFilename($diplomeFileName);
             $inscription->setPrenom($data['prenom']);
             $inscription->setSexe($data['sexe']);
             $inscription->setContact($data['contact']);
@@ -147,7 +164,9 @@ class RegistrationController extends AbstractController {
             $inscription->setCode($code);
 
             $inscription->setSection($entityManager->find(Section::class, $data['section']->getId()));
-
+            $inscription->setRestepaye($resultScolarite);
+            $inscription->setMontantInscription($resultScolarite);
+            $inscription->setMontantpayer(0);
             $inscription->setCniFilenamerecto($cnirectoFileName);
             $inscription->setCniFilename($cniversoFileName);
             $inscription->setBrochureFilename($brochureFileName);
@@ -198,7 +217,7 @@ class RegistrationController extends AbstractController {
 //                $authenticator,
 //                $request
 //            );
-            return $this->redirectToRoute('app_login', [], 302);
+            return $this->render('security/login.html.twig');
         }
 
         return $this->render('registration/register.html.twig', [
@@ -234,5 +253,150 @@ class RegistrationController extends AbstractController {
 
         return $this->redirectToRoute('app_register');
     }
+     #[Route('/paiementpro', name: 'app_paiementpro')]
+        public function paiementpro(Request $request,InscriptionRepository $inscriptionRepository,VersementRepository $versementRepository)
+     {
+        $data = $this->getUser();
+        $listedata = $inscriptionRepository->findBy(["createdBy"=>$data->getId()],["id" =>"DESC"],"1","0");
+         $nom       = "";
+         $prenom    = "";
+         $montant   = 0;
+         $id        = "";
+         $section   = "";
+         $code      = 0;
+         $montants  = 0;
+        foreach ($listedata as $ldata){
+            $nom       = $ldata->getNom();
+            $prenom    = $ldata->getPrenom();
+            $montant   = $ldata->getRestepaye();
+            $id        = $ldata->getId();
+            $code      = $ldata->getCodeversement();
+            $section   = $ldata->getSection();
+        }
+        $email     = $data->getEmail();
+        if($code == null || $code == 0){
+            $code = 1;
+        }else{
+            $code = $code + 1;
+        }
+        $listeversement = $versementRepository->findBy(["code"=>$code,"section"=>$section]);
+        foreach ($listeversement as $versement){
+            $montants = $versement->getMontantversement();
+        }
 
+        $reste = $montant - $montants;
+      //  dd([$nom,$prenom,$montant,$email,$id,$code]);
+
+         return $this->render("registration/paiementpro.html.twig",
+              [
+               'nom'=>$nom,
+               'prenom'=>$prenom,
+               'mont'=>$montant,
+               'email'=>$email,
+               'id'=>$id,
+               'montants'=>$montants,
+               'reste' => $reste,
+               'codepaie'=>$code,
+              ]);
+     }
+    #[Route('/paiementprosend', name: 'app_paiementprosend',methods: 'POST')]
+    public function paiementprosend(Request $request,InscriptionRepository $inscriptionRepository,UserRepository $userRepository,EntityManagerInterface $entityManager,PaiementRepository $paiementRepository)
+    {
+        $nom      = $request->request->get('nom');
+        $prenom   = $request->request->get('prenom');
+        $montant  = $request->request->get('montantapaye');
+        $email    = $request->request->get('email');
+        $telphone = $request->request->get('numero');
+        $code     = $request->request->get('code');
+        $id       = $request->request->get('id');
+        $reste    = $request->request->get('resteapaye');
+        $codepaie = $request->request->get('codepaie');
+
+        $data = array(
+            'merchantId' => "PP-F2322",
+            'amount' => $montant,
+            'description' => "Api PHP",
+            'channel' => $code,
+            'countryCurrencyCode' => "952",
+            'referenceNumber' => "REF-" . time(),
+            'customerEmail' => $email,
+            'customerFirstName' => $nom,
+            'customerLastname' => $prenom,
+            'customerPhoneNumber' => $telphone,
+            'notificationURL' => "http://www.cafop-lited.com/paiementproresult",
+            'returnURL' => "http://www.cafop-lited.com/paiementpro",
+            'returnContext' => '{"id":"'. $id.'","data":true}',
+        );
+
+        $data = json_encode($data);
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "https://www.paiementpro.net/webservice/onlinepayment/init/curl-init.php");
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json; charset=utf-8'));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_HEADER, FALSE);
+        curl_setopt($ch, CURLOPT_POST, TRUE);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+
+        $response = curl_exec($ch);
+
+        curl_close($ch);
+
+        $restResponse = json_decode($response);
+        //Modification du champ isVerified
+
+        $success = $restResponse->success;
+        $url     = $restResponse->url;
+
+        $reponses = "";
+        if($success == 1){
+            try {
+
+                $auditeur = $inscriptionRepository->find($id);
+                $section = $auditeur->getSection();
+                //Modification du reste de la scolarite et du code de versement
+                $auditeur->setRestepaye($reste);
+                $auditeur->setCodeversement($codepaie);
+                //Paiement scolarite
+                $paiement = new paiement();
+                $paiement->setSection($section);
+                $paiement->setModepaiement($code);
+                $paiement->setRestepaie($reste);
+                $paiement->setInscription($auditeur);
+                $paiement->setDatepaiement(new \DateTimeImmutable("now"));
+                $paiement->setMontantpaiement($montant);
+                $paiement->setCreatedAt(new \DateTimeImmutable("now"));
+                $paiement->setCreatedBy($this->getUser());
+                $entityManager->persist($paiement);
+                $entityManager->flush();
+
+                //Redirection pour effectuer le paiement
+                return $this->redirect($url,302);
+               // return $this->render('registration/succes.html.twig');
+
+            } catch(Exception $e) {
+                $reponses = $e->getMessage();
+            }
+
+            return $this->render('registration/paiementpro.html.twig');
+
+        }else{
+            return $this->redirectToRoute("app_user_profile");
+        }
+
+
+    }
+    #[Route('/paiementproresult', name: 'app_paiementproresult',methods: ['POST','GET'])]
+    public function paiementproresult(Request $request){
+       $response = $request->toArray();
+
+       $montant   = $response->amount;
+       $number    = $response->referenceNumber;
+       $dateheure = $response->transactiondt;
+       $code      = $response->responsecode;
+       $context   = $response->returnContext;
+       $id        = $response->customerId;
+       $madate = \DateTime::createFromFormat("Y-m-d H:i:s",$dateheure);
+    }
 }

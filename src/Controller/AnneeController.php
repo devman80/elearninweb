@@ -12,9 +12,18 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/annee')]
+#[Route('/admin/annee')]
 class AnneeController extends AbstractController
 {
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
+
+    public function __construct(EntityManagerInterface $entityManager) {
+
+        $this->entityManager = $entityManager;
+    }
     use ClientIp;
 
     #[Route('/', name: 'app_annee_index', methods: ['GET'])]
@@ -29,6 +38,20 @@ class AnneeController extends AbstractController
         ]);
     }
 
+        private function getData(): array {
+        /**
+         * @var $annee Annee[]
+         */
+        $list = [];
+        $annees = $this->entityManager->getRepository(Annee::class)->findBy(['deletedAt' => NULL], ['id'=>'desc'], 1,0);
+
+        foreach ($annees as $annee) {
+            $list[] = [
+                $annee->getLibelle()
+            ];
+        }
+        return $list;
+    }
 
     #[Route('/{id}/edit', name: 'app_annee_edit', methods: ['GET', 'POST'])]
     #[Route('/new', name: 'app_annee_new', methods: ['GET', 'POST'])]
@@ -46,15 +69,15 @@ class AnneeController extends AbstractController
 
             if ($type === 'new') {
                 $annee->setCreatedFromIp($this->GetIp()); // remplacement de la function par le trait
-              //  ->setCreatedBy($user);
+                $annee->setCreatedBy($user);
               $annee->setCreatedAt(new \DateTimeImmutable("now"));
 
                 $anneeRepository->save($annee, true);
 
                 ;
             } else {
-                $annee->setUpdatedFromIp($this->GetIp()) // remplacement de la function par le trait
-              //  ->setUpdatedBy($user)
+                $annee->setUpdatedFromIp($this->GetIp()); // remplacement de la function par le trait
+                $annee->setUpdatedBy($user)
         ;
         $annee->setUpdatedAt(new \DateTimeImmutable("now"));
 
@@ -115,7 +138,7 @@ class AnneeController extends AbstractController
         $LigneUpdate = $anneeRepository->find($id);
         $LigneUpdate->setDeletedFromIp($this->GetIp());
         $user = $this->getUser();
-      //  $LigneUpdate->setDeletedBy($user);
+       $LigneUpdate->setDeletedBy($user);
         $LigneUpdate->setDeletedAt(new \DateTimeImmutable("now"));
         $entityManager->flush();
         return $this->json(["data"=>"Suppression effectuée avec succès"],200,["Content-type"=>"application-json"]);

@@ -112,9 +112,10 @@ class RegistrationFormType extends AbstractType {
                         new RegEx("#^[0-9/? ?]{13,13}$#")
                     ],
                 ])
-          
-                ->add('certificatFilename', FileType::class, ['label' => 'Certificat de nationalité:', 'attr' => ['placeholder' => 'Certificat ', 'required' => false,]])
-                ->add('extraitFilename', FileType::class, ['label' => 'Extrait de naissance:', 'attr' => ['placeholder' => 'Extrait de naissance ','required' => false,]])
+
+                ->add('diplomeFilename', FileType::class, ['label' => 'Diplôme BEPC:','attr'=>['required'=>false]])
+                ->add('certificatFilename', FileType::class, ['label' => 'Certificat de nationalité:','attr'=>['required'=>'false']])
+                ->add('extraitFilename', FileType::class, ['label' => 'Extrait de naissance:'])
                 ->add('cniFilename', FileType::class, ['label' => 'Pièce Verso*:', 'attr' => ['label' => 'CNI Recto', 'placeholder' => 'CNI verso ']])
                 ->add('commune', EntityType::class, ['label' => 'Commune:',
                     'class' => Commune::class,
@@ -129,7 +130,8 @@ class RegistrationFormType extends AbstractType {
                         return $category->getLibelle();
                     }
                 ])
-                ->add('agreeTerms', CheckboxType::class, [
+                     ->add('agreeTerms', CheckboxType::class, [
+                       'label' => 'Cliquer ici si vous acceptez le contrat',
                     'mapped' => false,
                     'constraints' => [
                         new IsTrue([

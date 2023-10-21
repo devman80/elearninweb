@@ -1,0 +1,43 @@
+{{ form_start(form) }}
+<div class="my-custom-class-for-errors">
+	{{ form_errors(form) }}
+	{% for message in app.flashes('message') %}
+		<div class="row">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<div class="alert alert-success alert-dismissible">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<strong>Succès!</strong>
+					{{ message }}
+
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+
+</div>
+
+<div class="row">
+	<div class="col-md-6 bg-success-subtle grasmini">
+		{{ form_row(form.datepaiement, {'label':'Date : ', 'attr':{'class':'select2'}}) }}
+		{{ form_row(form.section, {'label':'Section : ', 'attr':{'onchange':'filtreSection()'}}) }}
+		{{ form_row(form.inscription, {'label':'Auditeur : ', 'attr':{'class':'select2','onchange':'AfficheReste()'}}) }}
+		{{ form_row(form.inscrit) }}
+		{{ form_row(form.modepaiement, {'label':'Mode paiement : ', 'attr':{'class':'form-control'}}) }}
+		{{ form_row(form.montantpaiement, {'label':'Montant : ', 'attr':{'class':'form-control','onkeyup':'VerifieMontant()'}}) }}
+		{{ form_row(form.restepaie, {'label':'Reste à payer : ', 'attr':{'class':'form-control','readonly':true}}) }}
+	</div>
+	<div class="col-md-3">
+		&nbsp;
+	</div>
+	<div class="col-md-3">
+		{{ form_row(form.save, {'label':'Valider ','attr':{'value':'save','class':'btn btnvalider','disabled':'true'}}) }}
+		{{ form_row(form.saveAndAdd, {'label':'Valider et continuer  ','attr':{'value':'save-and-add','class':'btn btnsave','disabled':'true'}}) }}
+		<a href="{{ path('app_paiement_index') }}" class="btn btnliste">Afficher la liste</a>
+
+	</div>
+</div>
+
+
+{{ form_end(form) }}
+
+

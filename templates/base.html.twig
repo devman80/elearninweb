@@ -10,24 +10,25 @@
 
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
 
+        <title>{% block title %}Bienvenue sur Elearning!{% endblock %}</title>
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
-
             <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
             <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.bootstrap5.min.css">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+            <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
             <link rel="preconnect" href="https://fonts.gstatic.com">
             <link rel="shortcut icon" href="img/icons/icon-48x48.png" />
-
+            <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+            <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
             <link rel="canonical" href="https://demo-basic.adminkit.io/" />
-            <link href="../css/app.css" rel="stylesheet">
             <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-            <title>{% block title %}Bienvenue sur Elearning!{% endblock %}</title>
+
             <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
 
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
 
+        {% endblock %}
 
     </head>
     <body>
@@ -50,11 +51,7 @@
                                 </a>
                             </li>
                         {% endif %}
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="{{path('app_user_profile')}}">
-                                <i class="align-middle" data-feather="user"></i> <span class="align-middle">Profile</span>
-                            </a>
-                        </li>
+                  
 
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="{{ path('app_logout') }}">
@@ -109,6 +106,32 @@
                             </li>
 
                         {% endif %}
+
+
+                        {% if is_granted('ROLE_COMPTABILITE') %}
+                            <li class="sidebar-header">
+                                Finances
+                            </li>
+
+                            <li class="sidebar-item">
+                                <a class="sidebar-link" href="{{ path('app_paiement_index') }}">
+                                    <i class="align-middle" data-feather="bar-chart-2"></i> <span class="align-middle">Scolarite</span>
+                                </a>
+                            </li>
+                            
+                              <li class="sidebar-item">
+                                <a class="sidebar-link" href="{{ path('app_salaire_index') }}">
+                                    <i class="align-middle" data-feather="bar-chart-2"></i> <span class="align-middle">Salaire</span>
+                                </a>
+                            </li>
+                            
+                              <li class="sidebar-item">
+                                <a class="sidebar-link" href="{{ path('app_depense_index') }}">
+                                    <i class="align-middle" data-feather="bar-chart-2"></i> <span class="align-middle">Depense</span>
+                                </a>
+                            </li>
+                        {% endif %}
+
                         {% if is_granted('ROLE_PROFESSEUR') %}
                             <li class="sidebar-header">
                                 Cours
@@ -117,6 +140,22 @@
                             <li class="sidebar-item">
                                 <a class="sidebar-link" href="{{ path('app_dispenser_index') }}">
                                     <i class="align-middle" data-feather="bar-chart-2"></i> <span class="align-middle">Dispenser</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                       {% if is_granted('ROLE_SUPER_ADMIN') %}
+                            <li class="sidebar-header">
+                                Securité
+                            </li>
+
+                            <li class="sidebar-item">
+                                <a class="sidebar-link" href="{{ path('app_user_index') }}">
+                                    <i class="align-middle" data-feather="bar-chart-2"></i> <span class="align-middle">Utilisateur</span>
+                                </a>
+                            </li>
+                               <li class="sidebar-item">
+                                <a class="sidebar-link" href="{{ path('app_versement_index') }}">
+                                    <i class="align-middle" data-feather="bar-chart-2"></i> <span class="align-middle">Versement</span>
                                 </a>
                             </li>
                         {% endif %}
@@ -152,13 +191,20 @@
                 {{ include('_partials/_nav.html.twig') }}
 
                 <main class="content">
+                          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                            {% for annee in annees %}
+                                <h1 class="h3 mb-0 text-gray-800">Année académique:
+                                    {{ annee.libelle }}</h1>
+                                {% endfor %}
+                        </div>
+                        
                     <div class="container-fluid p-0">
                         <section class="top-50">
                             <div class="container">
                                 <div class="row">
                                     <div class="col-md-12 col-lg-12">
                                         <div class="card corps">
-                                            <div class="card-header text-gras"><h1>CAFOP-LITED</h1></div>
+                                            <div class="card-header text-gras"><h2 class="text-gras">ESPACE ADMINISTRATION</h2></div>
                                             <div class="card-body">{% block body %}{% endblock %}</div>
 
                                         </div>
@@ -176,97 +222,101 @@
             </div>
         </div>
 
-
-
-
         {% block javascripts %}
-
+            {{ encore_entry_script_tags('app') }}
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
             <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
             <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
             <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
             <script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
             <script src="https://cdn.datatables.net/responsive/2.4.1/js/responsive.bootstrap5.min.js"></script>
-
+            <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+            <script src="{{ asset('js/app.js') }}"></script>
             <script type="application/javascript">
+
                 $(document).ready(function() {
-                $('#app_elearning').DataTable({
-                language: {
-                url: " http://cdn.datatables.net/plug-ins/1.10.9/i18n/French.json"
-                }
-                });
+                    $('select').select2();
+                    $('#app_elearning').DataTable({
+                    language: {
+                    url: " http://cdn.datatables.net/plug-ins/1.10.9/i18n/French.json"
+                    }
+                    });
                 } );
             </script>
-            <script src="../js/app.js"></script>
+
+
 
             <script>
-document.addEventListener("DOMContentLoaded", function () {
-    var ctx = document.getElementById("chartjs-dashboard-line").getContext("2d");
-    var gradient = ctx.createLinearGradient(0, 0, 0, 225);
-    gradient.addColorStop(0, "rgba(215, 227, 244, 1)");
-    gradient.addColorStop(1, "rgba(215, 227, 244, 0)");
-    // Line chart
-    new Chart(document.getElementById("chartjs-dashboard-line"), {
-        type: "line",
-        data: {
-            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-            datasets: [{
-                    label: "Sales ($)",
-                    fill: true,
-                    backgroundColor: gradient,
-                    borderColor: window.theme.primary,
-                    data: [
-                        2115,
-                        1562,
-                        1584,
-                        1892,
-                        1587,
-                        1923,
-                        2566,
-                        2448,
-                        2805,
-                        3438,
-                        2917,
-                        3327
-                    ]
-                }]
-        },
-        options: {
-            maintainAspectRatio: false,
-            legend: {
-                display: false
-            },
-            tooltips: {
-                intersect: false
-            },
-            hover: {
-                intersect: true
-            },
-            plugins: {
-                filler: {
-                    propagate: false
-                }
-            },
-            scales: {
-                xAxes: [{
-                        reverse: true,
-                        gridLines: {
-                            color: "rgba(0,0,0,0.0)"
-                        }
-                    }],
-                yAxes: [{
-                        ticks: {
-                            stepSize: 1000
+                document.addEventListener("DOMContentLoaded", function () {
+                    var ctx = document.getElementById("chartjs-dashboard-line").getContext("2d");
+                    var gradient = ctx.createLinearGradient(0, 0, 0, 225);
+                    gradient.addColorStop(0, "rgba(215, 227, 244, 1)");
+                    gradient.addColorStop(1, "rgba(215, 227, 244, 0)");
+                    // Line chart
+                    new Chart(document.getElementById("chartjs-dashboard-line"), {
+                        type: "line",
+                        data: {
+                            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                            datasets: [{
+                                    label: "Sales ($)",
+                                    fill: true,
+                                    backgroundColor: gradient,
+                                    borderColor: window.theme.primary,
+                                    data: [
+                                        2115,
+                                        1562,
+                                        1584,
+                                        1892,
+                                        1587,
+                                        1923,
+                                        2566,
+                                        2448,
+                                        2805,
+                                        3438,
+                                        2917,
+                                        3327
+                                    ]
+                                }]
                         },
-                        display: true,
-                        borderDash: [3, 3],
-                        gridLines: {
-                            color: "rgba(0,0,0,0.0)"
+                        options: {
+                            maintainAspectRatio: false,
+                            legend: {
+                                display: false
+                            },
+                            tooltips: {
+                                intersect: false
+                            },
+                            hover: {
+                                intersect: true
+                            },
+                            plugins: {
+                                filler: {
+                                    propagate: false
+                                }
+                            },
+                            scales: {
+                                xAxes: [{
+                                        reverse: true,
+                                        gridLines: {
+                                            color: "rgba(0,0,0,0.0)"
+                                        }
+                                    }],
+                                yAxes: [{
+                                        ticks: {
+                                            stepSize: 1000
+                                        },
+                                        display: true,
+                                        borderDash: [3, 3],
+                                        gridLines: {
+                                            color: "rgba(0,0,0,0.0)"
+                                        }
+                                    }]
+                            }
                         }
-                    }]
-            }
-        }
-    });
-});
+                    });
+                });
             </script>
             <script>
                 document.addEventListener("DOMContentLoaded", function () {
@@ -419,7 +469,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     });
                 });
             </script>
-
         {% endblock %}
+
+
+
+
     </body>
 </html>

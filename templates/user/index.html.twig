@@ -34,15 +34,18 @@
                             {{ message }}
                         </div>
                     {% endfor %}
-              
-                    
-                         {% if is_granted('ROLE_ADMIN') %}
-                    <a href='{{ path('registration_archive') }}'>
-                        <button class="btn btn-danger">Comptes fermés</button>
-                    </a>
-                        
+
+
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+                        <a href='{{ path('app_user_new') }}'>
+                            <button class="btn btn-primary">Création compte</button>
+                        </a>
+                        <a href='{{ path('registration_archive') }}'>
+                            <button class="btn btn-danger">Comptes fermés</button>
+                        </a>
+
                     {% endif %}
-   
+
                     <hr style="visibility: hidden" />  
 
                     <table id="app_elearning" class="table table-striped dt-responsive nowrap table-bordered table-hover" style="width:100%">
@@ -68,9 +71,9 @@
 
 
                                     <td>
-                                       {% if user.brochureFilename is not empty %}
+                                        {% if user.brochureFilename is not empty %}
                                             <img src="{{ asset('uploads/brochures/'~user.brochureFilename )}}"    class="rounded-circle img-fluid" style="width: 150px;"/>  
-                                       {% else %} {% endif %}
+                                        {% else %} {% endif %}
                                     </td>
                                     <td>
                                         {% if user.deletedAt is null %} <label class="btn bg-olive active"> Actif</label> {% else %} <label class="btn btn-danger"> Inactif</label>  {% endif %}
@@ -79,18 +82,18 @@
 
 
                                     <td  class="alignements">
-                                
-                                            <form method="post" action="{{ path('app_registration_delete', {'id': user.id}) }}" onsubmit="return confirm('Voulez-vous fermer ce compte?');">
-                                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
 
-                                                <button class="btn">
-                                                    <img src="{{ asset('img/s_cancel.png') }}" title="Fermer">
-                                                       
-                                                    </img>
-                                                </button>
-                                            </form>
+                                        <form method="post" action="{{ path('app_registration_delete', {'id': user.id}) }}" onsubmit="return confirm('Voulez-vous fermer ce compte?');">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
 
-                                     
+                                            <button class="btn">
+                                                <img src="{{ asset('img/s_cancel.png') }}" title="Fermer">
+
+                                                </img>
+                                            </button>
+                                        </form>
+
+
                                     </td>
                                 </tr>
                             {% else %}

@@ -1,15 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Auditeur index
+{% block title %}Liste des auditeurs
 {% endblock %}
 
 {% block body %}
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Liste des auditeurs
+            <h3 class="m-0 font-weight-bold text-primary">Liste des auditeurs</h3>
         </div>
-
-        {% for message in app.flashes('success') %}
+        <div>
+    <a href="{{ path('app_paiement_index2') }}" class="btn btn-outline-danger btns" data-turbo="true"><i class="fa-solid fa-bars"></i>&nbsp;&nbsp;Paiements scolarité</a>
+        </div>
+        {% for message in app.flashes('message') %}
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="alert alert-success alert-dismissible">
@@ -20,18 +22,13 @@
             </div>
 
         {% endfor %}
-        <div class="card-header py-3">
 
-            <a href="{{ path('app_inscrire_new') }}">Nouveau</a>
-            <a href="{{ path('app_inscription_archive') }}">En attente</a>
-            </h6>
-        </div>
 
 
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
+	<table id="app_elearning" class="table table-striped dt-responsive nowrap table-bordered table-hover" style="width:100%">
+		<thead class="table-primary">
                         <tr>
 
                             <th>Nom</th>
@@ -62,8 +59,8 @@
                                     <td> {{ date_format(inscription.createdAt) }}</td>
 
                                     <td>
-                                        <a href="{{ path('app_inscription_show', {'id': inscription.id}) }}">show</a>
-                                        <a href="{{ path('app_inscription_edit', {'id': inscription.id}) }}">edit</a>
+                                        <a href="{{ path('app_inscription_show', {'id': inscription.id}) }}">details</a>
+                                        <a href="{{ path('app_inscription_edit', {'id': inscription.id}) }}">modifier</a>
                                     </td>
                                 </tr>
                                 {% else %}

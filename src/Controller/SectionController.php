@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/section')]
+#[Route('/admin/section')]
 class SectionController extends AbstractController
 {
     use ClientIp;
@@ -42,15 +42,15 @@ class SectionController extends AbstractController
 
             if ($type === 'new') {
                 $section->setCreatedFromIp($this->GetIp()); // remplacement de la function par le trait
-              //  ->setCreatedBy($user);
+                $section->setCreatedBy($user);
               $section->setCreatedAt(new \DateTimeImmutable("now"));
 
                 $sectionRepository->save($section, true);
 
-                ;
+                
             } else {
                 $section->setUpdatedFromIp($this->GetIp()); // remplacement de la function par le trait
-              //  ->setUpdatedBy($user)
+               $section->setUpdatedBy($user);
               $section->setUpdatedAt(new \DateTimeImmutable("now"));
 
 
@@ -109,7 +109,7 @@ class SectionController extends AbstractController
         $LigneUpdate = $sectionRepository->find($id);
         $LigneUpdate->setDeletedFromIp($this->GetIp());
         $user = $this->getUser();
-      //  $LigneUpdate->setDeletedBy($user);
+        $LigneUpdate->setDeletedBy($user);
         $LigneUpdate->setDeletedAt(new \DateTimeImmutable("now"));
         $entityManager->flush();
         return $this->json(["data"=>"Suppression effectuée avec succès"],200,["Content-type"=>"application-json"]);

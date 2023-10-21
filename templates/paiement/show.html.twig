@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Paiement{% endblock %}
+
+{% block body %}
+    <h1>Paiement</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ paiement.id }}</td>
+            </tr>
+            <tr>
+                <th>Modepaiement</th>
+                <td>{{ paiement.modepaiement }}</td>
+            </tr>
+            <tr>
+                <th>Montantpaiement</th>
+                <td>{{ paiement.montantpaiement }}</td>
+            </tr>
+            <tr>
+                <th>Datepaiement</th>
+                <td>{{ paiement.datepaiement ? paiement.datepaiement|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>MotantPaye</th>
+                <td>{{ paiement.motantPaye }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ paiement.createdAt ? paiement.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>CreatedFromIp</th>
+                <td>{{ paiement.createdFromIp }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ paiement.updatedAt ? paiement.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedFromIp</th>
+                <td>{{ paiement.updatedFromIp }}</td>
+            </tr>
+            <tr>
+                <th>DeletedAt</th>
+                <td>{{ paiement.deletedAt ? paiement.deletedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DeletedFromIp</th>
+                <td>{{ paiement.deletedFromIp }}</td>
+            </tr>
+            <tr>
+                <th>Editable</th>
+                <td>{{ paiement.editable ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_paiement_index') }}">back to list</a>
+
+    <a href="{{ path('app_paiement_edit', {'id': paiement.id}) }}">edit</a>
+
+    {{ include('paiement/_delete_form.html.twig') }}
+{% endblock %}

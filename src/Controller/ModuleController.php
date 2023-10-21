@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/module')]
+#[Route('/admin/module')]
 class ModuleController extends AbstractController {
 
     use ClientIp;
@@ -40,16 +40,16 @@ class ModuleController extends AbstractController {
         if ($form->isSubmitted() && $form->isValid()) {
 
             if ($type === 'new') {
-                $module->setCreatedFromIp($this->GetIp()); // remplacement de la function par le trait
-                //  ->setCreatedBy($user);
+                $module->setCreatedFromIp($this->GetIp());// remplacement de la function par le trait
+                 $module ->setCreatedBy($user);
                 $module->setCreatedAt(new \DateTimeImmutable("now"));
 
                 $moduleRepository->save($module, true);
 
-                ;
+                
             } else {
-                $module->setUpdatedFromIp($this->GetIp()) // remplacement de la function par le trait
-                //  ->setUpdatedBy($user)
+                $module->setUpdatedFromIp($this->GetIp()); // remplacement de la function par le trait
+               $module->setUpdatedBy($user)
                 ;
                 $module->setUpdatedAt(new \DateTimeImmutable("now"));
 
@@ -106,7 +106,7 @@ class ModuleController extends AbstractController {
         $LigneUpdate = $moduleRepository->find($id);
         $LigneUpdate->setDeletedFromIp($this->GetIp());
         $user = $this->getUser();
-        //  $LigneUpdate->setDeletedBy($user);
+          $LigneUpdate->setDeletedBy($user);
         $LigneUpdate->setDeletedAt(new \DateTimeImmutable("now"));
         $entityManager->flush();
         return $this->json(["data" => "Suppression effectuée avec succès"], 200, ["Content-type" => "application-json"]);

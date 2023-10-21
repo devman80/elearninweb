@@ -90,7 +90,7 @@
                         <td>
 
                             {% if inscription.brochureFilename is not empty %}
-                                <a href="{{ asset('uploads/brochures/' ~ inscription.certificatFilename) }}">Voir photo</a>
+                                <a href="{{ asset('uploads/brochures/' ~ inscription.certificatFilename) }}" target="_blank">Voir photo</a>
                             {% else %}
                                 (Photo non importée)
                             {% endif %}
@@ -102,7 +102,7 @@
                         <th>Extrait de naissance</th>
                         <td>
                             {% if inscription.extraitFilename is not empty %}
-                                <a href="{{ asset('uploads/brochures/' ~ inscription.extraitFilename) }}">Voir photo</a>
+                                <a href="{{ asset('uploads/brochures/' ~ inscription.extraitFilename) }}" target="_blank">Voir photo</a>
                             {% else %}
                                 (Photo non importée)
                             {% endif %}
@@ -118,7 +118,7 @@
                         <td>
 
                             {% if inscription.diplomeFilename is not empty %}
-                                <a href="{{ asset('uploads/brochures/' ~ inscription.diplomeFilename) }}">Voir photo</a>
+                                <a href="{{ asset('uploads/brochures/' ~ inscription.diplomeFilename) }}" target="_blank">Voir photo</a>
                             {% else %}
                                 (Photo non importée)
                             {% endif %}
@@ -130,7 +130,7 @@
                         <td>
 
                             {% if inscription.cniFilename is not empty %}
-                                <a href="{{ asset('uploads/brochures/' ~ inscription.cniFilename) }}">Voir photo</a>
+                                <a href="{{ asset('uploads/brochures/' ~ inscription.cniFilename) }}" target="_blank">Voir photo</a>
                             {% else %}
                                 (Photo non importée)
                             {% endif %}

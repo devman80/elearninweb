@@ -18,7 +18,11 @@ class UserChecker implements UserCheckerInterface
 
         if ($user->isDeleted()) {
             // the message passed to this exception is meant to be displayed to the user
-            throw new CustomUserMessageAccountStatusException('Compte fermé, veuillez contacter votre l\'Administrateur.');
+            throw new CustomUserMessageAccountStatusException('Compte fermé, veuillez contacter  l\'Administrateur.');
+        }
+        
+         if ($user->isExpired()) {
+            throw new CustomUserMessageAccountStatusException('Compte innactif, veuillez effectuer le depôt de dosseir afin de vous connecter ');
         }
     }
 
@@ -28,9 +32,9 @@ class UserChecker implements UserCheckerInterface
             return;
         }
 
-//        // user account is expired, the user may be notified
+//        // Message d'erreur si compte non actif
 //        if ($user->isExpired()) {
-//            throw new CustomUserMessageAccountStatusException('Compte Eglise fermé, veuillez contacter Lynova Tech +225 0757000748 ');
+//            throw new CustomUserMessageAccountStatusException('Compte invalide, veuillez effectuer le depôt de dosseir afin de vous connecter ');
 //        }
     }
 }

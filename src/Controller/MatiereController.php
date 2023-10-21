@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/matiere')]
+#[Route('/admin/matiere')]
 class MatiereController extends AbstractController {
 
     use ClientIp;
@@ -43,18 +43,17 @@ class MatiereController extends AbstractController {
 
             if ($type === 'new') {
                 $matiere->setCreatedFromIp($this->GetIp()); // remplacement de la function par le trait
-                //  ->setCreatedBy($user);
+                  $matiere->setCreatedBy($user);
                 $matiere->setCreatedAt(new \DateTimeImmutable("now"));
 
                 $matiereRepository->save($matiere, true);
 
-                ;
+                
             } else {
                 $matiere->setUpdatedFromIp($this->GetIp()); // remplacement de la function par le trait
-                //  ->setUpdatedBy($user)
+                  $matiere->setUpdatedBy($user);
                 $matiere->setUpdatedAt(new \DateTimeImmutable("now"));
 
-                ;
                 $matiereRepository->save($matiere, true);
             }
             $nextAction = $form->get('saveAndAdd')->isClicked() ? 'app_matiere_new' : 'app_matiere_index';
@@ -108,7 +107,7 @@ class MatiereController extends AbstractController {
         $LigneUpdate = $matiereRepository->find($id);
         $LigneUpdate->setDeletedFromIp($this->GetIp());
         $user = $this->getUser();
-        //  $LigneUpdate->setDeletedBy($user);
+          $LigneUpdate->setDeletedBy($user);
         $LigneUpdate->setDeletedAt(new \DateTimeImmutable("now"));
         $entityManager->flush();
         return $this->json(["data" => "Suppression effectuée avec succès"], 200, ["Content-type" => "application-json"]);

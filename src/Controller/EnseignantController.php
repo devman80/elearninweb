@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use App\Twig\DateFormatExtension;
 
-#[Route('/enseignant')]
+#[Route('/admin/enseignant')]
 class EnseignantController extends AbstractController {
 
     use ClientIp;
@@ -35,6 +35,7 @@ class EnseignantController extends AbstractController {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $enseignant = new Enseignant();
+        $user = $this->getUser();
         $form = $this->createForm(EnseignantType::class, $enseignant);
         $form->handleRequest($request);
 
@@ -57,11 +58,11 @@ class EnseignantController extends AbstractController {
                     // ... handle exception if something happens during file upload
                 }
                 $enseignant->setCreatedFromIp($this->GetIp()); // remplacement de la function par le trait
-                //  ->setCreatedBy($user);
+                        $enseignant->setCreatedBy($user);
                 $enseignant->setCreatedAt(new \DateTimeImmutable("now"));
                 $enseignant->setBrochureFilename($newFilename);
             };
-
+            $enseignant->getCreatedBy($user);
             $enseignantRepository->save($enseignant, true);
 
             $nextAction = $form->get('saveAndAdd')->isClicked() ? 'app_enseignant_new' : 'app_enseignant_index';
@@ -95,6 +96,7 @@ class EnseignantController extends AbstractController {
 
         $form = $this->createForm(EnseignantType::class, $enseignant);
         $form->handleRequest($request);
+        $user = $this->getUser();
 
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -114,8 +116,9 @@ class EnseignantController extends AbstractController {
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
                 }
-                $enseignant->setUpdatedFromIp($this->GetIp()); // remplacement de la function par le trait
-                //  ->setCreatedBy($user);
+                $enseignant->setUpdatedFromIp($this->GetIp());
+                        // remplacement de la function par le trait
+                       $enseignant->setUpdatedBy($user);
                 $enseignant->setUpdatedAt(new \DateTimeImmutable("now"));
                 $enseignant->setBrochureFilename($newFilename);
             };
@@ -138,7 +141,7 @@ class EnseignantController extends AbstractController {
         $LigneUpdate = $enseignantRepository->find($id);
         $LigneUpdate->setDeletedFromIp($this->GetIp());
         $user = $this->getUser();
-        //  $LigneUpdate->setDeletedBy($user);
+         $LigneUpdate->setDeletedBy($user);
         $LigneUpdate->setDeletedAt(new \DateTimeImmutable("now"));
         $entityManager->flush();
         return $this->json(["data" => "Suppression effectuée avec succès"], 200, ["Content-type" => "application-json"]);

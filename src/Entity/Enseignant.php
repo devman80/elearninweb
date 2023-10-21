@@ -45,10 +45,18 @@ class Enseignant extends AbstractEntity
     #[ORM\OneToMany(mappedBy: 'enseignant', targetEntity: Dispenser::class)]
     private Collection $dispensers;
 
+    #[ORM\OneToMany(mappedBy: 'enseignant', targetEntity: Salaire::class)]
+    private Collection $salaires;
+
+    #[ORM\OneToMany(mappedBy: 'enseignant', targetEntity: Composition::class)]
+    private Collection $compositions;
+
     public function __construct()
     {
         $this->evaluations = new ArrayCollection();
         $this->dispensers = new ArrayCollection();
+        $this->salaires = new ArrayCollection();
+        $this->compositions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -206,6 +214,66 @@ class Enseignant extends AbstractEntity
             // set the owning side to null (unless already changed)
             if ($dispenser->getEnseignant() === $this) {
                 $dispenser->setEnseignant(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Salaire>
+     */
+    public function getSalaires(): Collection
+    {
+        return $this->salaires;
+    }
+
+    public function addSalaire(Salaire $salaire): static
+    {
+        if (!$this->salaires->contains($salaire)) {
+            $this->salaires->add($salaire);
+            $salaire->setEnseignant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSalaire(Salaire $salaire): static
+    {
+        if ($this->salaires->removeElement($salaire)) {
+            // set the owning side to null (unless already changed)
+            if ($salaire->getEnseignant() === $this) {
+                $salaire->setEnseignant(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Composition>
+     */
+    public function getCompositions(): Collection
+    {
+        return $this->compositions;
+    }
+
+    public function addComposition(Composition $composition): static
+    {
+        if (!$this->compositions->contains($composition)) {
+            $this->compositions->add($composition);
+            $composition->setEnseignant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComposition(Composition $composition): static
+    {
+        if ($this->compositions->removeElement($composition)) {
+            // set the owning side to null (unless already changed)
+            if ($composition->getEnseignant() === $this) {
+                $composition->setEnseignant(null);
             }
         }
 

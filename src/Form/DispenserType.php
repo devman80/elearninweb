@@ -36,7 +36,7 @@ class DispenserType extends AbstractType {
                         ->orderBy('f.nom', 'DESC');
                     },
                     'choice_label' => function ($enseignanc) {
-                        return $enseignancs[$enseignanc->getId()] = $enseignanc->getNom() . '' . $enseignanc->getPrenom();
+                        return $enseignancs[$enseignanc->getId()] = $enseignanc->getNom() . ' ' . $enseignanc->getPrenom();
                     },
                 ])
                 ->add('classeroom', EntityType::class, [

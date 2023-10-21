@@ -1,0 +1,97 @@
+{{ form_start(form) }}
+<div class="my-custom-class-for-errors">
+    {{ form_errors(form) }}
+    {% for message in app.flashes('commune') %}
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="alert alert-success alert-dismissible">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Succès!</strong> {{ message }}
+
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+</div>
+<section class="bd-style  container">
+	<div class="row ">
+		<div class="col-md-6">
+			<h1 class="text-gras">
+				Enregistrement de composition
+			</h1>
+
+		</div>
+
+	</div>
+
+<div class="row">
+
+    <div class="col-md-4">
+    {{ form_row(form.section, {'label':'Section : ', 'attr':{'class':'form-control'}}) }}
+    </div>
+    <div class="col-md-4">
+    {{ form_row(form.matiere, {'label':'Matière : ', 'attr':{'class':'form-control'}}) }}
+    </div>
+    <div class="col-md-4">
+    {{ form_row(form.enseignant, {'label':'Enseignant : ', 'attr':{'class':'form-control'}}) }}
+    </div>
+    
+</div>
+
+
+
+    
+    
+    <div class="row">
+
+    <div class="col-md-3">
+    {{ form_row(form.libelle, {'label':'Libelle : ', 'attr':{'class':'form-control'}}) }}
+    </div>
+    <div class="col-md-3">
+    {{ form_row(form.datecompos, {'label':'Date : ', 'attr':{'class':'form-control'}}) }}
+    </div>
+    <div class="col-md-3">
+    {{ form_row(form.heuredebut, {'label':'Heure debut : ', 'attr':{'class':'form-control'}}) }}
+    </div>
+    
+     <div class="col-md-3">
+    {{ form_row(form.heurefin, {'label':'Heure fin : ', 'attr':{'class':'form-control'}}) }}
+    </div>
+</div>
+       <div class="col-md-4">
+    {{ form_row(form.options, {'label':'Option : ', 'attr':{'class':'form-control'}}) }}
+    </div>
+    </section>
+    
+    
+    <section class="bd-style  container">
+	<div class="row ">
+		<div class="col-md-6">
+			<h1 class="text-gras">
+				Actions
+			</h1>
+
+		</div>
+
+	</div>
+
+
+
+<div class="row">
+
+    <div class="col-md-3">
+        {{ form_row(form.save, {'label':'Valider ','attr':{'value':'save','class':'btn btnvalider'}}) }}
+    </div>
+    <div class="col-md-3">
+        {{ form_row(form.saveAndAdd, {'label':'Valider et continuer  ','attr':{'value':'save-and-add','class':'btn btnsave'}}) }}
+    </div>
+    <div class="col-md-3">
+        <a href="{{ path('app_composition_index') }}" class="btn btnliste">Afficher la liste</a>
+
+    </div>
+
+</div>
+
+    </section>
+{{ form_end(form) }}
