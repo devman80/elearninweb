@@ -24,6 +24,8 @@ class Commune extends AbstractEntity
     #[ORM\OneToMany(mappedBy: 'commune', targetEntity: Inscription::class)]
     private Collection $inscriptions;
 
+
+
     public function __construct()
     {
         $this->inscriptions = new ArrayCollection();
@@ -75,4 +77,5 @@ class Commune extends AbstractEntity
 
         return $this;
     }
+
 }

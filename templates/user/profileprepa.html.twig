@@ -1,0 +1,122 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Profil de
+    {{ app.user.nom }}
+{% endblock %}
+
+{% block body %}
+
+
+    <section style="background-color: #eee;">
+        <div class="container py-5">
+            <div class="row">
+                <div class="col">
+                    <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+                        <ol class="breadcrumb mb-0">
+                            <li class="breadcrumb-item"><a href="#">Profil de : {{ app.user.nom|upper }} {{ app.user.prenom|upper }}  </a></li>
+
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="card mb-4">
+                        <div class="card-body text-center">
+
+                            <img src="{{ asset('uploads/brochures/'~app.user.brochureFilename )}}"   class="rounded-circle img-fluid" style="width: 150px;">
+
+
+                            <h5 class="my-3">{{ app.user.nom|upper }}</h5>
+                            <div class="d-flex justify-content-center mb-2">
+
+                            </div>
+                       
+                        </div>
+                    </div>
+
+
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <p class="mb-0">Nom</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <p class="text-muted mb-0">{{ app.user.nom|upper }}</p>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <p class="mb-0">Prénoms</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <p class="text-muted mb-0">{{ app.user.prenom|upper }}</p>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <p class="mb-0">Phone</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <p class="text-muted mb-0">
+                                            {{ app.user.contact }}
+                                        </p>
+                                    </div>
+                                </div>
+                                <hr>
+                          
+                       
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-md-12">
+                                <table  style="width:100%">
+                                    <thead class="table-primary">
+                                        <tr>
+
+                                            <th class="alignements">Liste Cours</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                     
+
+                                            <tr>
+
+                                                <td>
+                                                 
+
+
+                                                    {% for cour in cours %}
+
+                                                        {% if cour.brochureFilename is not empty %}
+                                                            <a href="{{ asset('uploads/brochures/' ~ cour.brochureFilename) }}"> {{ cour.lesson  }}      </a>
+                                                        {% else %} {% endif %}
+
+                                                    {% endfor %}
+                                                </td>
+                                             
+
+
+                                            </tr>
+
+
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                                    
+                                    
+                </div>
+            </div>
+        </section>
+        {% endblock %}

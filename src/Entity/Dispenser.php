@@ -38,6 +38,9 @@ class Dispenser extends AbstractEntity
     #[ORM\ManyToOne(inversedBy: 'dispensers')]
     private ?Section $section = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $type = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -135,6 +138,18 @@ class Dispenser extends AbstractEntity
     public function setSection(?Section $section): static
     {
         $this->section = $section;
+
+        return $this;
+    }
+
+    public function isType(): ?bool
+    {
+        return $this->type;
+    }
+
+    public function setType(?bool $type): static
+    {
+        $this->type = $type;
 
         return $this;
     }

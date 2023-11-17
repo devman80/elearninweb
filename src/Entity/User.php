@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -56,6 +58,14 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
 
     #[ORM\ManyToOne(inversedBy: 'users')]
     private ?Section $section = null;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Paiement::class)]
+    private Collection $paiements;
+
+    public function __construct()
+    {
+        $this->paiements = new ArrayCollection();
+    }
 
  
 
@@ -215,6 +225,36 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
        public function setSection(?Section $section): static
        {
            $this->section = $section;
+
+           return $this;
+       }
+
+       /**
+        * @return Collection<int, Paiement>
+        */
+       public function getPaiements(): Collection
+       {
+           return $this->paiements;
+       }
+
+       public function addPaiement(Paiement $paiement): static
+       {
+           if (!$this->paiements->contains($paiement)) {
+               $this->paiements->add($paiement);
+               $paiement->setUser($this);
+           }
+
+           return $this;
+       }
+
+       public function removePaiement(Paiement $paiement): static
+       {
+           if ($this->paiements->removeElement($paiement)) {
+               // set the owning side to null (unless already changed)
+               if ($paiement->getUser() === $this) {
+                   $paiement->setUser(null);
+               }
+           }
 
            return $this;
        }

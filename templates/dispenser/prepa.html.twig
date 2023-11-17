@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des cours
+{% block title %}Cours prepa CAFOP
 {% endblock %}
 
 {% block body %}
-    <h1>Liste des cours </h1>
+    <h1>Liste des cours PREPA-CAFOP</h1>
     {% for message in app.flashes('message') %}
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -17,13 +17,10 @@
         </div>
 
     {% endfor %}
-    <div><a href="{{ path('app_dispenser_new') }}" class="btn btn-outline-primary btns" data-turbo="true"><i class="fa-solid fa-bookmark"></i>&nbsp;&nbsp;Nouveau</a>
-
-
-    
-            <a class="btn btn-outline-success btns" href="{{ path('app_dispenser_prepa') }}">
-                Prepa CAFOP </a>
-         
+    <div>
+        <a href="{{ path('app_dispenser_newprepa') }}" class="btn btn-outline-primary btns" data-turbo="true"><i class="fa-solid fa-bookmark"></i>&nbsp;&nbsp;Nouveau</a>
+        <a class="btn btn-outline-success btns" href="{{ path('app_dispenser_index') }}">
+                Cours pour auditeurs </a>
     </div>
     <!-- The Modal -->
     <div class="modal fade" id="myModal">
@@ -83,13 +80,13 @@
                             Supprimer
                         </a>
                         &nbsp;
-                        <a href="{{ path('app_dispenser_edit', {'id': dispenser.id}) }}">
+                        <a href="{{ path('app_dispenser_editprepa', {'id': dispenser.id}) }}">
                             <img src="{{ asset('img/b_edit.png') }}" title="Modifier"> Modifier
                         </a>
                     </td>
                     <td>
                         {% if dispenser.brochureFilename is not empty %}
-                            <a href="{{ asset('uploads/brochures/' ~ dispenser.brochureFilename) }}">Voir le cours</a>
+                        <a href="{{ asset('uploads/brochures/' ~ dispenser.brochureFilename) }}">Voir le cours</a>
                         {% else %} {% endif %}
                     </td>
                 </tr>
@@ -108,24 +105,24 @@
 
     <script type="application/javascript">
 
-        $(document).ready(function() {
+            $(document).ready(function() {
 
-        var links = document.querySelectorAll('#dispenserid');
-        afficheModal(links);
-        $("#my-form").submit(function(event)
-        {
-        event.preventDefault(); // Empêcher l'envoi du formulaire
-        //console.log($("#my-form").serialize());
-        // Récupérer tous les liens du tableau
+                    var links = document.querySelectorAll('#dispenserid');
+                    afficheModal(links);
+                    $("#my-form").submit(function(event)
+                    {
+                            event.preventDefault(); // Empêcher l'envoi du formulaire
+                            //console.log($("#my-form").serialize());
+                            // Récupérer tous les liens du tableau
 
-        var url       = "{{ path('app_dispenser_delete') }}";
-        var formData  = $("#my-form").serialize(); // Récupérer les données du formulaire sous forme de chaîne de requête
-        var urlretour = "{{ path('app_dispenser_index') }}";
+                            var url       = "{{ path('app_dispenser_delete') }}";
+                            var formData  = $("#my-form").serialize(); // Récupérer les données du formulaire sous forme de chaîne de requête
+                            var urlretour = "{{ path('app_dispenser_index') }}";
 
-        supprimeData(url,formData,urlretour);
+                            supprimeData(url,formData,urlretour);
 
-        });
-        });
+                    });
+            });
     </script>
 
 {% endblock %}

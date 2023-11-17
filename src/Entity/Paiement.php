@@ -32,6 +32,9 @@ class Paiement extends AbstractEntity
     #[ORM\ManyToOne(inversedBy: 'paiements')]
     private ?Section $section = null;
 
+    #[ORM\ManyToOne(inversedBy: 'paiements')]
+    private ?User $user = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -105,6 +108,18 @@ class Paiement extends AbstractEntity
     public function setSection(?Section $section): static
     {
         $this->section = $section;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }

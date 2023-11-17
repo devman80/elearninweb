@@ -1,0 +1,43 @@
+{{ form_start(form) }}
+<div class="my-custom-class-for-errors">
+    {{ form_errors(form) }}
+    {% for message in app.flashes('enseignant') %}
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="alert alert-success alert-dismissible">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Succès!</strong>
+                    {{ message }}
+
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+</div>
+
+    <fieldset>
+
+        <div class="card mb-3" style="border:5px solid #1c7430;border-color: #1c7430;">
+            <div class="card-header" style="background-color: #1c7430;color: white;font-size: medium;font-weight: bold;">Identification</div>
+            <div class="card-body" style="font-weight: bold;color: black;">
+
+        {{ form_row(form.nom, {'label':'Nom ', 'attr':{'class':'form-control'}}) }}
+
+        {{ form_row(form.prenom, {'label':'Prenoms ', 'attr':{'class':'form-control'}}) }}
+  
+        {{ form_row(form.email, {'label':'Email ', 'attr':{'class':'form-control'}}) }}
+
+        {{ form_row(form.brochure, {'label':'Photo ', 'attr':{'class':'form-control'}}) }}
+   
+        {{ form_row(form.plainPassword, {'label':'Twitter ', 'attr':{'class':'form-control'}}) }}
+
+        <button type="submit" class="btn btn-success" name="save">Valider</button>
+    </div>
+
+    </div>
+
+    </fieldset>
+    
+
+{{ form_end(form) }}

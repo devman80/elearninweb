@@ -1,0 +1,117 @@
+{% extends 'layout.html.twig' %}
+{% block title %}Inscription{% endblock %}
+
+{% block body %}
+
+    <div class="card" style="padding: 10px 10px 10px 10px;">
+        <div class="card-header" style="background-color: #1c7430;color: white;font-size: medium;font-weight: bold;">Effectuer le paiement</div>
+        <div class="card-body" style="border:5px solid #1c7430;border-color: #1c7430;font-weight: bold;color: black;">
+            <form method="post" action="{{ path('app_paiementprosend') }}">
+
+                <div class="mb-3">
+                    <label for="nom" class="form-label">Nom </label>
+                    <input type="text" class="form-control" id="nom" name="nom" value="{{ nom }}" readonly>
+                    <input type="hidden" class="form-control" id="id" name="id" value="{{ id }}" readonly>
+                    <input type="hidden" class="form-control" id="email" name="email" value="{{ email }}" readonly>
+                </div>
+                <div class="mb-3">
+                    <label for="prenom" class="form-label">Prénom(s) </label>
+                    <input type="text" class="form-control" id="prenom" name="prenom" value="{{ prenom }}" readonly />
+                </div>
+                <div class="mb-3">
+                    <label for="total" class="form-label">Total Net </label>
+                    <input type="number" class="form-control" id="montantnet" name="montantnet" value="15000" required readonly/>
+                </div>
+                <div class="mb-3">
+                    <label for="modepaiement" class="form-label">Mode de paiement :</label>
+                    <a href="#"><img src="{{ asset('logo_vente/OM.png') }}" alt="OM" id="OM" value="ORANGE CI"></a>
+                    <a href="#"><img src="{{ asset('logo_vente/MOOV.png') }}" alt="MOOV" id="MOOV" value="MOOV CI"></a>
+                    <a href="#"><img src="{{ asset('logo_vente/MTN.png') }}" alt="MTN" id="MTN" value="MTN CI"></a>
+                    <a href="#"> <img src="{{ asset('logo_vente/WAVE.png') }}" alt="WAVE" id="WAVE" value="WAVE CI"></a>
+                    <input type="hidden" value="ORANGE CI" id="code" name="code">
+                    <input type="hidden" value="{{ id }}" id="id" name="id">
+                    <input type="hidden" value="{{ codepaie }}" id="codepaie" name="codepaie">
+
+                </div>
+                <div id="grpaiement" style="visibility: hidden;">
+                    <div class="mb-3" id="fnumero">
+                                              </div>
+
+
+                    <div class="mb-3">
+                        <label for="montant" class="form-label">Montant Net à payer</label>
+                        <input type="text" class="form-control" id="montantapaye" name="montantapaye" value="15000" inputmode="numeric" pattern="[0-9]*" minlength="4" maxlength="10" onkeyup="VerifieMontant()" onkeydown="verifiechamps();" required readonly />
+                    </div>
+                 
+                    <button type="submit" class="btn btn-primary" id="paiement_save" name="paiement_save">Soumettre</button>
+                </div>
+
+
+            </form>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+   {{ parent() }}
+    <script>
+       $('document').ready(function () {
+           $('#OM').click(function (e) {
+               e.preventDefault();
+               $('#grpaiement').css("visibility","visible");
+               $('#code').val("ORANGE CI");
+               let valcode = "ORANGE MONEY";
+               $('#fnumero').html('<label for="numero" class="form-label">Votre numéro '+valcode+'</label><input type="text" class="form-control" id="numero" name="numero" inputmode="numeric" pattern="[0-9]*" minlength="10" maxlength="10" required onkeydown="verifiechamps();" required />');
+           })
+           $('#MTN').click(function (e) {
+               e.preventDefault();
+               $('#grpaiement').css("visibility","visible");
+               $('#code').val("MTN CI");
+               let valcode = "MTN MONEY";
+               $('#fnumero').html('<label for="numero" class="form-label">Votre numéro '+valcode+'</label><input type="text" class="form-control" id="numero" name="numero" inputmode="numeric" pattern="[0-9]*" minlength="10" maxlength="10" required onkeydown="verifiechamps();" required />');
+
+           })
+           $('#MOOV').click(function (e) {
+               e.preventDefault();
+               $('#grpaiement').css("visibility","visible");
+               $('#code').val("MOOV CI");
+               let valcode = "MOOV MONEY";
+               $('#fnumero').html('<label for="numero" class="form-label">Votre numéro '+valcode+'</label><input type="text" class="form-control" id="numero" name="numero" inputmode="numeric" pattern="[0-9]*" minlength="10" maxlength="10" required onkeydown="verifiechamps();" required />');
+
+           })
+           $('#WAVE').click(function (e) {
+               e.preventDefault();
+               $('#grpaiement').css("visibility","visible");
+               $('#code').val("WAVE CI");
+               let valcode = "WAVE";
+               $('#fnumero').html('<label for="numero" class="form-label">Votre numéro '+valcode+'</label><input type="text" class="form-control" id="numero" name="numero" inputmode="numeric" pattern="[0-9]*" minlength="10" maxlength="10" required onkeydown="verifiechamps();" required />');
+
+           })
+
+       })
+       function verifiechamps() {
+           if($("#numero").val() > 0 && $("#montantapaye").val() > 0 && $("#nom").val() != "" && $("#prenom").val() != "" && $("#montantnet").val() > 0){
+               $("#paiement_save").css("visibility","visible");
+
+           }else{
+               $("#paiement_save").css("visibility","hidden");
+           }
+       }
+        function VerifieMontant() {
+            let mont = $("#montantapaye").val();
+            let net = $("#montantnet").val();
+
+            if(Number(mont) > Number(net)) {
+                alert("Montant saisi trop eleve");
+                $("#montantapaye").val(0);
+                $("#resteapaye").val(0);
+                $("#paiement_save").attr("disabled", true);
+
+            }else{
+              let rest = net - mont;
+              $("#resteapaye").val(rest);
+                $("#paiement_save").removeAttr("disabled");
+            }
+
+        }
+    </script>
+{% endblock %}

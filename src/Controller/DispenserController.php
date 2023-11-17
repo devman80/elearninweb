@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Dispenser;
+use App\Form\DispenserprepaType;
 use App\Form\DispenserType;
 use App\Repository\DispenserRepository;
 use App\Service\FileUploader;
@@ -22,15 +23,26 @@ class DispenserController extends AbstractController {
     public function index(DispenserRepository $dispenserRepository): Response {
                 $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        $liste = ["deletedAt" => Null];
+        $liste = ["deletedAt" => Null, "type" =>1];
         $limit = 1000;
         return $this->render('dispenser/index.html.twig', [
                     'dispensers' => $dispenserRepository->findBy($liste, ["id" => "ASC"]),
         ]);
     }
+    
+       #[Route('/prepa', name: 'app_dispenser_prepa', methods: ['GET'])]
+    public function indexPrepa(DispenserRepository $dispenserRepository): Response {
+                $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $liste = ["deletedAt" => Null, "type" =>0];
+        $limit = 1000;
+        return $this->render('dispenser/prepa.html.twig', [
+                    'dispensers' => $dispenserRepository->findBy($liste, ["id" => "ASC"]),
+        ]);
+    }
 
     #[Route('/{id}/edit', name: 'app_dispenser_edit', methods: ['GET', 'POST'])]
-    #[Route('/new', name: 'app_dispenser_new')]
+    #[Route('/new', name: 'app_dispenser_new', methods: ['GET', 'POST'])]
     public function new(Request $request, DispenserRepository $dispenserRepository,
             FileUploader $fileUploader, ?Dispenser $dispenser = null): Response {
 
@@ -57,8 +69,10 @@ class DispenserController extends AbstractController {
 
                 $dispenser->setCreatedFromIp($this->GetIp()); // remplacement de la function par le trait
                      $dispenser->setCreatedBy($user)
+                             
 
                 ;
+                     $dispenser->setType(1);
                 $dispenser->setCreatedAt(new \DateTimeImmutable("now"));
             } else {
 
@@ -89,6 +103,76 @@ class DispenserController extends AbstractController {
                         ], $response);
     }
 
+    
+    
+    
+    
+     #[Route('/{id}/editprepa', name: 'app_dispenser_editprepa', methods: ['GET', 'POST'])]
+    #[Route('/newprepa', name: 'app_dispenser_newprepa', methods: ['GET', 'POST'])]
+    public function newPrepa(Request $request, DispenserRepository $dispenserRepository,
+            FileUploader $fileUploader, ?Dispenser $dispenser = null): Response {
+
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $type = $dispenser === null ? 'newprepa' : 'editprepa';
+        $dispenser = $dispenser === null ? new Dispenser() : $dispenser;
+                $user = $this->getUser();
+        $form = $this->createForm(DispenserprepaType::class, $dispenser,);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            //Adresse ip de l'utilisateur
+
+            $dispenser->setCreatedFromIp($this->GetIp());
+
+            $brochureFile = $form['brochureFilename']->getData();
+            if ($brochureFile) {
+                $brochureFileName = $fileUploader->upload($brochureFile);
+            }
+            if ($type === 'newprepa') {
+                $user = $this->getUser();
+
+                $dispenser->setCreatedFromIp($this->GetIp()); // remplacement de la function par le trait
+                     $dispenser->setCreatedBy($user)
+
+                ;
+                     $dispenser->setType(0);
+                $dispenser->setCreatedAt(new \DateTimeImmutable("now"));
+            } else {
+
+                $dispenser->setUpdatedFromIp($this->GetIp()) ;// remplacement de la function par le trait
+                        $dispenser->setUpdatedBy($user)
+                ;
+                
+                        $dispenser->setUpdatedAt(new \DateTimeImmutable("now"));
+
+            }
+
+            $dispenser->setBrochureFilename($brochureFileName);
+            $dispenserRepository->save($dispenser, true);
+
+            $nextAction = $form->get('saveAndAdd')->isClicked() ? 'app_dispenser_newprepa' : 'app_dispenser_prepa';
+            if ($nextAction) {
+                $this->addFlash('message', 'Action effcetuée avec succès.');
+            }
+
+            return $this->redirectToRoute($nextAction);
+//            return $this->redirectToRoute('app_seancezone_index', [], Response::HTTP_SEE_OTHER);
+        }
+        $response = new Response(null, $form->isSubmitted() ? 422 : 200);
+        return $this->render('dispenser/newprepa.html.twig', [
+                    'dispenser' => $dispenser,
+                    'form' => $form->createView(),
+                    'response' => $response,
+                        ], $response);
+    }
+
+    
+    
+    
+    
+    
     #[Route('/{id}', name: 'app_dispenser_show', methods: ['GET'])]
     public function show(Dispenser $dispenser): Response {
                 $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');

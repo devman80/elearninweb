@@ -50,6 +50,9 @@ class UsersAuthenticator extends AbstractLoginFormAuthenticator {
         if ($this->security->isGranted("ROLE_UTILISATEUR")) {
             return new RedirectResponse($this->urlGenerator->generate('app_accueil'));
         }
+         if ($this->security->isGranted("ROLE_PREPA")) {
+            return new RedirectResponse($this->urlGenerator->generate('app_user_profileprepa'));
+        }
         return new RedirectResponse($this->urlGenerator->generate('app_user_profile'));
         // For example:
         //  return new RedirectResponse($this->urlGenerator->generate('app_user_profile'),303);

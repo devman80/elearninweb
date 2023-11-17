@@ -97,6 +97,7 @@
                             <ul class="list-inline">
                                 {% if is_granted('ROLE_USER') %} <li class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="{{ path('app_user_profile') }}">PROFIL </a></li>{% else %}
                                     <li class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="#loginModal" data-toggle="modal" data-target="#loginModal">connexion</a></li>
+                                    <li class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="{{ path('app_user_prepa') }}">Cours prepa</a></li>
 
                                 {% endif %}
                                 {% if is_granted('ROLE_USER') %} <li class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href=" {{ path('app_logout') }}">  DECONNEXION </a></li>{% else %} {% endif %}
@@ -220,7 +221,7 @@
         </div>
 
         <!-- hero slider -->
-        <section class="hero-section overlay bg-cover" data-background="photo001.jpg">
+        <section class="hero-section overlay bg-cover" data-background="images/CAF.png">
             <div class="container">
                 <div class="hero-slider">
                     <!-- slider item -->
@@ -273,16 +274,32 @@
 
                                         <p class="card-text mb-4">
                                             <b class="text-center align-items-center">ABIDJAN</b> <br />
-                                            <b>- Abobo</b>: Cours sociaux : 0748420707<br />
-                                            <b>- Cafop d'Abidjan</b> : Plateau
-                                            Voir M Bakayoko <br />
-                                            <b> - Yopougon </b>: Groupe Scolaire Béthanie, wassakara  (derrière super RIMCASH): 0153364942 <br />
-                                            <b>- André Latrille</b> : Gesco, voir le secrétariat. <br />
-                                           
+                                            <b>- Abobo</b>: Cours sociaux :
+                                            M.Yao Charles, directeur des études : 07 07 70 42 19<br />
+                                            M.Koko Serge  adjoint de M Yao : 07 57 85 76 87<br />
+                                            M Djédjé : 05 06 08 18 96 <br />
+                                            Mme Koné Ami: 07 48 42 07  07 <br />
+                                            <b>- Cafop d'Abidjan</b> : Plateau / Adjamé 220 logements
+                                            voir Adc Mme Tchi Adé: 0789630691/0103017865, Mme Tjosoro: 0709463266 <br />
+
+
+                                            <b> - Yopougon </b>: Groupe Scolaire Béthanie, wassakara  (derrière super RIMCASH):<br /> M. Amon, Directeur: 01 53 36 49 42, 
+                                            <br />
+                                            M. Paul, informaticien de l'école: 0759458201
+                                            <br />
+                                            Mme Victoire : 05 45 53 86 10  directrice adjointe<br />      
+                                            <b>- André Latrille</b> : Gesco, voir M. Koué, Directeur : 07 48 46 62 64 / Mlle Sedji : 07 49 00 86 28;  01 42 58 39 90, Gbai fabiola: 07 78 30 30 23 31  <br />
+
                                             <b>Yamoussoukro</b> <br />
-                                             <b>- Collège Notre Dame des Lacs</b>: 0505813313/ 0709115382<br />
+                                            <b>- Collège Notre Dame des Lacs</b>: <br /> Mme Awa : 07 77 74 71 44 <br /> M. Bobo : 01 01 50 5259,<br />  M KOUASSI: 0707307465<br />
                                             <b>Autres contacts: </b> 0768573696 / infos@cafop-lited.com / cafoplited@gmail.com<br />
-                                            NB : Tous les candidats doivent se conformer aux indications données
+
+
+                                            NB : Tous les candidats doivent se conformer aux indications données. <br />
+
+                                            Test de sélection: <b>20 000f  CFA</b>  <br>
+                                            Scolarité: <b>230 000 f CFA par an</b>  
+
 
                                         </p>
                                     </div>
@@ -296,12 +313,24 @@
                                         <h3 class="mb-xl-4 mb-lg-3 mb-4">Nos conditions</h3>
                                         <p class="card-text mb-4">
 
-
-
                                             Pour exercer le métier d'<b>enseignant</b>, vous devrez être titulaire du
-                                            BEPC au moins et remplir les conditions physiques et mentales pour dispenser les cours
+                                            BEPC au moins et remplir les conditions physiques et mentales pour dispenser les cours.<br />
+                                            Nb: les candidats de niveau 3 <sup>ème</sup>, seconde, première, terminale, bac, universitaire, BTS, BEP, etc peuvent s'inscrire sous réserve de BEPC.  <br />
+
+                                            Pour effectuer le paiement des cours, chaque auditeur doit se connecter 
+                                            et se rendre dans son profil, puis cliquer sur le boutton <b> <i>Effectuer un paiement</i></b>. Un formulaire vous guidéra sur le mode de paiement à choisir.
+
 
                                         </p>
+                                        <p class="card-text mb-4">  Test de sélection: <b>20 000f  CFA</b>  <br>
+                                            Scolarité: <b>230 000 f CFA par an</b>  
+                                        </p>
+                                        
+                                             <p class="card-text mb-4">   <b>Impression reçu : </b>Imprimez vos reçus à la finalisation du paiement
+                                                     ou concervez votre message de paiement reçu par sms sur votre téléphone utilisé pour effectuer le paiement
+                                           
+                                        </p>
+
                                     </div>
                                 </div>
                             </div>
@@ -327,6 +356,14 @@
                                             Sont admis les candidats ayant rempli toutes les conditions nécessaires
                                     </div>
 
+                                    <div class="card-body">
+                                        
+                                        <i class="ti-write mb-xl-4 mb-lg-3 mb-4 feature-icon"></i>
+                                        <h3 class="mb-xl-4 mb-lg-3 mb-4">Paiment scolarité</h3>
+                                        <p class="card-text mb-4">
+                                           Après votre inscription, veuillez vous connecter. Dans votre profil, il ya un bouton <br /> <button class="btn btn-primary">Effectuer un paiement</button>, veuillez cliquer 
+                                           sur ce bouton afin de commencer à effectuer le paiement selon la procédure qui vous sera proposée
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -363,17 +400,19 @@
                     <!-- course item -->
                     <div class="col-lg-4 col-sm-6 mb-5">
                         <div class="card p-0 border-primary rounded-0 hover-shadow">
-                            <img class="card-img-top rounded-0" src="photo003.jpg" alt="course thumb">
+                            <img class="card-img-top rounded-0" src="images/CAF2.png" alt="course thumb">
                             <div class="card-body">
 
                                 <a href="#">
                                     <h4 class="card-title">CHRONOGRAMME</h4>
                                 </a>
                                 <ul class="list-inline mb-2">
-                                    <li class="list-inline-item"><b>1.</b> Le Test de sélection des auditeurs le 20 Novembre 2023 (Français, cultures générales et Mathématiques)</li> <br />
-                                    <li class="list-inline-item"><b>2.</b> L'Inscription, le paiement (<b>Wave</b>, <b>Moov Money</b>,<b> Orange Money</b> et<b> MTN Money</b>) et le dépôt des dossiers du 23 Septembre au 15 Novembre 2023</li><br />
-                                    <li class="list-inline-item"><b>3.</b> Les résultats du test de sélection: 25 Novembre 2023</li><br />
-                                    <li class="list-inline-item"><b>4.</b> Début des cours : 11 Décembre 2023</li><br />
+                                    <li class="list-inline-item"><b>1.</b> Test de sélection: 1<sup>ère</sup> vague le samedi 02 Décembre 2023, 2<sup>ème</sup> vague le samedi 16 Décembre 2023(Français, cultures générales et Mathématiques)</li> <br />
+                                    <li class="list-inline-item"><b>2.</b> L'Inscription, le paiement (<b>Wave</b>, <b>Moov Money</b>,<b> Orange Money</b> et<b> MTN Money</b>) et le dépôt des dossiers à partir du  23 Septembre 2023</li><br />
+                                    <li class="list-inline-item"><b>3.</b> Les résultats du test de sélection: 1<sup>er</sup> résultat le 07 Décembre et 2<sup>ème</sup> résultat le 20 Décembre 2023</li><br />
+                                    <li class="list-inline-item"><b>4.</b> Rentrée académique: prise de contact le 05 Janvier 2024 et début effectif des cours le 07 Janvier 2024</li><br />
+                                    <li class="list-inline-item">Lieux de Test de sélection: Abobo Cours sociaux(face à la cité universitaire), Cafop d'Abidjan Plateau, Groupe Scolaire André Latrille
+                                    Yopougon Gesco, ES2I non loin de l'Hôtel Blanc Yopougon Koweit, Collège Notre Dame des Lacs Yamoussoukro </li><br />
                                 </ul>
 
                                 <a href="{{ path('app_register') }}" class="btn btn-primary btn-sm">Participez</a>
@@ -383,7 +422,7 @@
                     <!-- course item -->
                     <div class="col-lg-4 col-sm-6 mb-5">
                         <div class="card p-0 border-primary rounded-0 hover-shadow">
-                            <img class="card-img-top rounded-0" src="photo004.jpg" alt="course thumb">
+                            <img class="card-img-top rounded-0" src="images/CAF.png" alt="course thumb">
                             <div class="card-body">
                                 <ul class="list-inline mb-2">
                                     <li class="list-inline-item"><a class="text-color" href="#">Formation en ligne</a></li>
@@ -401,7 +440,7 @@
                     <!-- course item -->
                     <div class="col-lg-4 col-sm-6 mb-5">
                         <div class="card p-0 border-primary rounded-0 hover-shadow">
-                            <img class="card-img-top rounded-0" src="photo005.jpg" alt="course thumb">
+                            <img class="card-img-top rounded-0" src="images/CAF1.png" alt="course thumb">
                             <div class="card-body">
                                 <ul class="list-inline mb-2">
                                     <li class="list-inline-item"><a class="text-color" href="#">Pratiques</a></li>
@@ -421,7 +460,7 @@
                     <!-- course item -->
                     <div class="col-lg-4 col-sm-6 mb-5">
                         <div class="card p-0 border-primary rounded-0 hover-shadow">
-                            <img class="card-img-top rounded-0" src="photo006.jpg" alt="course thumb">
+                            <img class="card-img-top rounded-0" src="images/CAF2.png" alt="course thumb">
                             <div class="card-body">
                                 <ul class="list-inline mb-2">
                                     <li class="list-inline-item"><i class="ti-calendar mr-1 text-color"></i></li>
@@ -441,7 +480,7 @@
                     <!-- course item -->
                     <div class="col-lg-4 col-sm-6 mb-5">
                         <div class="card p-0 border-primary rounded-0 hover-shadow">
-                            <img class="card-img-top rounded-0" src="photo007.jpg" alt="course thumb">
+                            <img class="card-img-top rounded-0" src="images/CAF3.png" alt="course thumb">
                             <div class="card-body">
                                 <ul class="list-inline mb-2">
                                     <li class="list-inline-item"><i class="ti-calendar mr-1 text-color"></i></li>
@@ -461,7 +500,7 @@
                     <!-- course item -->
                     <div class="col-lg-4 col-sm-6 mb-5">
                         <div class="card p-0 border-primary rounded-0 hover-shadow">
-                            <img class="card-img-top rounded-0" src="photo008.jpg" alt="course thumb">
+                            <img class="card-img-top rounded-0" src="images/CAF4.png" alt="course thumb">
                             <div class="card-body">
                                 <ul class="list-inline mb-2">
                                     <li class="list-inline-item"><i class="ti-calendar mr-1 text-color"></i></li>
@@ -507,7 +546,7 @@
         <!-- /cta -->
 
         <!-- success story -->
-        <section class="section bg-cover" data-background="photo009.jpg">
+        <section class="section bg-cover" data-background="images/CAF.png">
             <div class="container">
                 <div class="row">
 
@@ -515,7 +554,7 @@
                         <div class="bg-white p-5">
                             <h2 class="section-title">Politiques d'emploi</h2>
 
-                            
+
                             <p>- Réduction du taux de chômage  en Côte d’Ivoire,</p>
                             <p>-Création d’une autre source de revenus pour les professeurs de Cafop retraités ou en fonction,</p>
                             <p>-Un vivier pour les écoles privées d’ici d’ailleurs,</p>
@@ -547,7 +586,7 @@
                     <!-- blog post -->
                     <article class="col-lg-4 col-sm-6 mb-5 mb-lg-0">
                         <div class="card rounded-0 border-bottom border-primary border-top-0 border-left-0 border-right-0 hover-shadow">
-                            <img class="card-img-top rounded-0" src="photo002.jpg" alt="Post thumb">
+                            <img class="card-img-top rounded-0" src="images/CAF1.png" alt="Post thumb">
                             <div class="card-body">
                                 <!-- post meta -->
                                 <ul class="list-inline mb-3">
@@ -557,13 +596,13 @@
                                     <!-- author
 
                                     <li class="list-inline-item mr-3 ml-0">Rentrée académique 2023-2024</li>
-                                     -->
-                                </ul>
-                                 <!--
-                                <a href={{ path('app_register') }}">
-                                   <h4 class="card-title">Les inscriptions se feront en ligne.</h4>
-                                </a>
                                     -->
+                                </ul>
+                                <!--
+                               <a href={{ path('app_register') }}">
+                                  <h4 class="card-title">Les inscriptions se feront en ligne.</h4>
+                               </a>
+                                -->
                                 <a href="" class="btn btn-primary btn-sm"></a>
                             </div>
                         </div>
@@ -571,7 +610,7 @@
                     <!-- blog post -->
                     <article class="col-lg-4 col-sm-6 mb-5 mb-lg-0">
                         <div class="card rounded-0 border-bottom border-primary border-top-0 border-left-0 border-right-0 hover-shadow">
-                            <img class="card-img-top rounded-0" src="photo003.jpg" alt="Post thumb">
+                            <img class="card-img-top rounded-0" src="images/CAF3.png" alt="Post thumb">
                             <div class="card-body">
                                 <!-- post meta -->
                                 <ul class="list-inline mb-3">
@@ -590,7 +629,7 @@
                     <!-- blog post -->
                     <article class="col-lg-4 col-sm-6 mb-5 mb-lg-0">
                         <div class="card rounded-0 border-bottom border-primary border-top-0 border-left-0 border-right-0 hover-shadow">
-                            <img class="card-img-top rounded-0" src="photo003.jpg" alt="Post thumb">
+                            <img class="card-img-top rounded-0" src="images/CAF4.png" alt="Post thumb">
                             <div class="card-body">
                                 <!-- post meta -->
                                 <ul class="list-inline mb-3">
@@ -599,7 +638,7 @@
                                     <!-- author -->
                                     <li class="list-inline-item mr-3 ml-0">Cours prépa Cafop ordinaire </li>
                                 </ul>
-                             
+
                             </div>
                         </div>
                     </article>

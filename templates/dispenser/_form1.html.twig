@@ -20,10 +20,7 @@
 
 <div class="row">
     <div class="col-md-6 bg-success-subtle grasmini">
-        {{ form_row(form.enseignant, {'label':'Choix professeur ', 'attr':{'class':'select2'}}) }}
-        {{ form_row(form.section) }}
         {{ form_row(form.matiere) }}
-        {{ form_row(form.classeroom, {'label':'CLasse : ', 'attr':{'class':'form-control'}}) }}
         {{ form_row(form.lesson, {'label':'Leçon ou chapitre ', 'attr':{'class':'form-control'}}) }}
         {{ form_row(form.brochureFilename, {'label':'Téléchargez le cours ', 'attr':{'class':'form-control'}}) }}
 
@@ -34,7 +31,7 @@
     <div class="col-md-3">
         {{ form_row(form.save, {'label':'Valider ','attr':{'value':'save','class':'btn btnvalider'}}) }}
         {{ form_row(form.saveAndAdd, {'label':'Valider et continuer  ','attr':{'value':'save-and-add','class':'btn btnsave'}}) }}
-        <a href="{{ path('app_dispenser_index') }}" class="btn btnliste">Afficher la liste</a>
+        <a href="{{ path('app_dispenser_prepa') }}" class="btn btnliste">Afficher la liste</a>
 
     </div>
 </div>
