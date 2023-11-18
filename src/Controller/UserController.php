@@ -24,7 +24,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use App\Security\UsersAuthenticator;
 
 #[Route('/user')]
 class UserController extends AbstractController {
@@ -106,7 +108,7 @@ class UserController extends AbstractController {
     }
 
     #[Route('/prepa', name: 'app_user_prepa', methods: ['GET', 'POST'])]
-    public function newPrepa(Request $request, SluggerInterface $slugger, UserRepository $userRepository, UserPasswordHasherInterface $userPasswordHasher): Response {
+    public function newPrepa(Request $request, SluggerInterface $slugger, UserRepository $userRepository, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $authenticator, UsersAuthenticator $formAuthenticator): Response {
 
         $user = new User();
         $form = $this->createForm(PrepaType::class, $user);
@@ -154,7 +156,7 @@ class UserController extends AbstractController {
 
             $userRepository->save($user, true);
             $this->addFlash('message', 'Enregistrerment avec succès.');
-
+            $authenticator->authenticateUser($user, $formAuthenticator, $request);
             return $this->redirectToRoute('app_paiementpro_prepa', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -166,8 +168,8 @@ class UserController extends AbstractController {
 
     #[Route('/paiementproprepa', name: 'app_paiementpro_prepa', methods: ['GET', 'POST'])]
     public function paiementproPrepa(Request $request, UserRepository $userRepository, VersementRepository $versementRepository) {
-        $data = $this->getUser();
-        $listedata = $userRepository->findBy(["createdBy" => $data->getId()], ["id" => "DESC"], "1", "0");
+        $user = $this->getUser();
+        $listedata = $userRepository->findBy([ $user->getId()], ["id" => "DESC"], "1", "0");
         $nom = "";
         $prenom = "";
         $montant = 0;
@@ -177,9 +179,9 @@ class UserController extends AbstractController {
         foreach ($listedata as $ldata) {
             $nom = $ldata->getNom();
             $prenom = $ldata->getPrenom();
-           //  $montant = $ldata->getRestepaye();
+            //  $montant = $ldata->getRestepaye();
             $id = $ldata->getId();
-           // $code = $ldata->getC();
+            // $code = $ldata->getC();
             // $section = $ldata->getSection();
         }
         $email = $data->getEmail();
@@ -204,7 +206,7 @@ class UserController extends AbstractController {
                             'email' => $email,
                             'id' => $id,
                             'montants' => $montants,
-                           // 'reste' => $reste,
+                            // 'reste' => $reste,
                             'codepaie' => $code,
         ]);
     }
@@ -297,28 +299,22 @@ class UserController extends AbstractController {
         ]);
     }
 
-    
-        #[Route('/profileprepa', name: 'app_user_profileprepa', methods: ['GET', 'POST'])]
+    #[Route('/profileprepa', name: 'app_user_profileprepa', methods: ['GET', 'POST'])]
     public function profilePrepa(DispenserRepository $dispenserRepository) {
         // Recupere l'utilisateur courant
         $user = $this->getUser();
 
-
-        $listecours = $dispenserRepository->findBy(["deletedAt" => Null, "type"=>0]);
+        $listecours = $dispenserRepository->findBy(["deletedAt" => Null, "type" => 0]);
 
         if (null === $user) {
             return $this->redirectToRoute('app_home128');
         }
 
         return $this->render('user/profileprepa.html.twig', [
-                
-                   
                     'cours' => $listecours,
-                  
         ]);
     }
 
-    
     #[Route('/membre/{id}', name: 'app_user_listelesson', methods: ['GET', 'POST'])]
     public function listeLesson(Request $request, DispenserRepository $dispenserRepository, MatiereRepository $matiereRepository) {
         //Recuperation id matiere
